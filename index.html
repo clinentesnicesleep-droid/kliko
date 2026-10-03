@@ -49,22 +49,35 @@
           
           <!-- BARRA SUPERIOR INTEGRADA: MARCA + ACCIONES RÁPIDAS (INTERNA Y RESPONSIVE) -->
           <div class="kliko-mobile-brand-bar">
-            <div class="kliko-brand-badge">
-              <img src="img/kliko_emblem.png" alt="KLIKO Emblema" class="kliko-brand-logo-img">
-              <div class="kliko-brand-info">
-                <div class="kliko-title-row">
-                  <span class="kliko-brand-title">KLIKO</span>
-                  <div id="supabase-status-badge" class="supabase-micro-badge" title="Supabase Cloud Conectado">
-                    <span class="cloud-dot online"></span>
-                    <span class="cloud-status-text">En Vivo</span>
+            <!-- FILA 1: MARCA INSTITUCIONAL Y HERRAMIENTAS DE PANTALLA -->
+            <div class="brand-bar-top-row">
+              <div class="kliko-brand-badge">
+                <img src="img/kliko_emblem.png" alt="KLIKO Emblema" class="kliko-brand-logo-img">
+                <div class="kliko-brand-info">
+                  <div class="kliko-title-row">
+                    <span class="kliko-brand-title">KLIKO</span>
+                    <div id="supabase-status-badge" class="supabase-micro-badge" title="Supabase Cloud Conectado">
+                      <span class="cloud-dot online"></span>
+                      <span class="cloud-status-text">En Vivo</span>
+                    </div>
                   </div>
+                  <span class="kliko-brand-pill">Orcera 2027–2031</span>
                 </div>
-                <span class="kliko-brand-pill">Orcera 2027–2031</span>
+              </div>
+
+              <div class="brand-bar-system-tools">
+                <button id="toggle-device-view" class="app-top-action-btn desktop-only" title="Alternar entre modo smartphone y pantalla completa libre">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg>
+                  <span class="btn-action-label">Libre</span>
+                </button>
+                <button id="theme-toggle" class="app-top-action-btn theme-action-btn" title="Alternar Modo Oscuro/Claro">
+                  <span id="theme-icon">🌙</span>
+                </button>
               </div>
             </div>
 
-            <!-- CONTROLES ESENCIALES INTEGRADOS DENTRO DE LA PANTALLA -->
-            <div class="kliko-top-actions">
+            <!-- FILA 2: ACCESOS DIRECTOS PRINCIPALES DE NAVEGACIÓN -->
+            <div class="brand-bar-nav-actions">
               <a href="manual.html" id="btn-manual-toolbar" class="app-top-action-btn" title="Manual de Usuario Joven Paso a Paso">
                 <span class="btn-action-icon">📖</span>
                 <span class="btn-action-label">Guía</span>
@@ -76,13 +89,6 @@
               <button id="btn-admin-access" class="app-top-action-btn" title="Panel de Gestión Municipal (Concejalía y Técnico)">
                 <span class="btn-action-icon">🏛️</span>
                 <span class="btn-action-label">Gestión</span>
-              </button>
-              <button id="toggle-device-view" class="app-top-action-btn desktop-only" title="Alternar entre modo smartphone y pantalla completa libre">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg>
-                <span class="btn-action-label">Libre</span>
-              </button>
-              <button id="theme-toggle" class="app-top-action-btn theme-action-btn" title="Alternar Modo Oscuro/Claro">
-                <span id="theme-icon">🌙</span>
               </button>
             </div>
           </div>
