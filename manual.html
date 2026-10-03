@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Manual Oficial de Usuario: KLIKO · Tu Voz Decide en Orcera</title>
+  <meta name="description" content="Guía completa paso a paso para jóvenes usuarias y usuarios de KLIKO. Aprende a votar, proponer ideas, acumular puntos y canjear premios en Orcera.">
+  
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090e17;
+      --bg-card: rgba(22, 33, 54, 0.75);
+      --bg-card-hover: rgba(30, 45, 74, 0.85);
+      --surface-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --pine-green: #064e3b;
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amurjo-cyan: #06b6d4;
+      --amber: #f59e0b;
+      --coral: #ef4444;
+      --purple: #8b5cf6;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f0f4f8;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 0.95);
+      --surface-border: rgba(0, 0, 0, 0.08);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --emerald-glow: rgba(16, 185, 129, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding-bottom: 80px;
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* BARRA SUPERIOR FIJA */
+    .manual-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(9, 14, 23, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    [data-theme="light"] .manual-nav {
+      background: rgba(240, 244, 248, 0.88);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .nav-brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px;
+    }
+    .nav-brand-text h1 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-brand-text span {
+      font-size: 0.72rem;
+      color: var(--amurjo-cyan);
+      font-weight: 600;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-nav-action {
+      background: var(--bg-card);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-nav-action:hover {
+      border-color: var(--emerald);
+      transform: translateY(-1px);
+    }
+    .btn-back-app {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 12px var(--emerald-glow);
+    }
+    .btn-back-app:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 16px var(--emerald-glow);
+    }
+
+    /* CONTENEDOR CENTRAL */
+    .manual-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* HERO DEL MANUAL */
+    .manual-hero {
+      background: linear-gradient(145deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%), url('img/hero-orcera-youth.jpg') center/cover no-repeat;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 40px 28px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 32px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    }
+    .manual-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9, 14, 23, 0.3) 0%, rgba(9, 14, 23, 0.85) 100%);
+      z-index: 1;
+    }
+    .manual-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid var(--emerald);
+      color: #6ee7b7;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+    .manual-hero h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .manual-hero p {
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.55;
+      margin-bottom: 20px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .hero-quick-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .stat-pill {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ÍNDICE RÁPIDO (STICKY PILLS) */
+    .quick-toc-wrapper {
+      margin-bottom: 32px;
+    }
+    .quick-toc-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-toc {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+    .quick-toc a {
+      white-space: nowrap;
+      background: var(--bg-card);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-toc a:hover {
+      background: var(--emerald-glow);
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+
+    /* SECCIONES Y TARJETAS */
+    .guide-section {
+      background: var(--bg-card);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 30px 26px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+      transition: border-color 0.2s ease;
+    }
+    .guide-section:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .section-step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title-wrap h3 {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-main);
+    }
+    .section-title-wrap p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* GRID DE CARACTERÍSTICAS / PASOS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: transform 0.2s ease;
+    }
+    .step-card:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .step-card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .step-card h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .step-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* PESTAÑAS INTERACTIVAS ANDROID / IOS */
+    .platform-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 4px;
+      border-radius: var(--radius-full);
+      width: fit-content;
+      border: 1px solid var(--surface-border);
+    }
+    .platform-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .platform-tab-btn.active {
+      background: var(--emerald);
+      color: #fff;
+    }
+    .platform-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .platform-content.active {
+      display: block;
+    }
+
+    /* PUNTOS Y RECOMPENSAS */
+    .points-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.9rem;
+    }
+    .points-table th, .points-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .points-table th {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--amurjo-cyan);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .points-tag {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+    }
+
+    /* CAJA DESTACADA / CALLOUT */
+    .guide-callout {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(16, 185, 129, 0.12));
+      border: 1px solid var(--amurjo-cyan);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .guide-callout-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .guide-callout-body h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--amurjo-cyan);
+      margin-bottom: 4px;
+    }
+    .guide-callout-body p {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* SIMULADOR INTERACTIVO DE PUNTOS */
+    .points-calc-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-top: 18px;
+    }
+    .calc-checklist {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .calc-check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .calc-check-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--surface-border);
+    }
+    .calc-check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--emerald);
+      cursor: pointer;
+    }
+    .calc-result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--surface-border);
+      padding-top: 14px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .calc-total-pill {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--emerald);
+    }
+    .calc-reward-status {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--amurjo-cyan);
+    }
+
+    /* ACORDEÓN FAQ */
+    .faq-item {
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .faq-question {
+      padding: 14px 18px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.98rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .faq-question:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .faq-answer {
+      padding: 0 18px 16px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: none;
+    }
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(180deg);
+    }
+    .faq-icon {
+      transition: transform 0.2s ease;
+    }
+
+    /* FOOTER */
+    .manual-footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .manual-footer strong {
+      color: var(--text-main);
+    }
+
+    /* BOTÓN VOLVER FLOTANTE EN MÓVIL */
+    .floating-back-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 6px 20px var(--emerald-glow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+    .floating-back-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .manual-hero {
+        padding: 28px 18px;
+      }
+      .manual-hero h2 {
+        font-size: 1.7rem;
+      }
+      .section-header {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .manual-nav {
+        padding: 10px 14px;
+      }
+      .nav-brand-text h1 span.subtitle-hide {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <nav class="manual-nav">
+    <a href="index.html" class="nav-brand">
+      <img src="img/kliko_emblem.png" alt="KLIKO" class="nav-brand-logo">
+      <div class="nav-brand-text">
+        <h1>KLIKO <span class="subtitle-hide">· Manual Joven</span></h1>
+        <span>Orcera 2027–2031</span>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <button id="manual-theme-btn" class="btn-nav-action" title="Cambiar Tema Día/Noche">
+        <span id="manual-theme-icon">🌙</span>
+      </button>
+      <a href="index.html" class="btn-nav-action btn-back-app">
+        <span>← Volver a la App</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="manual-container">
+
+    <!-- HERO DE BIENVENIDA -->
+    <header class="manual-hero">
+      <div class="manual-hero-overlay"></div>
+      <div class="manual-hero-content">
+        <span class="hero-badge">📖 Guía Oficial Paso a Paso</span>
+        <h2>Tu Voz, Tus Puntos y Tu Pueblo en Tu Bolsillo</h2>
+        <p>Aprende en 3 minutos a exprimir <strong>KLIKO</strong>: cómo votar en las consultas del pueblo, proponer ideas a la Concejalía de Juventud, ganar Puntos Cívicos y canjearlos por entradas de Amurjo y premios reales.</p>
+        <div class="hero-quick-stats">
+          <div class="stat-pill">⚡ 75.000 € en Transparencia</div>
+          <div class="stat-pill">🏊‍♂️ Premios en Amurjo</div>
+          <div class="stat-pill">🗳️ Votación en Supabase</div>
+          <div class="stat-pill">🌲 100% Orcera</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ÍNDICE DE SALTO RÁPIDO -->
+    <div class="quick-toc-wrapper">
+      <div class="quick-toc-title">⚡ Navegación Rápida por Secciones:</div>
+      <div class="quick-toc">
+        <a href="#que-es-kliko">🐿️ 1. ¿Qué es KLIKO?</a>
+        <a href="#instalacion-pwa">📲 2. Instalar en Móvil</a>
+        <a href="#perfil-puntos">👤 3. Perfil & Puntos</a>
+        <a href="#stories-expres">⚡ 4. Stories Exprés</a>
+        <a href="#el-plan">📖 5. El Plan & Cuentas</a>
+        <a href="#los-7-ejes">🎯 6. Los 7 Ejes</a>
+        <a href="#premios-amurjo">🎁 7. Premios Amurjo</a>
+        <a href="#buzon-joven">💡 8. Buzón Joven</a>
+        <a href="#simulador">🧮 9. Simulador PTS</a>
+        <a href="#faq">❓ 10. Preguntas Frecuentes</a>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: ¿QUÉ ES KLIKO? -->
+    <section id="que-es-kliko" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">01</div>
+        <div class="section-title-wrap">
+          <h3>¿Qué es KLIKO y para qué sirve?</h3>
+          <p>La plataforma interactiva oficial del III Plan Municipal de Juventud de Orcera (2027–2031).</p>
+        </div>
+      </div>
+
+      <p>KLIKO nace con un objetivo muy claro: <strong>que la juventud de Orcera no tenga intermediarios para decidir sobre su pueblo</strong>. No es una web informativa aburrida: es una aplicación viva conectada a la nube donde puedes:</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-card-icon">💰</span>
+          <h4>Transparencia Total</h4>
+          <p>Ves en tiempo real los 15.000 € anuales asignados a juventud: facturas, nóminas, convenios y ejecución de cada proyecto.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🗳️</span>
+          <h4>Voz y Voto Directo</h4>
+          <p>Vota en 1 clic en consultas de fiestas, horarios de instalaciones y presupuestos participativos comarcales.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">⚡</span>
+          <h4>Gamificación Cívica</h4>
+          <p>Gana Puntos KLIKO (PTS) participando en asambleas, proponiendo mejoras o asistiendo al voluntariado en la Sierra.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🎁</span>
+          <h4>Recompensas Reales</h4>
+          <p>Canjea tus puntos por pases libres en Amurjo, abonos para pádel, talleres de música o sudaderas oficiales.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: INSTALACIÓN EN MÓVIL (PWA) -->
+    <section id="instalacion-pwa" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">02</div>
+        <div class="section-title-wrap">
+          <h3>Paso 0: Cómo instalar KLIKO en tu móvil en 5 segundos</h3>
+          <p>Sin descargas de 100 MB ni tiendas de apps. Cero espacio ocupado.</p>
+        </div>
+      </div>
+
+      <div class="platform-tabs">
+        <button class="platform-tab-btn active" onclick="switchPlatform('android')">🤖 Android (Chrome)</button>
+        <button class="platform-tab-btn" onclick="switchPlatform('ios')">🍎 iPhone (Safari)</button>
+      </div>
+
+      <div id="platform-android" class="platform-content active">
+        <ol style="margin-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+          <li>Abre <strong>kliko-wheat.vercel.app</strong> en Google Chrome.</li>
+          <li>Toca los <strong>tres puntos verticales (⋮)</strong> en la esquina superior derecha.</li>
+          <li>Selecciona <strong>"Añadir a pantalla de inicio"</strong> o <strong>"Instalar aplicación"</strong>.</li>
+          <li>¡Hecho! Aparecerá el icono de la ardilla de KLIKO en tu menú como cualquier app nativa.</li>
+        </ol>
+      </div>
+
+      <div id="platform-ios" class="platform-content">
+        <ol style="margin-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+          <li>Abre <strong>kliko-wheat.vercel.app</strong> en Safari.</li>
+          <li>Toca el botón <strong>"Compartir"</strong> (el icono del cuadrado con una flecha hacia arriba ⎋ en la barra inferior).</li>
+          <li>Baja por las opciones y pulsa <strong>"Añadir a la pantalla de inicio" (+)</strong>.</li>
+          <li>Pulsa "Añadir" arriba a la derecha. ¡Ya tienes KLIKO a pantalla completa sin marco de navegador!</li>
+        </ol>
+      </div>
+
+      <div class="guide-callout">
+        <div class="guide-callout-icon">🌲</div>
+        <div class="guide-callout-body">
+          <h4>Funciona sin cobertura en la Sierra</h4>
+          <p>KLIKO almacena los datos clave en el almacenamiento local de tu teléfono. Aunque te quedes sin cobertura en mitad de una ruta del Parque Natural, podrás consultar las acciones y tus códigos de canje.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: PERFIL Y PUNTOS CÍVICOS -->
+    <section id="perfil-puntos" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">03</div>
+        <div class="section-title-wrap">
+          <h3>Paso 1: Tu Perfil Joven y los Puntos Cívicos (⚡ PTS)</h3>
+          <p>Conoce tu nivel cívico y cómo funciona el sistema de puntuación.</p>
+        </div>
+      </div>
+
+      <p>En la cabecera verás siempre tu <strong>avatar</strong>, tu <strong>nivel</strong> y tu <strong>saldo de puntos</strong>:</p>
+
+      <div class="steps-grid" style="margin-bottom: 20px;">
+        <div class="step-card">
+          <span class="step-card-icon">🥉</span>
+          <h4>Nivel 1: Explorador/a</h4>
+          <p>De 0 a 100 PTS. Empiezas conociendo el Plan y votando tus primeras consultas exprés.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🥈</span>
+          <h4>Nivel 2: Activista</h4>
+          <p>De 101 a 300 PTS. Ya propones iniciativas, debates y participas en actividades juveniles.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🥇</span>
+          <h4>Nivel 3: Líder de Orcera</h4>
+          <p>+300 PTS. Tienes voz prioritaria en el Pleno Joven y acceso a las recompensas premium de Amurjo.</p>
+        </div>
+      </div>
+
+      <h4 style="font-family: var(--font-display); margin-top: 16px; margin-bottom: 8px;">Tabla de puntos oficiales:</h4>
+      <table class="points-table">
+        <thead>
+          <tr>
+            <th>Acción Participativa</th>
+            <th>Puntos Ganados</th>
+            <th>Frecuencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🆕 Registro y bienvenida a la app</td>
+            <td><span class="points-tag">+50 PTS</span></td>
+            <td>Una vez</td>
+          </tr>
+          <tr>
+            <td>🗳️ Votar en una Story / Consulta Exprés</td>
+            <td><span class="points-tag">+20 PTS</span></td>
+            <td>Por cada consulta</td>
+          </tr>
+          <tr>
+            <td>💡 Publicar una nueva propuesta en el Buzón</td>
+            <td><span class="points-tag">+30 PTS</span></td>
+            <td>Por propuesta</td>
+          </tr>
+          <tr>
+            <td>⭐ Calificar y valorar una acción del Plan</td>
+            <td><span class="points-tag">+15 PTS</span></td>
+            <td>Por cada valoración</td>
+          </tr>
+          <tr>
+            <td>👥 Invitar a un colega a la app</td>
+            <td><span class="points-tag">+25 PTS</span></td>
+            <td>Por amigo registrado</td>
+          </tr>
+          <tr>
+            <td>🌲 Asistir a voluntariado ambiental en la Sierra</td>
+            <td><span class="points-tag">+40 PTS</span></td>
+            <td>Por jornada</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SECCIÓN 4: STORIES EXPRÉS -->
+    <section id="stories-expres" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">04</div>
+        <div class="section-title-wrap">
+          <h3>Paso 2: Consultas Exprés (Stories en 1 Clic)</h3>
+          <p>El formato más rápido de opinar sobre lo que pasa cada semana en el pueblo.</p>
+        </div>
+      </div>
+
+      <p>Debajo de tu perfil verás una fila horizontal de <strong>historias interactivas circulares</strong> con un anillo iluminado, exactamente igual que en Instagram o TikTok:</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-card-icon">🏊‍♂️</span>
+          <h4>Fiesta Amurjo</h4>
+          <p>Elige qué estilo musical o temática prefieres para las aperturas nocturnas de verano.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🎧</span>
+          <h4>Cursos DJ & Sonido</h4>
+          <p>Vota el horario y temáticas de los nuevos talleres del Espacio Joven.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🗳️</span>
+          <h4>Vota 1.000 €</h4>
+          <p>Micro-presupuesto exprés: tú decides qué material deportivo o tecnológico se compra este mes.</p>
+        </div>
+      </div>
+
+      <div class="guide-callout" style="margin-top: 18px;">
+        <div class="guide-callout-icon">⚡</div>
+        <div class="guide-callout-body">
+          <h4>Voto instantáneo con recompensa</h4>
+          <p>Al pulsar una historia se abre la consulta. Tocas tu respuesta preferida y al instante ves el % de votos del pueblo y tu cuenta suma <strong>+20 Puntos Cívicos</strong> de forma automática.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: PESTAÑA EL PLAN -->
+    <section id="el-plan" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">05</div>
+        <div class="section-title-wrap">
+          <h3>Paso 3: Pestaña "El Plan" (Transparencia y Finanzas)</h3>
+          <p>Conoce las cuentas del Ayuntamiento sin filtros ni letra pequeña.</p>
+        </div>
+      </div>
+
+      <p>En la primera pestaña de la barra inferior (<strong>📖 El Plan</strong>), tienes el cuadro de mando general del III Plan Quinquenal:</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-card-icon">📊</span>
+          <h4>75.000 € Quinquenales</h4>
+          <p>El presupuesto total blindado para los 5 años (2027–2031), distribuido en 15.000 € por ejercicio.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">📈</span>
+          <h4>Ejecución en Directo</h4>
+          <p>La barra te muestra en qué porcentaje se ha gastado el dinero del año actual (ej. 10.260 € invertidos de 15.000 €).</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🎯</span>
+          <h4>63 Acciones Oficiales</h4>
+          <p>El catálogo íntegro de proyectos planificados con fecha de inicio, duración y concejalía responsable.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">⭐</span>
+          <h4>Satisfacción Juvenil</h4>
+          <p>La nota media ponderada de las opiniones emitidas por los jóvenes usuarios sobre el impacto de las medidas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6: LOS 7 EJES -->
+    <section id="los-7-ejes" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">06</div>
+        <div class="section-title-wrap">
+          <h3>Paso 4: Pestaña "7 Ejes en Acción"</h3>
+          <p>La estructura completa de las áreas de trabajo de Orcera.</p>
+        </div>
+      </div>
+
+      <p>Pulsa en la pestaña <strong>🎯 7 Ejes</strong> para navegar por las diferentes temáticas del Plan Municipal:</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-card-icon">🌲</span>
+          <h4>1. Entorno Sostenible & Digital</h4>
+          <p>Protección del Parque Natural, voluntariado verde, senderismo y conectividad rural de alta velocidad.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🎭</span>
+          <h4>2. Ocio, Cultura & Deporte</h4>
+          <p>Piscina de Amurjo, torneos deportivos nocturnos, conciertos, festivales y talleres culturales.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🚀</span>
+          <h4>3. Empleo, Formación & Vivienda</h4>
+          <p>Incentivos al emprendimiento rural, bolsas de vivienda joven, teletrabajo y formación profesional.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🗳️</span>
+          <h4>4. Participación & Voluntariado</h4>
+          <p>Pleno Joven municipal, dinamización de la Asociación Juvenil y presupuestos participativos.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">❤️</span>
+          <h4>5. Salud, Bienestar & Apoyo</h4>
+          <p>Bienestar emocional, prevención de adicciones, salud mental comunitaria y espacios de escucha.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🌈</span>
+          <h4>6. Igualdad & Convivencia</h4>
+          <p>Puntos violeta en fiestas, sensibilización LGTBIQ+, tolerancia cero a la discriminación y respeto.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">⚖️</span>
+          <h4>7. Gobernanza & Transparencia</h4>
+          <p>Evaluación pública de cada euro invertido y rendición de cuentas directa con la juventud.</p>
+        </div>
+      </div>
+
+      <div class="guide-callout" style="margin-top: 18px;">
+        <div class="guide-callout-icon">⭐</div>
+        <div class="guide-callout-body">
+          <h4>¡Valora las acciones con estrellas!</h4>
+          <p>Al abrir la ficha de cualquier acción puedes calificarla de 1 a 5 estrellas y escribir tu opinión sincera. Con cada reseña válida ganas <strong>+15 PTS</strong> y los técnicos reciben tu feedback.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7: PREMIOS AMURJO -->
+    <section id="premios-amurjo" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">07</div>
+        <div class="section-title-wrap">
+          <h3>Paso 5: Pestaña "Premios Amurjo" (Canjes de Recompensas)</h3>
+          <p>Tu implicación cívica se premia con ocio, cultura y deporte real.</p>
+        </div>
+      </div>
+
+      <p>Entra en la pestaña <strong>🎁 Premios Amurjo</strong> para consultar el catálogo de ventajas activas:</p>
+
+      <div class="steps-grid">
+        <div class="step-card" style="border-color: rgba(16, 185, 129, 0.4);">
+          <span class="step-card-icon">🎁</span>
+          <h4>Alta en Asociación Juvenil</h4>
+          <p><strong>0 PTS (Gratis por registro)</strong>. Carnet digital de socio/a con voz y voto oficial en asambleas.</p>
+        </div>
+        <div class="step-card" style="border-color: rgba(6, 182, 212, 0.4);">
+          <span class="step-card-icon">🏊‍♂️</span>
+          <h4>Pase 1 Día para Amurjo</h4>
+          <p><strong>200 PTS</strong>. Entrada gratuita a la mayor piscina natural de Europa en plena Sierra.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🎾</span>
+          <h4>Abono Pádel / Gimnasio</h4>
+          <p><strong>450 PTS</strong>. 1 mes de acceso a pistas deportivas y gimnasio municipal de Orcera.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🎧</span>
+          <h4>Plaza Curso DJ</h4>
+          <p><strong>350 PTS</strong>. Plaza preferente y reserva de mesa de mezclas en el Espacio Joven.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">👕</span>
+          <h4>Pack Merchandising KLIKO</h4>
+          <p><strong>300 PTS</strong>. Sudadera oficial de algodón orgánico con el logo KLIKO + botella térmica.</p>
+        </div>
+      </div>
+
+      <div class="guide-callout" style="margin-top: 20px;">
+        <div class="guide-callout-icon">🎟️</div>
+        <div class="guide-callout-body">
+          <h4>¿Cómo se canjea en la vida real?</h4>
+          <p>1. Pulsa en <strong>"Canjear Premio"</strong> en la recompensa que quieras.<br>
+          2. La app genera tu <strong>Código Único</strong> (ejemplo: <code>AMURJO-7X9Q</code>) guardado en Supabase.<br>
+          3. Enseña ese código desde tu móvil en la <strong>taquilla de Amurjo</strong> o en el <strong>Ayuntamiento</strong> para que te entreguen tu entrada o abono.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 8: BUZÓN JOVEN -->
+    <section id="buzon-joven" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">08</div>
+        <div class="section-title-wrap">
+          <h3>Paso 6: Pestaña "Buzón Joven" (Tus Propuestas a la Nube)</h3>
+          <p>Construye el futuro de Orcera proponiendo ideas y votando las de tus amigos.</p>
+        </div>
+      </div>
+
+      <p>En la pestaña <strong>💡 Buzón Joven</strong> puedes presentar cualquier propuesta de mejora para el pueblo:</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-card-icon">✍️</span>
+          <h4>1. Envía tu Idea</h4>
+          <p>Escribe un título atractivo, la descripción de tu propuesta, el eje temático y la ubicación en Orcera (+30 PTS).</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">👍</span>
+          <h4>2. Votación Comunitaria</h4>
+          <p>Lee las ideas de otros jóvenes y pulsa <strong>"Apoyar Idea"</strong>. Los votos se sincronizan al segundo vía Supabase.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-card-icon">🏛️</span>
+          <h4>3. Al Pleno Joven</h4>
+          <p>Las propuestas con mayor apoyo pasan a estudio técnico de viabilidad y se someten a votación en el Pleno.</p>
+        </div>
+      </div>
+
+      <h4 style="font-family: var(--font-display); margin-top: 18px; margin-bottom: 8px;">El viaje de tu propuesta:</h4>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
+        <span class="stat-pill" style="border-color: #f59e0b; color: #fbbf24;">🟡 En Votación Popular</span>
+        <span class="stat-pill" style="border-color: #3b82f6; color: #60a5fa;">🔵 En Estudio Técnico</span>
+        <span class="stat-pill" style="border-color: #10b981; color: #34d399;">🟢 Aprobada en Presupuestos</span>
+        <span class="stat-pill" style="border-color: #8b5cf6; color: #c084fc;">🏆 ¡Ejecutada en Orcera!</span>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 9: SIMULADOR INTERACTIVO DE PUNTOS -->
+    <section id="simulador" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">09</div>
+        <div class="section-title-wrap">
+          <h3>Simulador Interactivo de Puntos KLIKO</h3>
+          <p>Calcula cuántos puntos puedes ganar hoy y qué premios podrás desbloquear.</p>
+        </div>
+      </div>
+
+      <div class="points-calc-box">
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Marca las cosas que te gustaría hacer en la app:</p>
+        <div class="calc-checklist">
+          <label class="calc-check-item">
+            <input type="checkbox" value="50" onchange="updateCalc()" checked>
+            <span>Darme de alta en la App (+50)</span>
+          </label>
+          <label class="calc-check-item">
+            <input type="checkbox" value="20" onchange="updateCalc()" checked>
+            <span>Votar en la Story de Amurjo (+20)</span>
+          </label>
+          <label class="calc-check-item">
+            <input type="checkbox" value="20" onchange="updateCalc()" checked>
+            <span>Votar en la Story de Cursos DJ (+20)</span>
+          </label>
+          <label class="calc-check-item">
+            <input type="checkbox" value="30" onchange="updateCalc()" checked>
+            <span>Enviar una propuesta al Buzón (+30)</span>
+          </label>
+          <label class="calc-check-item">
+            <input type="checkbox" value="25" onchange="updateCalc()">
+            <span>Invitar a 2 colegas (+50)</span>
+          </label>
+          <label class="calc-check-item">
+            <input type="checkbox" value="45" onchange="updateCalc()">
+            <span>Valorar 3 acciones con estrellas (+45)</span>
+          </label>
+          <label class="calc-check-item">
+            <input type="checkbox" value="40" onchange="updateCalc()">
+            <span>Participar en voluntariado (+40)</span>
+          </label>
+        </div>
+
+        <div class="calc-result-row">
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Total de Puntos Estimados:</span>
+            <div class="calc-total-pill" id="calc-pts-display">120 PTS</div>
+          </div>
+          <div class="calc-reward-status" id="calc-reward-desc">
+            🎉 ¡Ya tienes el Alta Oficial Gratis en la Asociación!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 10: FAQ PREGUNTAS FRECUENTES -->
+    <section id="faq" class="guide-section">
+      <div class="section-header">
+        <div class="section-step-num">10</div>
+        <div class="section-title-wrap">
+          <h3>Preguntas Frecuentes de la Juventud (FAQ)</h3>
+          <p>Resolvemos las dudas más habituales.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Tengo que pagar algo por usar KLIKO o canjear los premios?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">
+          No, en absoluto. KLIKO es una iniciativa 100% pública y gratuita impulsada por el Ayuntamiento de Orcera dentro del III Plan Municipal de Juventud. Todas las recompensas están financiadas por las partidas municipales asignadas.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Qué edades comprende el Plan Joven de Orcera?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">
+          Principalmente personas de entre 12 y 30 años (y simpatizantes o familias vinculadas a la vida juvenil y deportiva de Orcera).
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Se pierden mis puntos si borro las cookies de mi teléfono?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">
+          No. Tu cuenta y tus puntos están sincronizados con la base de datos de Supabase en la nube. Si tienes dudas, puedes consultar en el Espacio Joven o en la Concejalía indicando tu nombre de usuario.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Quién revisa las propuestas del Buzón?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">
+          Las propuestas ciudadanas son moderadas por el equipo técnico de juventud y evaluadas por la Concejalía de Juventud. Periódicamente se presentan en el Pleno Joven para acordar su ejecución presupuestaria.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Cómo contacto si tengo una incidencia o sugerencia urgente?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">
+          Puedes enviar tu mensaje a través del formulario del Buzón Joven seleccionando "Incidencia / Sugerencia" o acudir en persona al Espacio Joven y Telecentro Municipal de Orcera.
+        </div>
+      </div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="manual-footer">
+      <img src="img/kliko_logo_clean.png" alt="KLIKO" style="width: 110px; margin-bottom: 12px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));">
+      <p><strong>KLIKO · III Plan Municipal de Juventud de Orcera (2027–2031)</strong></p>
+      <p style="margin-top: 4px;">Ayuntamiento de Orcera · Concejalía de Juventud · Asociación Juvenil de Orcera</p>
+      <p style="margin-top: 2px; color: var(--emerald);">Sierra de Segura · Parque Natural</p>
+    </footer>
+
+  </main>
+
+  <!-- BOTÓN FLOTANTE INFERIOR -->
+  <a href="index.html" class="floating-back-btn">
+    <span>📱 Abrir la App KLIKO</span>
+  </a>
+
+  <script>
+    // Conmutador de tema Día / Noche
+    const themeBtn = document.getElementById('manual-theme-btn');
+    const themeIcon = document.getElementById('manual-theme-icon');
+    const htmlElem = document.documentElement;
+
+    // Detectar tema actual desde localStorage
+    const savedTheme = localStorage.getItem('kliko_theme') || 'dark';
+    htmlElem.setAttribute('data-theme', savedTheme);
+    themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlElem.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlElem.setAttribute('data-theme', next);
+      localStorage.setItem('kliko_theme', next);
+      themeIcon.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // Pestañas de plataforma Android / iOS
+    function switchPlatform(plat) {
+      document.querySelectorAll('.platform-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.platform-content').forEach(c => c.classList.remove('active'));
+      if (plat === 'android') {
+        document.querySelectorAll('.platform-tab-btn')[0].classList.add('active');
+        document.getElementById('platform-android').classList.add('active');
+      } else {
+        document.querySelectorAll('.platform-tab-btn')[1].classList.add('active');
+        document.getElementById('platform-ios').classList.add('active');
+      }
+    }
+
+    // Acordeón FAQ
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+    }
+
+    // Simulador interactivo de puntos
+    function updateCalc() {
+      const checks = document.querySelectorAll('.calc-check-item input[type="checkbox"]');
+      let total = 0;
+      checks.forEach(c => {
+        if (c.checked) {
+          total += parseInt(c.value, 10);
+        }
+      });
+      const display = document.getElementById('calc-pts-display');
+      const rewardDesc = document.getElementById('calc-reward-desc');
+      display.textContent = total + ' PTS';
+
+      if (total >= 450) {
+        rewardDesc.textContent = '🏆 ¡Desbloqueas el Abono Completo de Pádel y Gimnasio!';
+      } else if (total >= 350) {
+        rewardDesc.textContent = '🎧 ¡Desbloqueas la Plaza Preferente en Cursos DJ!';
+      } else if (total >= 300) {
+        rewardDesc.textContent = '👕 ¡Desbloqueas la Sudadera y Botella Oficial KLIKO!';
+      } else if (total >= 200) {
+        rewardDesc.textContent = '🏊‍♂️ ¡Desbloqueas un Pase Gratis para la Piscina de Amurjo!';
+      } else if (total >= 50) {
+        rewardDesc.textContent = '🎁 ¡Desbloqueas el Alta Gratuita en la Asociación Juvenil!';
+      } else {
+        rewardDesc.textContent = '⚡ Sigue participando para desbloquear premios';
+      }
+    }
+
+    // Ejecutar cálculo inicial
+    updateCalc();
+  </script>
+</body>
+</html>
