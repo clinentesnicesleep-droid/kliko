@@ -4,9 +4,9 @@
  */
 
 const SUPABASE_CONFIG = {
-  url: "https://yguxomidjdbmrzfphjua.supabase.co",
-  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlndXhvbWlkamRibXJ6ZnBoanVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzMxNTgsImV4cCI6MjEwNjYwOTE1OH0.nGp6pxfgAM528eUadlxZXMEMBjJvKztPKO4D6w49or0",
-  projectId: "yguxomidjdbmrzfphjua"
+  url: "https://dyyhknpoymnuoueavfmk.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5eWhrbnBveW1udW91ZWF2Zm1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMzI2MjUsImV4cCI6MjEwNjYwODYyNX0.AaNKe4jmLAHQcWpiB23fmetRbhYeIwmiNN8zJCP5HpY",
+  projectId: "dyyhknpoymnuoueavfmk"
 };
 
 class KlikoDatabaseService {
