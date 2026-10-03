@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KLIKO · III Plan Municipal de Juventud de Orcera (2027-2031) | App Oficial</title>
+  <meta name="description" content="KLIKO: Aplicación interactiva y participativa del III Plan Municipal de Juventud de Orcera 2027-2031. Transparencia, presupuestos en vivo, gamificación y ocio en la Sierra de Segura.">
+  
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicons & App Icons Oficiales KLIKO -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta property="og:title" content="KLIKO · App Oficial del III Plan Municipal de Juventud de Orcera">
+  <meta property="og:image" content="img/kliko_logo_clean.png">
+  
+  <link rel="stylesheet" href="css/styles.css?v=kliko_brand_v1">
+</head>
+<body>
+  <!-- CONTENEDOR GLOBAL CON SWITCHER DE DISPOSITIVO (MÓVIL / PANTALLA COMPLETA) -->
+  <div class="app-layout">
+    
+    <!-- BARRA SUPERIOR DE HERRAMIENTAS DE PREVISUALIZACIÓN -->
+    <header class="preview-toolbar">
+      <div class="toolbar-brand">
+        <img src="img/kliko_emblem.png" alt="KLIKO" class="toolbar-logo-icon">
+        <div class="toolbar-brand-text">
+          <strong class="toolbar-kliko-title">KLIKO</strong>
+          <span class="toolbar-sub">· Orcera Joven 2027–2031</span>
+        </div>
+      </div>
+      <div class="toolbar-controls">
+        <div id="supabase-status-badge" class="supabase-badge" title="Conectando a Supabase...">
+          <span class="cloud-dot online"></span>
+          <span>Supabase En Vivo</span>
+        </div>
+        <button id="btn-promo-share-toolbar" class="btn-tool" title="Promocionar la App (+25 Pts)" style="color:var(--cyber-coral); border-color:rgba(255,87,34,0.4); font-weight:700;">
+          <span>📣</span>
+          <span class="btn-text">¡Promocionar! (+25 Pts)</span>
+        </button>
+        <a href="presentacion.html" target="_blank" id="btn-presentacion-toolbar" class="btn-tool" title="Proyectar Transparencias PPT para el Alcalde y el Pleno" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)); border-color: rgba(16, 185, 129, 0.5); color: #34d399; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+          <span>📽️</span>
+          <span class="btn-text">Presentación PPT</span>
+        </a>
+        <button id="btn-admin-access" class="btn-tool" title="Panel de Gestión Municipal (Concejalía y Técnico)" style="background: linear-gradient(135deg, rgba(6, 78, 59, 0.4), rgba(6, 182, 212, 0.2)); border-color: var(--amurjo-cyan); font-weight:700;">
+          <span>🏛️</span>
+          <span class="btn-text">Panel Municipal</span>
+        </button>
+        <button id="user-toolbar-btn" class="btn-tool" title="Identidad Cívica y Cambio de Usuario">
+          <span id="toolbar-avatar-icon">👤</span>
+          <span class="btn-text" id="toolbar-user-name">Sara (Sesión)</span>
+        </button>
+        <button id="toggle-device-view" class="btn-tool" title="Alternar marco de smartphone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg>
+          <span class="btn-text">Modo Móvil / Libre</span>
+        </button>
+        <button id="theme-toggle" class="btn-tool" title="Alternar Modo Oscuro/Claro">
+          <span id="theme-icon">🌙</span>
+          <span class="btn-text">Tema</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CHASIS DE DISPOSITIVO MÓVIL (SIMULADOR SMARTPHONE) -->
+    <div class="phone-frame-wrapper" id="frame-wrapper">
+      <div class="smartphone-chassis" id="smartphone-chassis">
+        <!-- NOTCH / ISLA DINÁMICA -->
+        <div class="device-notch">
+          <div class="notch-speaker"></div>
+          <div class="notch-camera"></div>
+        </div>
+
+        <!-- BARRA DE ESTADO DEL SISTEMA -->
+        <div class="status-bar">
+          <span class="status-time" id="status-clock">09:41</span>
+          <div class="status-icons">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+            <span class="network-badge">5G Orcera</span>
+            <svg width="18" height="12" viewBox="0 0 24 14" fill="currentColor"><rect x="1" y="1" width="19" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="13" height="8" rx="1.5"/><path d="M22 5v4" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+        </div>
+
+        <!-- CONTENIDO SCROLLABLE DE LA APP -->
+        <div class="mobile-viewport" id="mobile-viewport">
+          
+          <!-- BARRA DE MARCA SUPERIOR KLIKO -->
+          <div class="kliko-mobile-brand-bar">
+            <div class="kliko-brand-badge">
+              <img src="img/kliko_emblem.png" alt="KLIKO Emblema" class="kliko-brand-logo-img">
+              <span class="kliko-brand-title">KLIKO</span>
+              <span class="kliko-brand-pill">Orcera Joven</span>
+            </div>
+            <div class="kliko-brand-tag">2027–2031</div>
+          </div>
+
+          <!-- CABECERA DE LA APP CON PERFIL Y PUNTOS CÍVICOS -->
+          <header class="app-topbar">
+            <div class="user-pill" id="user-pill-trigger" role="button" tabindex="0" title="Ver mi perfil cívico, cambiar de usuario o registrarse">
+              <div class="user-avatar" id="header-user-avatar">
+                <span id="header-avatar-initials">SJ</span>
+                <span class="online-indicator"></span>
+              </div>
+              <div class="user-meta">
+                <span class="user-greeting" id="header-user-greeting">¡Hola, Sara! 👋</span>
+                <span class="user-role" id="user-level-badge">Nivel 2: Activista de la Sierra</span>
+              </div>
+            </div>
+            <div class="points-pill" id="gamification-trigger" title="Ver tus Puntos KLIKO y Premios Amurjo">
+              <span class="points-icon">⚡</span>
+              <div class="points-counter">
+                <span id="user-points-val">290</span>
+                <small>PTS</small>
+              </div>
+            </div>
+          </header>
+
+          <!-- PÍLDORA PROMO VIRAL / INVITA A COLEGAS -->
+          <div class="promo-strip-pill" id="promo-strip-trigger" role="button" tabindex="0" title="Recomienda la app a tus amigos y gana +25 Puntos Cívicos">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="promo-gift-icon">🎁</span>
+              <div>
+                <strong>¡Invita a tus colegas y gana +25 PTS!</strong>
+                <small>Alta gratis en la asociación y entradas para Amurjo</small>
+              </div>
+            </div>
+            <span class="btn-share-mini">Compartir ➔</span>
+          </div>
+
+          <!-- SECCIÓN 0: STORIES EXPRÉS DE PARTICIPACIÓN (FORMATO INSTAGRAM) -->
+          <div class="stories-header">
+            <div class="stories-header-left">
+              <span class="live-dot"></span>
+              <span>🗳️ Consultas Rápidas (Vota en 1 Clic)</span>
+            </div>
+            <span class="stories-badge">+20 Pts</span>
+          </div>
+
+          <section class="stories-strip" aria-label="Historias y Consultas Exprés">
+            <button class="story-item story-active" data-story="amurjo-fest" title="Votar: Fiesta Amurjo">
+              <div class="story-ring">
+                <div class="story-avatar amurjo-bg">🏊‍♂️</div>
+              </div>
+              <span class="story-label">Fiesta Amurjo</span>
+            </button>
+            <button class="story-item" data-story="talleres-dj">
+              <div class="story-ring">
+                <div class="story-avatar dj-bg">🎧</div>
+              </div>
+              <span class="story-label">Curso DJ</span>
+            </button>
+            <button class="story-item" data-story="presupuestos-expr">
+              <div class="story-ring">
+                <div class="story-avatar vote-bg">🗳️</div>
+              </div>
+              <span class="story-label">Vota 1.000€</span>
+            </button>
+            <button class="story-item" data-story="voluntariado">
+              <div class="story-ring">
+                <div class="story-avatar nature-bg">🌲</div>
+              </div>
+              <span class="story-label">Sierra Limpia</span>
+            </button>
+            <button class="story-item" data-story="telecentro">
+              <div class="story-ring">
+                <div class="story-avatar tech-bg">💻</div>
+              </div>
+              <span class="story-label">Telecentro 24h</span>
+            </button>
+          </section>
+
+          <!-- PESTAÑAS DE NAVEGACIÓN PRINCIPAL INTERNA -->
+          <nav class="view-tabs" role="tablist">
+            <button class="tab-btn active" data-tab="tab-plan" role="tab" aria-selected="true">
+              <span class="tab-icon">📖</span> El Plan (Inicio)
+            </button>
+            <button class="tab-btn" data-tab="tab-ejes" role="tab" aria-selected="false">
+              <span class="tab-icon">🎯</span> 7 Ejes en Acción
+            </button>
+            <button class="tab-btn" data-tab="tab-gamificacion" role="tab" aria-selected="false">
+              <span class="tab-icon">🎁</span> Premios Amurjo
+            </button>
+            <button class="tab-btn" data-tab="tab-buzon" role="tab" aria-selected="false">
+              <span class="tab-icon">💡</span> Buzón Joven
+            </button>
+          </nav>
+
+          <!-- ======================================================== -->
+          <!-- PESTAÑA 1 (INICIO): "DESCUBRE EL PLAN" & DATOS GENERALES -->
+          <!-- ======================================================== -->
+          <section id="tab-plan" class="tab-panel active" role="tabpanel">
+            
+            <!-- BENTO HERO CARD: IMPACTO Y DATOS ECONÓMICOS/ESTADÍSTICOS (SOLO EN INICIO) -->
+            <section class="hero-bento-card">
+              <div class="hero-bento-cover">
+                <img src="img/hero-orcera-youth.jpg" alt="Jóvenes de Orcera participando en el III Plan Municipal de Juventud" class="hero-bento-img" loading="eager" />
+                <div class="hero-bento-cover-gradient"></div>
+                <div class="hero-bento-cover-tags">
+                  <span class="hero-cover-tag">🏔️ Orcera · Sierra de Segura</span>
+                  <span class="hero-header-badge" style="margin-bottom:0;">
+                    <span class="live-dot"></span> Presupuesto y Datos Oficiales 2027–2031
+                  </span>
+                </div>
+              </div>
+              <div class="hero-brand-lockup">
+                <img src="img/kliko_emblem.png" alt="KLIKO" class="hero-brand-emblem">
+                <div class="hero-brand-meta">
+                  <span class="hero-brand-name">KLIKO</span>
+                  <span class="hero-brand-desc">Plataforma Oficial · Orcera Joven</span>
+                </div>
+              </div>
+              <h1 class="hero-title">III Plan Municipal de Juventud</h1>
+              <p class="hero-subtitle">Construyendo oportunidades reales para quedarte, crecer y liderar en Orcera con la app <strong>KLIKO</strong>.</p>
+
+              <!-- BENTO KPI GRID (DATOS ECONÓMICOS, NUMÉRICOS Y ESTADÍSTICOS) -->
+              <div class="bento-kpi-grid">
+                <div class="bento-kpi kpi-budget">
+                  <span class="kpi-label">Presupuesto Quinquenal</span>
+                  <strong class="kpi-value" id="total-budget-quinquenal">75.000 €</strong>
+                  <span class="kpi-tag">15.000 € / año</span>
+                </div>
+                <div class="bento-kpi kpi-execution">
+                  <span class="kpi-label">Ejecución Presupuestaria 2027</span>
+                  <div class="kpi-progress-wrap">
+                    <strong class="kpi-value" id="global-exec-percent">68.4%</strong>
+                    <div class="progress-bar-bg">
+                      <div class="progress-bar-fill" id="global-progress-bar" style="width: 68.4%;"></div>
+                    </div>
+                  </div>
+                  <span class="kpi-foot">10.260 € de 15.000 €</span>
+                </div>
+                <div class="bento-kpi kpi-actions">
+                  <span class="kpi-label">Acciones en Marcha</span>
+                  <strong class="kpi-value" id="total-actions-count">28 Activas</strong>
+                  <span class="kpi-tag green-tag">7 Ejes Activos</span>
+                </div>
+                <div class="bento-kpi kpi-rating">
+                  <span class="kpi-label">Satisfacción Joven</span>
+                  <strong class="kpi-value" id="global-satisfaction-val">4.8 ★</strong>
+                  <span class="kpi-foot" id="global-votes-count">142 valoraciones</span>
+                </div>
+              </div>
+            </section>
+
+            <div class="section-intro">
+              <h2 class="section-title">El Plan en 5 Minutos</h2>
+              <p class="section-desc">Todo el documento oficial traducido a un lenguaje directo, transparente y sin rodeos burocráticos.</p>
+            </div>
+
+            <div class="plan-accordion">
+              
+              <!-- PUNTO 1 -->
+              <article class="accordion-item" id="acc-punto-1">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="acc-badge num-1">01</div>
+                  <div class="acc-title-group">
+                    <span class="acc-tag">Presentación & Resumen</span>
+                    <h3 class="acc-heading">Orcera cree en ti</h3>
+                  </div>
+                  <div class="acc-chevron">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </button>
+                <div class="accordion-body">
+                  <div class="acc-content-card">
+                    <div class="highlight-quote">
+                      "No tienes por qué marcharte de tu pueblo si tu proyecto de vida puede florecer aquí."
+                    </div>
+                    <p class="paragraph">
+                      El <strong>III Plan Municipal de Juventud de Orcera 2027-2031</strong> es la brújula construida con las opiniones de las y los jóvenes de Orcera. Aprobado por el Ayuntamiento para blindar políticas públicas que van desde el ocio saludable en Amurjo hasta la vivienda y el empleo tecnológico.
+                    </p>
+                    <div class="card-pills-row">
+                      <span class="mini-pill">🌱 5 Años de Vigencia</span>
+                      <span class="mini-pill">💰 75.000 € de Inversión</span>
+                      <span class="mini-pill">👥 Dirigido a las personas jóvenes</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- PUNTO 2 -->
+              <article class="accordion-item" id="acc-punto-2">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="acc-badge num-2">02</div>
+                  <div class="acc-title-group">
+                    <span class="acc-tag">Marco Legal & Alianzas</span>
+                    <h3 class="acc-heading">Las reglas del juego</h3>
+                  </div>
+                  <div class="acc-chevron">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </button>
+                <div class="accordion-body">
+                  <div class="acc-content-card">
+                    <p class="paragraph">
+                      Este plan no es una promesa en el aire: está blindado jurídicamente y alineado con los grandes marcos internacionales y autonómicos para captar subvenciones y proyectos europeos para Orcera.
+                    </p>
+                    <ul class="framework-list">
+                      <li>
+                        <span class="fw-icon">🇪🇺</span>
+                        <div>
+                          <strong>Estrategia Europea de la Juventud 2027:</strong> Acceso a movilidades <em>Erasmus+</em> e intercambios juveniles sin coste.
+                        </div>
+                      </li>
+                      <li>
+                        <span class="fw-icon">🏛️</span>
+                        <div>
+                          <strong>Plan Integral de Juventud de Andalucía & IAJ:</strong> Financiación de talleres, asesoramiento laboral y carnet joven.
+                        </div>
+                      </li>
+                      <li>
+                        <span class="fw-icon">🎯</span>
+                        <div>
+                          <strong>Objetivos de Desarrollo Sostenible (ODS 2030):</strong> Empleo digno (ODS 8), reducción de desigualdades (ODS 10) y acción climática en nuestro Parque Natural (ODS 13 y 15).
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              <!-- PUNTO 3 -->
+              <article class="accordion-item" id="acc-punto-3">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="acc-badge num-3">03</div>
+                  <div class="acc-title-group">
+                    <span class="acc-tag">Diagnóstico & Realidad</span>
+                    <h3 class="acc-heading">Radiografía de Orcera</h3>
+                  </div>
+                  <div class="acc-chevron">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </button>
+                <div class="accordion-body">
+                  <div class="acc-content-card">
+                    <p class="paragraph">
+                      Para transformar la realidad, primero hay que mirarla de frente con datos contrastados:
+                    </p>
+                    <div class="data-stats-row">
+                      <div class="stat-box">
+                        <span class="stat-number">1.712</span>
+                        <span class="stat-caption">Habitantes censados en Orcera</span>
+                      </div>
+                      <div class="stat-box">
+                        <span class="stat-number">285</span>
+                        <span class="stat-caption">Jóvenes entre 12 y 30 años (16.6%)</span>
+                      </div>
+                      <div class="stat-box">
+                        <span class="stat-number">1 Gbps</span>
+                        <span class="stat-caption">Fibra óptica para teletrabajo rural</span>
+                      </div>
+                    </div>
+                    <div class="diagnostic-grid">
+                      <div class="diag-block challenge">
+                        <h4>⚠️ Retos identificados</h4>
+                        <ul>
+                          <li>Estacionalidad económica vinculada a la campaña del olivar.</li>
+                          <li>Dificultad para encontrar pisos de alquiler joven todo el año.</li>
+                          <li>Sensación de desconexión nocturna en invierno.</li>
+                        </ul>
+                      </div>
+                      <div class="diag-block opportunity">
+                        <h4>✨ Nuestras ventajas únicas</h4>
+                        <ul>
+                          <li>Piscina Municipal de Amurjo (referente comarcal y de ocio).</li>
+                          <li>Parque Natural de la Sierra de Segura (multiaventura y biodiversidad).</li>
+                          <li>Vida comunitaria segura, cercana y con coste de vida asequible.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- PUNTO 4 -->
+              <article class="accordion-item" id="acc-punto-4">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="acc-badge num-4">04</div>
+                  <div class="acc-title-group">
+                    <span class="acc-tag">Principios Rectores</span>
+                    <h3 class="acc-heading">Lo que nos mueve</h3>
+                  </div>
+                  <div class="acc-chevron">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </button>
+                <div class="accordion-body">
+                  <div class="acc-content-card">
+                    <div class="values-grid">
+                      <div class="val-card">
+                        <span class="val-icon">🤝</span>
+                        <h4>Igualdad Real</h4>
+                        <p>Cero tolerancia a la violencia de género y respeto absoluto a la diversidad sexual y cultural.</p>
+                      </div>
+                      <div class="val-card">
+                        <span class="val-icon">🧠</span>
+                        <h4>Salud Mental</h4>
+                        <p>Hablar de ansiedad o depresión sin tabúes. Apoyo emocional preventivo desde la cercanía.</p>
+                      </div>
+                      <div class="val-card">
+                        <span class="val-icon">🌲</span>
+                        <h4>Sierra Sostenible</h4>
+                        <p>Cuidar nuestro entorno natural como motor de vida, turismo verde y orgullo serrano.</p>
+                      </div>
+                      <div class="val-card">
+                        <span class="val-icon">🚀</span>
+                        <h4>Tú eres el Centro</h4>
+                        <p>No se hace nada 'para' los jóvenes sin contar 'con' los jóvenes. Tú tienes la última palabra.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- PUNTO 5 -->
+              <article class="accordion-item" id="acc-punto-5">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="acc-badge num-5">05</div>
+                  <div class="acc-title-group">
+                    <span class="acc-tag">Metodología Activa</span>
+                    <h3 class="acc-heading">Participa y decide</h3>
+                  </div>
+                  <div class="acc-chevron">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </button>
+                <div class="accordion-body">
+                  <div class="acc-content-card">
+                    <p class="paragraph">
+                      Esta app no es un folleto estático en PDF: es una herramienta de <strong>gestión democrática en vivo</strong>:
+                    </p>
+                    <div class="participation-steps">
+                      <div class="step-line">
+                        <span class="step-num">1</span>
+                        <div><strong>Vota en 1 clic:</strong> Decide cartel de conciertos, fechas de talleres o distribución del presupuesto.</div>
+                      </div>
+                      <div class="step-line">
+                        <span class="step-num">2</span>
+                        <div><strong>Evalúa con estrellas:</strong> ¿Estuvo bien el torneo de pádel? Dale 5 estrellas o dinos qué falló.</div>
+                      </div>
+                      <div class="step-line">
+                        <span class="step-num">3</span>
+                        <div><strong>Gana Puntos Orcera:</strong> Cada voto o propuesta te da puntos canjeables por entradas de Amurjo y cursos.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <!-- ======================================================== -->
+          <!-- PESTAÑA 2: MÓDULO "EJES EN ACCIÓN" (7 EJES Y DETALLES)  -->
+          <!-- ======================================================== -->
+          <section id="tab-ejes" class="tab-panel" role="tabpanel">
+            <div class="section-intro">
+              <h2 class="section-title">Los 7 Ejes Estratégicos</h2>
+              <p class="section-desc">Fichas técnicas en tiempo real: objetivos, presupuesto justificado, cronograma y evaluación.</p>
+            </div>
+
+            <!-- SELECTOR RÁPIDO HORIZONTAL DE EJES -->
+            <div class="ejes-pill-slider" id="ejes-pill-slider">
+              <!-- Rellenado por JS -->
+            </div>
+
+            <!-- FICHA DETALLADA DEL EJE SELECCIONADO -->
+            <div class="eje-detail-container" id="eje-detail-container">
+              <!-- Renderizado dinámico vía JavaScript con los 7 campos requeridos -->
+            </div>
+          </section>
+
+          <!-- ======================================================== -->
+          <!-- PESTAÑA 3: GAMIFICACIÓN Y PREMIOS AMURJO                 -->
+          <!-- ======================================================== -->
+          <section id="tab-gamificacion" class="tab-panel" role="tabpanel">
+            <div class="section-intro">
+              <h2 class="section-title">Asociación Juvenil de Orcera</h2>
+              <p class="section-desc">Tu participación tiene premio directo. Canjea tus puntos por ocio real en el pueblo.</p>
+            </div>
+
+            <!-- BANNER OFICIAL: ALTA EN LA ASOCIACIÓN JUVENIL DE ORCERA -->
+            <div class="asociacion-promo-banner" id="asociacion-promo-banner">
+              <div class="asociacion-banner-thumb">
+                <img src="img/asociacion-juvenil.jpg" alt="Asociación Juvenil de Orcera" loading="lazy" />
+              </div>
+              <div class="asociacion-banner-text">
+                <div class="asociacion-badge-free">🎁 Recompensa Oficial de Bienvenida</div>
+                <h4>Hazte Socio/a de la Asociación Juvenil de Orcera</h4>
+                <p>El alta es 100% gratuita al registrarte en el III Plan. Participa con voz y voto en asambleas, salidas al Parque Natural y eventos juveniles.</p>
+                <div id="asociacion-banner-actions">
+                  <button type="button" class="btn-open-asociacion" id="btn-open-asociacion-form">
+                    <span>📝</span>
+                    <span id="asociacion-banner-btn-text">Solicitar Alta Gratuita de Socio/a</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TARJETA CÍVICA DEL USUARIO -->
+            <div class="user-civic-card">
+              <div class="civic-header">
+                <div>
+                  <span class="card-org">Ayuntamiento de Orcera</span>
+                  <h3 class="card-name" id="civic-card-name">Sara Jiménez Navío</h3>
+                </div>
+                <div class="card-chip"></div>
+              </div>
+              <div class="civic-body">
+                <div class="civic-stat">
+                  <span class="label">Puntos Disponibles</span>
+                  <strong class="civic-pts" id="card-display-points">290 PTS</strong>
+                </div>
+                <div class="civic-stat">
+                  <span class="label">Rango Cívico</span>
+                  <span class="badge-role" id="civic-card-role">Nivel 2 · Activista</span>
+                </div>
+              </div>
+              <div class="civic-footer">
+                <span id="civic-card-dni">DNI: ***4829* · Orcera (Jaén)</span>
+                <span class="civic-hash" id="civic-card-hash">#ORC-2027-LIVE</span>
+              </div>
+            </div>
+
+                        <!-- SECCIÓN: LOS 4 NIVELES CÍVICOS DE ORCERA & GUÍA DE PUNTOS -->
+            <div class="levels-explainer-card">
+              <div class="levels-card-header">
+                <div>
+                  <span class="badge-tag-civic">🏛️ Plan Municipal de Juventud</span>
+                  <h3 class="levels-main-title">Los 4 Niveles Cívicos de Orcera</h3>
+                </div>
+                <button type="button" class="btn-toggle-pts-guide" id="btn-toggle-pts-guide" title="Ver cómo ganar puntos">
+                  ⚡ ¿Cómo sumar puntos?
+                </button>
+              </div>
+
+              <!-- BARRA DE PROGRESO DE NIVEL DEL USUARIO -->
+              <div class="level-progress-box" id="user-level-progress-box">
+                <div class="level-progress-labels">
+                  <span id="level-prog-current">Nivel 2: Activista de Orcera</span>
+                  <strong id="level-prog-next">Te faltan 111 pts para Nivel 3: Motor de Orcera</strong>
+                </div>
+                <div class="level-progress-track">
+                  <div class="level-progress-bar" id="level-progress-bar-fill" style="width: 55%;"></div>
+                </div>
+              </div>
+
+              <!-- GUÍA DESPLEGABLE DE ACCIONES PARA GANAR PUNTOS -->
+              <div class="pts-earning-guide" id="pts-earning-guide">
+                <h4 style="font-size: 0.8rem; margin: 0 0 10px; color: var(--amurjo-cyan); display: flex; align-items:center; gap:6px;">
+                  <span>⚡</span> Acciones que suman Puntos Cívicos en Orcera:
+                </h4>
+                <div class="pts-actions-grid">
+                  <div class="pts-action-item">
+                    <span class="pts-badge-val">+50 PTS</span>
+                    <div>
+                      <strong>Registro y Padrón</strong>
+                      <small>Crear tu cuenta acreditando residencia en Orcera</small>
+                    </div>
+                  </div>
+                  <div class="pts-action-item">
+                    <span class="pts-badge-val">+50 PTS</span>
+                    <div>
+                      <strong>Buzón Participativo</strong>
+                      <small>Publicar una nueva propuesta para el municipio</small>
+                    </div>
+                  </div>
+                  <div class="pts-action-item">
+                    <span class="pts-badge-val">+40 PTS</span>
+                    <div>
+                      <strong>Presupuestos Exprés</strong>
+                      <small>Votar en consultas de destino de partidas públicas</small>
+                    </div>
+                  </div>
+                  <div class="pts-action-item">
+                    <span class="pts-badge-val">+30 PTS</span>
+                    <div>
+                      <strong>Valorar Acciones</strong>
+                      <small>Puntuar con estrellas y feedback los 7 Ejes del Plan</small>
+                    </div>
+                  </div>
+                  <div class="pts-action-item">
+                    <span class="pts-badge-val">+15 PTS</span>
+                    <div>
+                      <strong>Apoyar Ideas</strong>
+                      <small>Votar a favor de propuestas de otros jóvenes</small>
+                    </div>
+                  </div>
+                  <div class="pts-action-item">
+                    <span class="pts-badge-val">+100 PTS</span>
+                    <div>
+                      <strong>Voluntariado y Cursos</strong>
+                      <small>Check-in en batidas del Parque Natural o talleres</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CUADRÍCULA DE LOS 4 NIVELES -->
+              <div class="levels-grid" id="levels-grid-cards">
+                <!-- Nivel 1 -->
+                <div class="level-tier-card" data-tier="1" id="tier-card-1">
+                  <div class="tier-badge-pill tier-1">NIVEL 1 · 0 - 150 PTS</div>
+                  <h4 class="tier-title">Explorador/a del Municipio de Orcera</h4>
+                  <p class="tier-desc">Punto de partida al registrarte. Descubre los 7 ejes, consulta el presupuesto municipal y emite tus primeros votos.</p>
+                  <div class="tier-perks">
+                    <span>✓ Acceso integral al Plan</span>
+                    <span>✓ Voto en consultas exprés</span>
+                  </div>
+                </div>
+
+                <!-- Nivel 2 -->
+                <div class="level-tier-card" data-tier="2" id="tier-card-2">
+                  <div class="tier-badge-pill tier-2">NIVEL 2 · 151 - 400 PTS</div>
+                  <h4 class="tier-title">Activista de Orcera</h4>
+                  <p class="tier-desc">Participación cívica activa. Evalúa acciones, aporta sugerencias directas y canjea pases para la Piscina de Amurjo.</p>
+                  <div class="tier-perks">
+                    <span>✓ Canjes en Piscina de Amurjo</span>
+                    <span>✓ Evaluación directa de los 7 ejes</span>
+                  </div>
+                </div>
+
+                <!-- Nivel 3 -->
+                <div class="level-tier-card" data-tier="3" id="tier-card-3">
+                  <div class="tier-badge-pill tier-3">NIVEL 3 · 401 - 800 PTS</div>
+                  <h4 class="tier-title">Motor de Orcera</h4>
+                  <p class="tier-desc">Compromiso destacado con el pueblo. Lanzamiento de propuestas de impacto y acceso prioritario a talleres tecnológicos y pádel.</p>
+                  <div class="tier-perks">
+                    <span>✓ Prioridad en Cursos DJ y Robótica</span>
+                    <span>✓ Pistas de Pádel y Polideportivo</span>
+                  </div>
+                </div>
+
+                <!-- Nivel 4 -->
+                <div class="level-tier-card" data-tier="4" id="tier-card-4">
+                  <div class="tier-badge-pill tier-4">NIVEL 4 · +800 PTS</div>
+                  <h4 class="tier-title">Leyenda Joven de Orcera</h4>
+                  <p class="tier-desc">Máxima distinción cívica juvenil. Tus iniciativas comunitarias tienen prioridad directa para su debate en el Pleno Municipal.</p>
+                  <div class="tier-perks">
+                    <span>✓ Acceso directo a Pleno Joven</span>
+                    <span>✓ Reconocimiento oficial del Ayuntamiento</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- SPOTLIGHT VISUAL: PISCINA FLUVIAL DE AMURJO -->
+            <div class="amurjo-spotlight-card">
+              <div class="amurjo-spotlight-media">
+                <img src="img/amurjo-pool.jpg" alt="Piscina Fluvial de Amurjo en Orcera" class="amurjo-spotlight-img" loading="lazy" />
+                <div class="amurjo-spotlight-overlay">
+                  <span class="amurjo-spotlight-chip">🏊‍♂️ Piscina Fluvial de Amurjo</span>
+                  <span class="amurjo-spotlight-caption">El corazón del verano serrano en plena Sierra de Segura</span>
+                </div>
+              </div>
+              <div class="amurjo-spotlight-info">
+                <div class="amurjo-info-header">
+                  <span class="badge-tag-civic">🎁 Canje de Recompensas</span>
+                  <h4 style="margin: 4px 0 6px;">¡Consigue tus pases gratis y entradas para el verano!</h4>
+                </div>
+                <p>Participando activamente en el III Plan de Juventud acumulas Puntos Cívicos que puedes canjear de inmediato por pases individuales, abonos de temporada y acceso a eventos en el pinar de Amurjo.</p>
+                <div class="amurjo-features-list">
+                  <span class="amurjo-feat-pill">🌲 Aguas cristalinas en plena naturaleza</span>
+                  <span class="amurjo-feat-pill">🎟️ Pases individuales y familiares</span>
+                  <span class="amurjo-feat-pill">⚡ Canje directo con tu móvil</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CATÁLOGO DE RECOMPENSAS -->
+            <h3 class="sub-heading">Recompensas Disponibles</h3>
+            <div class="rewards-grid" id="rewards-grid">
+              <!-- Generado dinámicamente con JS -->
+            </div>
+          </section>
+
+          <!-- ======================================================== -->
+          <!-- PESTAÑA 4: BUZÓN PARTICIPATIVO Y VOTACIÓN EXPRÉS        -->
+          <!-- ======================================================== -->
+          <section id="tab-buzon" class="tab-panel" role="tabpanel">
+            <div class="section-intro">
+              <h2 class="section-title">Buzón de Propuestas</h2>
+              <p class="section-desc">¿Tienes una idea para Orcera? Si consigue 25 apoyos de jóvenes, pasa a Pleno Municipal.</p>
+            </div>
+
+            <!-- FORMULARIO DE PROPUESTA -->
+            <div class="proposal-card">
+              <h3>Lanza tu Propuesta Joven</h3>
+              <form id="new-proposal-form">
+                <div class="form-group">
+                  <label for="prop-title">Título de la idea</label>
+                  <input type="text" id="prop-title" placeholder="Ej: Torneo de Vóley-playa nocturno en Amurjo" required>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="prop-eje">Eje temático</label>
+                    <select id="prop-eje">
+                      <option value="1">Eje 1: Entorno sostenible y digital</option>
+                      <option value="2" selected>Eje 2: Ocio, cultura y deporte</option>
+                      <option value="3">Eje 3: Empleo y vivienda</option>
+                      <option value="4">Eje 4: Participación juvenil</option>
+                      <option value="5">Eje 5: Salud y bienestar</option>
+                      <option value="6">Eje 6: Igualdad y diversidad</option>
+                      <option value="7">Eje 7: Gobernanza y evaluación</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="prop-place">Lugar propuesto</label>
+                    <input type="text" id="prop-place" placeholder="Ej: Amurjo / Espacio Joven">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="prop-desc">¿En qué consiste y a quién beneficia?</label>
+                  <textarea id="prop-desc" rows="3" placeholder="Explica tu idea fácil para que otros jóvenes puedan votarla..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit-proposal">
+                  <span>🚀 Publicar Propuesta</span>
+                  <small>(+50 Puntos Orcera)</small>
+                </button>
+              </form>
+            </div>
+
+            <!-- LISTA DE PROPUESTAS ACTIVAS DE LA COMUNIDAD -->
+            <h3 class="sub-heading">Propuestas en Votación Comunitaria</h3>
+            <div class="proposals-list" id="proposals-list">
+              <!-- Renderizado dinámico con JS -->
+            </div>
+          </section>
+
+          <footer class="mobile-footer">
+            <p><strong>III Plan Municipal de Juventud de Orcera (2027-2031)</strong></p>
+            <p>Concejalía de Juventud · Ayuntamiento de Orcera · Sierra de Segura (Jaén)</p>
+          </footer>
+
+        </div> <!-- /mobile-viewport -->
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR (BOTTOM TAB BAR TIPO NATIVA) -->
+        <nav class="bottom-tab-bar" aria-label="Navegación Móvil Principal">
+          <button class="nav-item active" data-target="tab-plan">
+            <span class="nav-icon">📖</span>
+            <span class="nav-text">El Plan</span>
+          </button>
+          <button class="nav-item" data-target="tab-ejes">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-text">7 Ejes</span>
+          </button>
+          <button class="nav-item" data-target="tab-gamificacion">
+            <span class="nav-icon">🎁</span>
+            <span class="nav-text">Premios</span>
+          </button>
+          <button class="nav-item" data-target="tab-buzon">
+            <span class="nav-icon">💡</span>
+            <span class="nav-text">Buzón</span>
+          </button>
+        </nav>
+
+        <!-- INDICADOR HOME DE DISPOSITIVO MÓVIL (HOME BAR) -->
+        <div class="device-home-indicator"></div>
+
+      </div> <!-- /smartphone-chassis -->
+    </div> <!-- /phone-frame-wrapper -->
+
+  </div> <!-- /app-layout -->
+
+  <!-- MODAL VISOR DE STORIES / ENCUESTA EXPRÉS (TIPO INSTAGRAM) -->
+  <div class="modal-overlay" id="story-modal" role="dialog" aria-hidden="true">
+    <div class="story-modal-card">
+      <div class="story-progress-bar">
+        <div class="story-progress-fill" id="story-progress-fill"></div>
+      </div>
+      <button class="btn-close-modal story-close" id="close-story-modal" aria-label="Cerrar historia">&times;</button>
+      
+      <div class="story-card-content">
+        <div class="story-header-pill">
+          <span id="story-icon">🏊‍♂️</span>
+          <span id="story-category">CONSULTA VINCULANTE</span>
+        </div>
+        
+        <h3 id="story-modal-title">Fiesta Nocturna en Amurjo</h3>
+        <p id="story-modal-desc">El Ayuntamiento quiere programar la apertura nocturna de la piscina de Amurjo este verano. ¿Qué formato prefieres?</p>
+        
+        <div class="story-options-container" id="story-options-container">
+          <!-- Opciones A y B renderizadas por JS -->
+        </div>
+
+        <div class="story-reward-badge">
+          <span>⚡ Tu voto decide la programación y suma +20 Puntos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CANJE QR DE RECOMPENSAS -->
+  <div class="modal-overlay" id="qr-modal" role="dialog" aria-hidden="true">
+    <div class="modal-card">
+      <button class="btn-close-modal" id="close-qr-modal" aria-label="Cerrar modal">&times;</button>
+      <div class="qr-header">
+        <span class="qr-badge">Bono Canjeable</span>
+        <h3 id="qr-modal-title">Entrada Piscina Municipal Amurjo</h3>
+        <p>Presenta este código en la taquilla de Amurjo o en el Ayuntamiento de Orcera.</p>
+      </div>
+      <div class="qr-canvas-mock">
+        <div class="qr-matrix-sim" id="qr-modal-render-area" style="background:#fff; padding:10px; border-radius:8px;">
+        </div>
+        <div class="qr-code-text" id="qr-modal-code">ORC-AMURJO-78923-PASS</div>
+      </div>
+      <div class="qr-footer">
+        <span class="qr-status-valid">● Válido para temporada 2027</span>
+        <button class="btn-primary" id="qr-done-btn">Guardar en Mi Teléfono</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE VOLANTE DE JUSTIFICANTE CONTABLE OFICIAL (FACTURA O NÓMINA) -->
+  <div class="modal-overlay" id="justificante-modal" role="dialog" aria-hidden="true">
+    <div class="volante-contable-box">
+      <button class="btn-close-modal" id="close-justificante-modal" aria-label="Cerrar justificante">&times;</button>
+
+      <div class="volante-header">
+        <div class="volante-header-text">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+            <span style="font-size:1.1rem;">🏛️</span>
+            <strong>AYUNTAMIENTO DE ORCERA</strong>
+          </div>
+          <h3>Intervención y Tesorería Municipal</h3>
+          <p>Justificación Contable · III Plan Municipal de Juventud (2027–2031)</p>
+        </div>
+        <div class="volante-seal">
+          Fiscalizado<br>Intervención<br>Orcera
+        </div>
+      </div>
+
+      <div id="justificante-modal-content">
+        <!-- Rellenado dinámicamente con JS -->
+      </div>
+
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px;">
+        <button type="button" class="btn btn-secondary" id="btn-print-justificante" style="padding: 6px 12px; font-size: 0.76rem;">
+          🖨️ Imprimir Volante
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-close-justificante" style="padding: 6px 14px; font-size: 0.76rem;">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL DE IDENTIDAD CÍVICA, SESIÓN Y REGISTRO DE JOVEN -->
+  <div class="modal-overlay" id="user-modal" role="dialog" aria-hidden="true">
+    <div class="user-modal-box">
+      <button class="btn-close-modal" id="close-user-modal" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="user-modal-header">
+        <div class="user-modal-title-area">
+          <h3 id="modal-header-title">🏛️ Identidad Cívica Joven</h3>
+          <p id="modal-header-desc">III Plan Municipal de Juventud de Orcera (2027–2031)</p>
+        </div>
+      </div>
+
+      <!-- SECCIÓN A: CUANDO EL USUARIO TIENE SESIÓN INICIADA (MI CUENTA) -->
+      <div id="user-view-logged" style="display: none;">
+        <div class="user-active-summary-card">
+          <div class="user-big-avatar" id="modal-user-avatar">SJ</div>
+          <div class="user-summary-info">
+            <h4 class="user-summary-name" id="modal-user-name">Sara Jiménez Navío</h4>
+            <span class="user-summary-badge" id="modal-user-role-badge">Nivel 2 · Activista</span>
+            <div class="user-summary-stats">
+              <div>Saldo: <span class="user-summary-stat-val" id="modal-user-points">290 PTS</span></div>
+              <div id="modal-user-padron-status">✅ Empadronada</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: var(--segura-surface-elevated); border: 1px solid var(--segura-border); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 20px; font-size: 0.78rem;">
+          <div style="display:flex; justify-content:space-between; margin-bottom: 6px;">
+            <span style="color: var(--text-muted);">Edad acreditada:</span>
+            <strong id="modal-user-age">20 años (Tramo 19-24)</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom: 6px;">
+            <span style="color: var(--text-muted);">Documento:</span>
+            <strong id="modal-user-dni">***4829* (Orcera)</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color: var(--text-muted);">ID Digital Cívico:</span>
+            <strong id="modal-user-hash" style="color: var(--amurjo-cyan);">#ORC-2027-LIVE</strong>
+          </div>
+        </div>
+
+        <button type="button" class="btn-logout" id="btn-logout-action">
+          <span>🚪</span>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+
+      <!-- SECCIÓN B: CUANDO NO HAY SESIÓN (REGISTRO O INICIAR SESIÓN) -->
+      <div id="user-view-guest" style="display: none;">
+        <!-- PESTAÑAS: REGISTRARME O INICIAR SESIÓN -->
+        <div class="user-nav-tabs">
+          <button type="button" class="user-nav-tab active" id="tab-btn-register" data-auth-tab="register">
+            ➕ Crear Cuenta
+          </button>
+          <button type="button" class="user-nav-tab" id="tab-btn-login" data-auth-tab="login">
+            🔑 Iniciar Sesión
+          </button>
+        </div>
+
+        <!-- PANE REGISTRARSE -->
+        <div class="auth-subpane" id="pane-register">
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px;">
+            Crea tu cuenta joven de Orcera para votar presupuestos, proponer ideas y acumular puntos para la Piscina Municipal de Amurjo.
+          </p>
+
+          <form id="form-register-user">
+            <div class="form-group-orcera">
+              <label for="reg-fullname">Nombre y Apellidos *</label>
+              <input type="text" id="reg-fullname" placeholder="Ej: Ramón García Muñoz" required autocomplete="name">
+            </div>
+
+            <div class="form-group-orcera">
+              <label for="reg-alias">¿Cómo quieres que te llamemos? (Saludo)</label>
+              <input type="text" id="reg-alias" placeholder="Ej: Ramón" autocomplete="nickname">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div class="form-group-orcera">
+                <label for="reg-age">Edad *</label>
+                <input type="number" id="reg-age" min="12" max="35" value="22" required>
+              </div>
+              <div class="form-group-orcera">
+                <label for="reg-dni">DNI / NIE (Opcional)</label>
+                <input type="text" id="reg-dni" placeholder="***1234*">
+              </div>
+            </div>
+
+            <div class="form-group-orcera">
+              <label for="reg-email">Correo Electrónico (Opcional)</label>
+              <input type="email" id="reg-email" placeholder="tu.correo@ejemplo.com">
+            </div>
+
+            <label class="form-checkbox-row">
+              <input type="checkbox" id="reg-empadronado" checked>
+              <div class="form-checkbox-label">
+                <strong>Estoy empadronado/a o resido en Orcera</strong><br>
+                <span style="color: var(--amurjo-cyan); font-size: 0.7rem;">🎁 Bonificación cívica de bienvenida: +50 Puntos Orcera.</span>
+              </div>
+            </label>
+
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content:center; padding: 12px;">
+              🎉 Crear mi Cuenta (+50 Pts)
+            </button>
+          </form>
+        </div>
+
+        <!-- PANE INICIAR SESIÓN -->
+        <div class="auth-subpane" id="pane-login" style="display: none;">
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px;">
+            Accede a tu cuenta guardada en este dispositivo para continuar participando:
+          </p>
+
+          <div id="login-saved-accounts-box">
+            <!-- Si hay cuentas guardadas previamente en este navegador se listan aquí -->
+          </div>
+
+          <form id="form-login-user" style="margin-top: 10px;">
+            <div class="form-group-orcera">
+              <label for="login-name">Nombre, Alias o DNI registrado</label>
+              <input type="text" id="login-name" placeholder="Ej: Ramón o ***1234*" autocomplete="username">
+            </div>
+            <button type="submit" class="btn-tool" style="width: 100%; justify-content:center; padding: 10px; font-weight:700;">
+              🔑 Entrar con mi Cuenta
+            </button>
+          </form>
+
+          <div style="margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--segura-border); text-align: center;">
+            <button type="button" class="btn-demo-link" id="btn-load-demo-user">
+              🧪 ¿Quieres explorar con datos de prueba? Cargar cuenta Demo (Sara, 290 pts)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL DE SOLICITUD DE ALTA: ASOCIACIÓN JUVENIL DE ORCERA -->
+  <div class="modal-overlay" id="asociacion-modal" role="dialog" aria-hidden="true">
+    <div class="asociacion-modal-box">
+      <button class="btn-close-modal" id="close-asociacion-modal" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="asociacion-modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="asociacion-logo-circle">🤝</div>
+          <div>
+            <span class="badge-tag-civic">Entidad Juvenil Oficial · Orcera</span>
+            <h3 style="margin:2px 0 0; font-family:var(--font-heading); font-size:1.15rem; color:var(--text-main);">
+              Asociación Juvenil de Orcera
+            </h3>
+          </div>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin:8px 0 0;">
+          Solicitud formal de pertenencia y emisión de carnet de socio/a. Recompensa de bienvenida del III Plan Municipal (Cuota 0 € gratuita).
+        </p>
+      </div>
+
+      <!-- FOTOGRAFÍA DINÁMICA DE LA ASOCIACIÓN JUVENIL -->
+      <div class="asociacion-modal-banner-img">
+        <img src="img/asociacion-juvenil.jpg" alt="Equipo de la Asociación Juvenil de Orcera" loading="lazy" />
+        <div class="asociacion-banner-img-overlay">
+          <span>🤝 Espacio Joven Orcera · Convivencia, viajes, cultura y ocio serrano</span>
+        </div>
+      </div>
+
+      <!-- VISTA 1: FORMULARIO DE SOLICITUD (SI NO ES SOCIO) -->
+      <div id="asociacion-form-container">
+        <form id="form-solicitud-asociacion">
+          <div class="form-group-orcera">
+            <label for="ajo-fullname">Nombre y Apellidos *</label>
+            <input type="text" id="ajo-fullname" placeholder="Nombre completo" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="form-group-orcera">
+              <label for="ajo-dni">DNI / NIE *</label>
+              <input type="text" id="ajo-dni" placeholder="***1234*" required>
+            </div>
+            <div class="form-group-orcera">
+              <label for="ajo-edad">Edad *</label>
+              <input type="number" id="ajo-edad" min="12" max="35" value="20" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="form-group-orcera">
+              <label for="ajo-phone">Teléfono / WhatsApp *</label>
+              <input type="tel" id="ajo-phone" placeholder="Ej: 612 34 56 78" required>
+            </div>
+            <div class="form-group-orcera">
+              <label for="ajo-email">Correo Electrónico *</label>
+              <input type="email" id="ajo-email" placeholder="tu.correo@ejemplo.com" required>
+            </div>
+          </div>
+
+          <div class="form-group-orcera">
+            <label>¿En qué áreas te gustaría participar activamente?</label>
+            <div class="ajo-checkbox-grid">
+              <label class="ajo-interest-pill"><input type="checkbox" name="ajo-interes" value="amurjo" checked> 🏊‍♂️ Ocio & Amurjo</label>
+              <label class="ajo-interest-pill"><input type="checkbox" name="ajo-interes" value="naturaleza" checked> 🌲 Parque Natural & Voluntariado</label>
+              <label class="ajo-interest-pill"><input type="checkbox" name="ajo-interes" value="cultura"> 🎧 Cultura, DJ & Tecnología</label>
+              <label class="ajo-interest-pill"><input type="checkbox" name="ajo-interes" value="deporte"> 🎾 Deportes & Pádel</label>
+              <label class="ajo-interest-pill"><input type="checkbox" name="ajo-interes" value="salud"> 🧠 Bienestar Emocional</label>
+            </div>
+          </div>
+
+          <label class="form-checkbox-row" style="margin-top:10px;">
+            <input type="checkbox" id="ajo-acepto" checked required>
+            <div class="form-checkbox-label">
+              <strong>Solicito formalmente mi alta en la Asociación Juvenil de Orcera</strong><br>
+              <span style="font-size: 0.7rem; color: var(--amurjo-cyan);">
+                Acepto los estatutos asociativos. Cuota anual 0 € subvencionada por el Ayuntamiento en el marco del III Plan.
+              </span>
+            </div>
+          </label>
+
+          <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:12px; margin-top:8px;">
+            🌟 Enviar Solicitud y Emitir Carnet (+50 Pts)
+          </button>
+        </form>
+      </div>
+
+      <!-- VISTA 2: CARNET DIGITAL DE SOCIO/A (SI YA ES SOCIO) -->
+      <div id="asociacion-card-container" style="display:none;">
+        <div class="ajo-member-card">
+          <div class="ajo-card-top">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:1.4rem;">🤝</span>
+              <div>
+                <strong>ASOCIACIÓN JUVENIL DE ORCERA</strong>
+                <small style="display:block; opacity:0.85; font-size:0.65rem;">Socio/a Oficial de Pleno Derecho</small>
+              </div>
+            </div>
+            <div class="ajo-card-badge">ACTIVO 2027</div>
+          </div>
+
+          <div class="ajo-card-center">
+            <h3 id="ajo-display-name" style="margin:0 0 4px; font-size:1.15rem; color:#fff;">Sara Jiménez Navío</h3>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; opacity:0.9;">
+              <span id="ajo-display-num">Nº Socio: #AJO-2027-042</span>
+              <span id="ajo-display-dni">DNI: ***4829*</span>
+            </div>
+          </div>
+
+          <div class="ajo-card-bottom">
+            <span>Orcera (Jaén) · Sierra de Segura</span>
+            <span style="color:#67e8f9; font-weight:700;">Alta Gratuita · III Plan</span>
+          </div>
+        </div>
+
+        <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:12px; margin:14px 0; font-size:0.75rem; color:var(--text-muted); line-height:1.4;">
+          🎉 <strong>¡Eres miembro de la Asociación Juvenil de Orcera!</strong> Tienes derecho a participar en las asambleas generales, proponer actividades juveniles y disfrutar de ventajas en actividades del municipio.
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-tool" id="btn-print-ajo-card" style="flex:1; justify-content:center;">
+            🖨️ Imprimir Carnet
+          </button>
+          <button type="button" class="btn-primary" id="btn-close-ajo-ok" style="flex:1; justify-content:center;">
+            Listo
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL DE ACCESO / LOGIN AL PANEL MUNICIPAL -->
+  <div class="modal-overlay" id="admin-login-modal" role="dialog" aria-hidden="true">
+    <div class="user-modal-box" style="max-width: 440px;">
+      <button class="btn-close-modal" id="close-admin-login-modal" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="user-modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="asociacion-logo-circle" style="background: linear-gradient(135deg, var(--pine-green), var(--amurjo-cyan));">🏛️</div>
+          <div>
+            <span class="badge-tag-civic">Acceso Restringido · Ayuntamiento de Orcera</span>
+            <h3 style="margin:2px 0 0; font-family:var(--font-heading); font-size:1.15rem; color:var(--text-main);">
+              Panel de Gestión Municipal
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px;">
+        Selecciona tu perfil profesional para acceder a la gestión y actualización del III Plan Municipal de Juventud:
+      </p>
+
+      <!-- BOTONES DE ACCESO RÁPIDO SEGÚN PERFIL -->
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;">
+        <!-- PERFIL TÉCNICO -->
+        <button type="button" class="admin-role-choice-btn" id="btn-login-tecnico">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="admin-choice-avatar">🛠️</div>
+            <div style="text-align:left;">
+              <strong style="display:block; font-size:0.86rem; color:var(--text-main);">D. Alberto Moreno · Técnico de Juventud</strong>
+              <small style="font-size:0.7rem; color:var(--amurjo-cyan);">Gestión operativa: Estados de acciones, facturas, buzón y asociación</small>
+            </div>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
+        </button>
+
+        <!-- PERFIL ADMINISTRADOR -->
+        <button type="button" class="admin-role-choice-btn" id="btn-login-admin" style="border-color: rgba(245, 158, 11, 0.4);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="admin-choice-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">👑</div>
+            <div style="text-align:left;">
+              <strong style="display:block; font-size:0.86rem; color:var(--text-main);">Dña. Carmen Romero · Concejala de Juventud (Admin)</strong>
+              <small style="font-size:0.7rem; color:#fbbf24;">Control total: Presupuesto anual, configuración del plan y auditoría</small>
+            </div>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
+        </button>
+      </div>
+
+      <!-- FORMULARIO CON CLAVE / PIN MUNICIPAL -->
+      <form id="form-admin-pin" style="border-top: 1px dashed var(--segura-border); padding-top: 14px;">
+        <div class="form-group-orcera" style="margin-bottom: 8px;">
+          <label for="admin-pin-input">O introduce tu Clave / PIN Municipal:</label>
+          <div style="display:flex; gap:8px;">
+            <input type="password" id="admin-pin-input" placeholder="tecnico2027 o admin2027" style="flex:1;">
+            <button type="submit" class="btn-primary" style="padding: 0 16px;">Entrar</button>
+          </div>
+        </div>
+        <small style="font-size:0.68rem; color:var(--text-muted); display:block;">
+          Claves demo: <code>tecnico2027</code> (Técnico) o <code>admin2027</code> (Administrador).
+        </small>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD COMPLETO DE GESTIÓN MUNICIPAL (VISTA FULL PANEL) -->
+  <div class="admin-dashboard-overlay" id="admin-dashboard-container" style="display: none;">
+    
+    <!-- TOPBAR DEL PANEL MUNICIPAL -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <div class="admin-logo-badge">🏛️</div>
+        <div>
+          <h2 class="admin-title">AYUNTAMIENTO DE ORCERA · PANEL DE GESTIÓN DEL III PLAN</h2>
+          <div class="admin-role-status">
+            <span class="admin-status-dot"></span>
+            <span id="admin-current-user-label">Técnico de Juventud: Alberto Moreno</span>
+          </div>
+        </div>
+      </div>
+      <div class="admin-topbar-right">
+        <button type="button" class="btn-tool" id="btn-admin-switch-role" title="Cambiar entre Administrador y Técnico">
+          <span>🔄</span>
+          <span id="btn-switch-role-text">Cambiar a Administrador</span>
+        </button>
+        <button type="button" class="btn-tool" id="btn-admin-view-mobile" style="background:var(--pine-green); color:#fff; border-color:var(--pine-light);" title="Cerrar panel para ver los cambios en la app móvil">
+          <span>📱</span>
+          <span>Ver App Móvil</span>
+        </button>
+        <button type="button" class="btn-tool" id="btn-admin-logout" style="color:#f87171;" title="Cerrar sesión municipal">
+          <span>🚪</span>
+          <span>Salir</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CUERPO PRINCIPAL DEL DASHBOARD -->
+    <div class="admin-layout-body">
+      <!-- SIDEBAR DE NAVEGACIÓN POR SECCIONES -->
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar-title">Módulos de Gestión</div>
+        <nav class="admin-nav-list">
+          <button type="button" class="admin-nav-item active" data-admin-pane="pane-acciones">
+            <span>📋</span>
+            <div class="admin-nav-text">
+              <strong>1. Acciones y Estados</strong>
+              <small>Avance y trimestres (Ejes 1–7)</small>
+            </div>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-finanzas">
+            <span>💶</span>
+            <div class="admin-nav-text">
+              <strong>2. Finanzas y Facturas</strong>
+              <small>Justificantes y partidas</small>
+            </div>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-buzon">
+            <span>🗳️</span>
+            <div class="admin-nav-text">
+              <strong>3. Buzón y Pleno Joven</strong>
+              <small>Propuestas y admisiones</small>
+            </div>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-stories">
+            <span>⚡</span>
+            <div class="admin-nav-text">
+              <strong>4. Consultas Exprés</strong>
+              <small>Lanzar Stories de votación</small>
+            </div>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-asociacion">
+            <span>🤝</span>
+            <div class="admin-nav-text">
+              <strong>5. Censo Asociación</strong>
+              <small>Solicitudes de alta de socios</small>
+            </div>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-config">
+            <span>⚙️</span>
+            <div class="admin-nav-text">
+              <strong>6. Configuración & Auditoría</strong>
+              <small id="nav-config-sub">Solo Administrador/a</small>
+            </div>
+            <span class="nav-lock-icon" id="nav-lock-config" style="display:none;">🔒</span>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-promocion">
+            <span>📣</span>
+            <div class="admin-nav-text">
+              <strong>7. Promoción y Cartelería</strong>
+              <small>Carteles con QR y difusión</small>
+            </div>
+          </button>
+        </nav>
+      </aside>
+
+      <!-- CONTENEDOR DE CONTENIDO DE LA SECCIÓN ACTIVA -->
+      <main class="admin-main-content" id="admin-main-content">
+        <!-- Renderizado dinámicamente con JS según pestaña seleccionada -->
+      </main>
+    </div>
+
+  </div>
+
+  <!-- MODAL DE EDICIÓN Y CREACIÓN DE ACCIÓN / VARIANTE ACEPTADA -->
+  <div class="modal-overlay" id="admin-action-modal" role="dialog" aria-hidden="true" style="z-index: 1100;">
+    <div class="asociacion-modal-box" style="max-width: 580px;">
+      <button class="btn-close-modal" id="close-admin-action-modal" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="asociacion-modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="asociacion-logo-circle" style="background: linear-gradient(135deg, var(--pine-green), var(--amurjo-cyan));">📝</div>
+          <div>
+            <span class="badge-tag-civic">Gestión Técnica · III Plan Municipal</span>
+            <h3 id="admin-action-modal-title" style="margin:2px 0 0; font-family:var(--font-heading); font-size:1.15rem; color:var(--text-main);">
+              Modificar Acción del Plan
+            </h3>
+          </div>
+        </div>
+        <p id="admin-action-modal-subtitle" style="font-size:0.75rem; color:var(--text-muted); margin:6px 0 0;">
+          Edita la redacción, temporalidad, recursos o incorpora variantes ciudadanas aprobadas en Pleno Joven.
+        </p>
+      </div>
+
+      <form id="form-edit-action">
+        <input type="hidden" id="edit-action-is-new" value="false">
+        <input type="hidden" id="edit-action-eje-id" value="1">
+
+        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 10px;">
+          <div class="form-group-orcera">
+            <label for="edit-action-code">Código de la Acción *</label>
+            <input type="text" id="edit-action-code" placeholder="Ej: ACC-1.1.1" required>
+          </div>
+          <div class="form-group-orcera">
+            <label for="edit-action-oe">Objetivo Específico Vinculado</label>
+            <select id="edit-action-oe" class="form-group-orcera" style="margin:0; padding:10px;">
+              <!-- Rellenado dinámicamente con JS -->
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group-orcera">
+          <label for="edit-action-title">Título de la Acción *</label>
+          <textarea id="edit-action-title" rows="2" placeholder="Título completo de la acción municipal" required style="width:100%; box-sizing:border-box; background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:8px 10px; color:var(--text-main); font-size:0.82rem; font-family:inherit;"></textarea>
+        </div>
+
+        <div class="form-group-orcera">
+          <label for="edit-action-desc">Descripción y Alcance Detallado</label>
+          <textarea id="edit-action-desc" rows="3" placeholder="Detalles de ejecución, público objetivo y objetivos esperados..." style="width:100%; box-sizing:border-box; background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:8px 10px; color:var(--text-main); font-size:0.8rem; font-family:inherit;"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px;">
+          <div class="form-group-orcera">
+            <label for="edit-action-resp">Concejalía / Responsable *</label>
+            <input type="text" id="edit-action-resp" placeholder="Ej: Concejalía de Juventud y Deportes" required>
+          </div>
+          <div class="form-group-orcera">
+            <label for="edit-action-vigencia">Vigencia / Cronograma *</label>
+            <input type="text" id="edit-action-vigencia" placeholder="Ej: Quinquenal (2027–2031) o Anual 2027" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group-orcera">
+            <label for="edit-action-recursos">Recursos Asignados</label>
+            <input type="text" id="edit-action-recursos" placeholder="Ej: Recursos propios municipales / 1.500 €">
+          </div>
+          <div class="form-group-orcera">
+            <label for="edit-action-estado">Estado de Ejecución *</label>
+            <select id="edit-action-estado" class="form-group-orcera" style="margin:0; padding:10px;">
+              <option value="no_iniciada">⏳ No Iniciada</option>
+              <option value="en_curso">🚀 En Curso</option>
+              <option value="finalizada">✅ Finalizada</option>
+              <option value="en_revision_participativa">🔍 En Revisión Participativa</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SECCIÓN: VARIANTE ACEPTADA / ENMIENDA CIUDADANA -->
+        <div style="background:rgba(6, 182, 212, 0.1); border:1px solid rgba(6, 182, 212, 0.35); border-radius:var(--radius-md); padding:12px; margin:12px 0;">
+          <label class="form-checkbox-row" style="background:none; border:none; padding:0; margin-bottom:8px;">
+            <input type="checkbox" id="edit-action-has-variante">
+            <div class="form-checkbox-label">
+              <strong style="color:var(--amurjo-cyan);">★ Esta acción incorpora una Variante / Propuesta Ciudadana Aceptada</strong><br>
+              <span style="font-size:0.68rem; color:var(--text-muted);">
+                Marca esta casilla si la acción ha sido adaptada o creada tras una propuesta del Buzón o acuerdo del Pleno Joven.
+              </span>
+            </div>
+          </label>
+          <div id="box-variante-details" style="display:none; margin-top:8px;">
+            <label style="font-size:0.72rem; font-weight:700; color:var(--amurjo-cyan); display:block; margin-bottom:4px;">
+              Detalles de la Variante Aceptada / Origen Participativo:
+            </label>
+            <input type="text" id="edit-action-variante-texto" placeholder="Ej: Aprobada en Pleno Joven tras propuesta vecinal en el buzón" style="width:100%; box-sizing:border-box; background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:8px 10px; color:var(--text-main); font-size:0.78rem;">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 14px;">
+          <button type="button" class="btn-tool" id="btn-cancel-edit-action" style="flex:1; justify-content:center;">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-primary" style="flex:2; justify-content:center;">
+            💾 Guardar Cambios en la Acción
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE PROMOCIÓN CIUDADANA (INVITA A TUS AMIGOS) -->
+  <div class="modal-overlay" id="promo-share-modal" role="dialog" aria-hidden="true">
+    <div class="user-modal-box" style="max-width: 480px;">
+      <button class="btn-close-modal" id="close-promo-share-modal" aria-label="Cerrar modal">&times;</button>
+      
+      <div class="user-modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img src="img/kliko_emblem.png" alt="KLIKO" style="width:38px; height:38px; border-radius:50%; border:2px solid var(--amurjo-cyan); flex-shrink:0;">
+          <div>
+            <span class="badge-tag-civic">Difusión Cívica · KLIKO</span>
+            <h3 style="margin:2px 0 0; font-family:var(--font-heading); font-size:1.15rem; color:var(--text-main);">
+              ¡Pasa la voz a tus Colegas!
+            </h3>
+          </div>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin:6px 0 0;">
+          Gana <strong>+25 Puntos KLIKO</strong> por cada amigo/a que se registre en el III Plan.
+        </p>
+      </div>
+
+      <!-- TARJETA ENLACE Y CÓDIGO -->
+      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:14px; margin-bottom:14px;">
+        <label style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Tu Enlace Personal de Embajador/a KLIKO:</label>
+        <div style="display:flex; gap:8px; margin-top:6px;">
+          <input type="text" id="promo-ref-link" value="http://localhost:8000/?ref=kliko_orcera" readonly style="flex:1; background:rgba(0,0,0,0.3); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:8px 10px; color:var(--amurjo-cyan); font-size:0.78rem; font-family:monospace;">
+          <button type="button" class="btn-tool" id="btn-copy-promo-link" style="padding:0 12px; font-weight:700;">
+            📋 Copiar
+          </button>
+        </div>
+      </div>
+
+      <!-- BOTONES DE COMPARTIR RÁPIDO -->
+      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+        <button type="button" class="btn-whatsapp-share" id="btn-share-whatsapp">
+          <span style="font-size:1.2rem;">💬</span>
+          <span style="font-weight:700;">Compartir KLIKO por WhatsApp con un Clic</span>
+        </button>
+        
+        <button type="button" class="btn-tool" id="btn-view-qr-screen" style="justify-content:center; padding:10px; font-weight:700;">
+          <span>📲</span>
+          <span>Mostrar Código QR de KLIKO</span>
+        </button>
+      </div>
+
+      <!-- CAJA QR EXPANDIBLE -->
+      <div id="promo-qr-box" style="display:none; text-align:center; background:white; border-radius:var(--radius-md); padding:16px; margin-bottom:16px;">
+        <div style="font-size:0.78rem; font-weight:800; color:#0f172a; margin-bottom:8px;">
+          Escanea para unirte a KLIKO · Orcera Joven
+        </div>
+        <div style="display:flex; justify-content:center; padding:10px; background:#fff; border-radius:8px;" id="promo-qr-render-area">
+          <img src="img/qr_orcera_joven.png" alt="Código QR Estándar ISO" width="160" height="160" style="display:block; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+        </div>
+        <small style="color:#64748b; font-size:0.68rem; display:block; margin-top:8px;">Código QR estándar ISO · Compatible con la cámara de cualquier teléfono móvil</small>
+      </div>
+
+      <!-- GUÍA PARA INSTALAR EN PANTALLA DE INICIO (PWA) -->
+      <div class="pwa-guide-box">
+        <div class="pwa-guide-header">
+          <div class="pwa-header-icon">📲</div>
+          <div>
+            <strong class="pwa-guide-title">¿Cómo tener la App en tu móvil como una app de verdad?</strong>
+            <p class="pwa-guide-subtitle">
+              Se instala directamente desde el <strong>navegador de tu teléfono</strong> (sin necesidad de buscarla en Play Store ni App Store).
+            </p>
+          </div>
+        </div>
+
+        <!-- NOTA ACLARATORIA DE UBICACIÓN -->
+        <div class="pwa-notice-pill">
+          <span>📍</span>
+          <div>
+            <strong>¿Dónde se hace?</strong> En la <strong>barra de tu navegador móvil</strong> (en los menús de Chrome o Safari), <em>no dentro de esta página</em>. Sigue los pasos según tu teléfono:
+          </div>
+        </div>
+
+        <!-- BOTÓN DE INSTALACIÓN NATIVA AUTOMÁTICA (SI EL NAVEGADOR LO SOPORTA) -->
+        <div id="pwa-auto-install-row" style="display:none; margin-bottom:12px;">
+          <button type="button" class="btn-pwa-direct-install" id="btn-pwa-direct-install">
+            <span>⚡</span>
+            <span>Instalar App en este Dispositivo Ahora (1 Clic)</span>
+          </button>
+        </div>
+
+        <!-- SELECTOR DE PLATAFORMA (ANDROID VS IPHONE) -->
+        <div class="pwa-tabs-row" role="tablist">
+          <button type="button" class="pwa-tab-btn active" id="pwa-tab-android" role="tab" aria-selected="true">
+            <span>🤖</span>
+            <span>En Móviles Android (Chrome)</span>
+          </button>
+          <button type="button" class="pwa-tab-btn" id="pwa-tab-ios" role="tab" aria-selected="false">
+            <span>🍏</span>
+            <span>En iPhone (Safari)</span>
+          </button>
+        </div>
+
+        <!-- CONTENIDO PASO A PASO: ANDROID -->
+        <div class="pwa-platform-card" id="pwa-card-android">
+          <div class="pwa-step-item">
+            <div class="pwa-step-num">1</div>
+            <div class="pwa-step-text">
+              <strong>Abre Google Chrome en tu móvil:</strong>
+              <span>Entra a esta misma dirección web desde el navegador de tu móvil.</span>
+            </div>
+          </div>
+
+          <div class="pwa-step-item">
+            <div class="pwa-step-num">2</div>
+            <div class="pwa-step-text">
+              <strong>Toca el menú del navegador:</strong>
+              <span>Mira la <strong>esquina superior derecha</strong> de tu pantalla (arriba del todo, en la barra gris del navegador Chrome) y pulsa en los <strong>tres puntos verticales</strong>:</span>
+              <div class="pwa-visual-badge">
+                <span class="pwa-browser-badge">Barra superior derecha</span>
+                <span class="pwa-key-symbol">⋮</span>
+                <span class="pwa-badge-hint">Menú de Chrome</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pwa-step-item">
+            <div class="pwa-step-num">3</div>
+            <div class="pwa-step-text">
+              <strong>Elige Instalar:</strong>
+              <span>En el menú desplegable que aparece, pulsa sobre:</span>
+              <div class="pwa-action-badge">
+                <span>📲</span>
+                <strong>«Instalar aplicación»</strong>
+                <small>(o «Añadir a pantalla de inicio»)</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="pwa-step-result">
+            <span>✨</span>
+            <span>¡Listo! Se creará el acceso directo con el icono oficial del III Plan en tu móvil.</span>
+          </div>
+        </div>
+
+        <!-- CONTENIDO PASO A PASO: IPHONE (SAFARI) -->
+        <div class="pwa-platform-card" id="pwa-card-ios" style="display:none;">
+          <div class="pwa-step-item">
+            <div class="pwa-step-num">1</div>
+            <div class="pwa-step-text">
+              <strong>Abre Safari en tu iPhone:</strong>
+              <span>Entra a esta web usando el navegador oficial <strong>Safari</strong> de Apple.</span>
+            </div>
+          </div>
+
+          <div class="pwa-step-item">
+            <div class="pwa-step-num">2</div>
+            <div class="pwa-step-text">
+              <strong>Toca el botón Compartir:</strong>
+              <span>Mira la <strong>barra inferior</strong> de la pantalla de tu iPhone (abajo del todo de la ventana de Safari) y toca el botón del <strong>cuadrado con flecha hacia arriba</strong>:</span>
+              <div class="pwa-visual-badge">
+                <span class="pwa-browser-badge">Barra inferior de Safari</span>
+                <span class="pwa-key-symbol">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                    <polyline points="16 6 12 2 8 6"/>
+                    <line x1="12" y1="2" x2="12" y2="15"/>
+                  </svg>
+                </span>
+                <span class="pwa-badge-hint">Compartir</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pwa-step-item">
+            <div class="pwa-step-num">3</div>
+            <div class="pwa-step-text">
+              <strong>Selecciona Añadir a pantalla de inicio:</strong>
+              <span>En la lista de opciones que se abre desde abajo, desliza y toca en:</span>
+              <div class="pwa-action-badge">
+                <span>➕</span>
+                <strong>«Añadir a pantalla de inicio»</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="pwa-step-result">
+            <span>✨</span>
+            <span>¡Listo! La App se abrirá a pantalla completa y sin marcos de navegador.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CARTEL OFICIAL DE PROMOCIÓN A4/A3 CON QR LISTO PARA IMPRIMIR -->
+  <div class="modal-overlay" id="promo-poster-modal" role="dialog" aria-hidden="true" style="z-index: 1200;">
+    <div class="poster-modal-wrapper">
+      <div class="poster-toolbar-actions">
+        <button type="button" class="btn-primary" id="btn-print-poster-now" style="padding:8px 16px; font-weight:800;">
+          🖨️ Imprimir Cartel Oficial (A4/A3) / Guardar en PDF
+        </button>
+        <button type="button" class="btn-tool" id="close-promo-poster-modal">
+          Cerrar Vista Previa
+        </button>
+      </div>
+
+      <!-- EL CARTEL OFICIAL IMPRIMIBLE -->
+      <div class="official-poster-sheet" id="official-poster-sheet">
+        <div class="poster-inner-frame">
+          <!-- CABECERA INSTITUCIONAL -->
+          <div class="poster-header">
+            <div class="poster-header-escudo">🏛️</div>
+            <div class="poster-header-text">
+              <h3>AYUNTAMIENTO DE ORCERA</h3>
+              <p>Concejalía de Juventud · Asociación Juvenil de Orcera</p>
+            </div>
+            <div class="poster-header-year">2027–2031</div>
+          </div>
+
+          <!-- MARCA OFICIAL KLIKO CON LOGO Y ARDILLA -->
+          <div class="poster-kliko-brand-block">
+            <img src="img/kliko_logo_clean.png" alt="KLIKO - Orcera Joven" class="poster-kliko-main-logo">
+          </div>
+
+          <!-- TITULAR DE IMPACTO -->
+          <div class="poster-hero-title">
+            <span class="poster-tagline">¿TIENES ENTRE 12 Y 30 AÑOS? ¡DESCÁRGATE KLIKO!</span>
+            <h1>TU OPINIÓN DECIDE EN ORCERA</h1>
+            <p class="poster-hero-sub">III PLAN MUNICIPAL DE JUVENTUD & PLATAFORMA DIGITAL PARTICIPATIVA</p>
+          </div>
+
+          <!-- LAS 4 VENTAJAS CLAVE -->
+          <div class="poster-benefits-grid">
+            <div class="poster-benefit-item">
+              <span class="poster-b-icon">🏊‍♂️</span>
+              <strong>Entradas en Amurjo</strong>
+              <small>Canjea puntos cívicos por pases a la piscina natural más grande de Europa</small>
+            </div>
+            <div class="poster-benefit-item">
+              <span class="poster-b-icon">🤝</span>
+              <strong>Alta Gratis en la Asociación</strong>
+              <small>Hazte socio/a oficial con voz y voto en actividades juveniles</small>
+            </div>
+            <div class="poster-benefit-item">
+              <span class="poster-b-icon">🗳️</span>
+              <strong>Tú Decides las Inversiones</strong>
+              <small>Votación directa en presupuestos participativos y Pleno Joven</small>
+            </div>
+            <div class="poster-benefit-item">
+              <span class="poster-b-icon">🎧</span>
+              <strong>Talleres DJ, Robótica y Pádel</strong>
+              <small>Ocio tecnológico, formación digital y pistas deportivas gratuitas</small>
+            </div>
+          </div>
+
+          <!-- SECCIÓN CENTRAL CON QR GIGANTE -->
+          <div class="poster-qr-section">
+            <div class="poster-qr-callout">
+              <h2>¡ESCANEA CON TU TELÉFONO!</h2>
+              <p>Accede en 5 segundos sin descargas complejas. Consigue tus <strong>primeros 50 Puntos KLIKO de bienvenida</strong> acreditando residencia en Orcera.</p>
+              <div class="poster-url-badge" id="poster-url-display">🌐 http://192.168.1.20:8000</div>
+              <div style="margin-top:6px; font-size:0.68rem; color:rgba(255,255,255,0.75);">Apunta con la cámara de tu iPhone o Android</div>
+            </div>
+
+            <div class="poster-qr-frame">
+              <div id="poster-qr-render-area" style="display:flex; justify-content:center; align-items:center; background:#fff; padding:6px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+                <img src="img/qr_orcera_joven.png" alt="Código QR Estándar Oficial" width="165" height="165" style="display:block;">
+              </div>
+              <div class="poster-qr-scan-label">KLIKO · ORCERA JOVEN · CÓDIGO QR ESTÁNDAR</div>
+            </div>
+          </div>
+
+          <!-- FOOTER INSTITUCIONAL -->
+          <div class="poster-footer">
+            <div>
+              <strong>AYUNTAMIENTO DE ORCERA · PROVINCIA DE JAÉN</strong><br>
+              <span>Parque Natural Sierras de Cazorla, Segura y Las Villas · #OrceraJoven</span>
+            </div>
+            <div style="text-align:right;">
+              <strong>CONCEJALÍA DE JUVENTUD</strong><br>
+              <span>Espacio Joven & Telecentro Municipal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST DE NOTIFICACIÓN DE PUNTOS HÁPTICO -->
+  <div class="points-toast" id="points-toast">
+    <div class="toast-icon">⚡</div>
+    <div class="toast-body">
+      <strong id="toast-title">+30 Puntos Ganados</strong>
+      <span id="toast-desc">¡Gracias por participar en el III Plan!</span>
+    </div>
+  </div>
+
+  <!-- SUPABASE JS CLIENT OFICIAL -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/data-ejes.js?v=finanzas_anualizadas_v1"></script>
+  <script src="js/app.js?v=supabase_v1"></script>
+</body>
+</html>

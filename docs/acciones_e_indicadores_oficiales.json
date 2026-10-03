@@ -1,0 +1,1178 @@
+[
+  {
+    "eje_numero": 1,
+    "eje_titulo": "ENTORNO SOSTENIBLE, DIGITAL Y CONECTADO",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Fomentar la conciencia ambiental y la participación de la juventud en la protección, conservación y puesta en valor del entorno natural y cultural de Orcera.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-1.1.1",
+            "codigo_simple": "1.1",
+            "titulo": "Organizar anualmente actividades de sensibilización ambiental dirigidas a la población joven, incluyendo talleres, jornadas de limpieza del entorno, rutas interpretativas y actividades de conocimiento del patrimonio natural y cultural de Orcera.",
+            "responsable": "Concejalía de Turismo, Medio Ambiente y Agricultura, en colaboración con la Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de sensibilización ambiental realizadas",
+              "Número de jóvenes participantes, desagregado por sexo y grupo de edad",
+              "Número de actividades relacionadas con el patrimonio natural y cultural",
+              "Número de jornadas de limpieza y conservación desarrolladas",
+              "Grado de satisfacción de las personas participantes",
+              "Número de propuestas de mejora recogidas"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-1.1.2",
+            "codigo_simple": "1.2",
+            "titulo": "Promover iniciativas juveniles relacionadas con la protección del medio ambiente, la conservación del patrimonio y la puesta en valor de los recursos naturales y culturales del municipio.",
+            "responsable": "Concejalía de Turismo, Medio Ambiente y responsable Agricultura y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de iniciativas juveniles presentadas",
+              "Número de proyectos desarrollados",
+              "Número de jóvenes implicados, desagregado por sexo",
+              "Número de entidades colaboradoras",
+              "Número de espacios naturales o culturales en los que se interviene",
+              "Grado de participación juvenil en el diseño de las iniciativas"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-1.1.3",
+            "codigo_simple": "1.3",
+            "titulo": "Desarrollar campañas de sensibilización sobre reciclaje, consumo responsable, ahorro energético, cuidado del agua y conservación del entorno, utilizando medios presenciales y digitales.",
+            "responsable": "Concejalía de Turismo, Medio Ambiente y Agricultura y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de campañas realizadas",
+              "Número de materiales informativos elaborados y difundidos",
+              "Alcance de las publicaciones en redes sociales",
+              "Número de actividades presenciales desarrolladas",
+              "Número de jóvenes participantes",
+              "Grado de conocimiento adquirido sobre hábitos sostenibles"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Mejorar las competencias digitales de las personas jóvenes, favoreciendo un uso seguro, responsable y provechoso de las tecnologías y los recursos digitales.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-1.2.1",
+            "codigo_simple": "1.4",
+            "titulo": "Organizar talleres prácticos sobre competencias digitales aplicadas a la formación, el empleo, la realización de trámites administrativos y el acceso a recursos públicos.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres digitales realizados",
+              "Número de participantes, desagregado por sexo y edad",
+              "Número de contenidos y competencias digitales trabajadas",
+              "Número de jóvenes que completan los talleres",
+              "Grado de satisfacción de las personas participantes",
+              "Porcentaje de participantes que manifiestan haber mejorado sus competencias digitales"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-1.2.2",
+            "codigo_simple": "1.5",
+            "titulo": "Desarrollar acciones de sensibilización sobre el uso seguro y responsable de internet y las redes sociales, abordando la privacidad, la protección de datos, la desinformación y los riesgos digitales.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de acciones de sensibilización realizadas",
+              "Número de participantes",
+              "Número de materiales divulgativos difundidos",
+              "Contenidos abordados sobre privacidad, seguridad y desinformación",
+              "Alcance de las campañas digitales",
+              "Resultados de los cuestionarios de valoración o aprendizaje"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-1.2.3",
+            "codigo_simple": "1.6",
+            "titulo": "Difundir información sobre cursos, plataformas y herramientas digitales gratuitas o de bajo coste que favorezcan la formación y el desarrollo personal y profesional de la juventud.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de recursos digitales difundidos",
+              "Número de cursos y plataformas identificados",
+              "Número de publicaciones realizadas",
+              "Alcance de la información difundida",
+              "Número de jóvenes que solicitan información adicional",
+              "Número de recursos relacionados con formación y empleo"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Favorecer el acceso de la juventud a recursos, servicios y oportunidades mediante la mejora de la conectividad y el aprovechamiento de las posibilidades que ofrecen la digitalización y las nuevas formas de conexión.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-1.3.1",
+            "codigo_simple": "1.7",
+            "titulo": "Crear y mantener un espacio digital de información juvenil que reúna recursos, servicios, actividades, convocatorias, oportunidades formativas, empleo y programas de movilidad.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Creación y puesta en funcionamiento del espacio digital",
+              "Número de contenidos publicados",
+              "Número de áreas temáticas incorporadas",
+              "Número de actualizaciones realizadas",
+              "Número de visitas o interacciones registradas",
+              "Número de recursos y convocatorias difundidos"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-1.3.2",
+            "codigo_simple": "1.8",
+            "titulo": "Difundir periódicamente oportunidades de formación, empleo, participación, movilidad y ocio a través de los canales digitales municipales.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de oportunidades difundidas",
+              "Número de publicaciones realizadas",
+              "Número de áreas temáticas incluidas",
+              "Alcance de las publicaciones",
+              "Número de consultas recibidas",
+              "Número de jóvenes que acceden a la información"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-1.3.3",
+            "codigo_simple": "1.9",
+            "titulo": "Facilitar el acceso de la juventud a espacios municipales equipados con conexión a internet y recursos tecnológicos para actividades académicas, formativas, laborales y de participación.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Infraestructuras, Urbanismo y Festejos.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de espacios municipales habilitados",
+              "Número de equipos tecnológicos disponibles",
+              "Número de horas de uso registradas",
+              "Número de jóvenes usuarias y usuarios",
+              "Número de actividades formativas desarrolladas",
+              "Grado de satisfacción con los recursos disponibles"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eje_numero": 2,
+    "eje_titulo": "OCIO, CULTURA, DEPORTE Y VIDA SALUDABLE",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Ampliar y diversificar las alternativas de ocio y tiempo libre dirigidas a la juventud, favoreciendo espacios de encuentro, convivencia y participación.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-2.1.1",
+            "codigo_simple": "2.1",
+            "titulo": "Elaborar una programación anual de ocio juvenil que incluya actividades lúdicas, recreativas y de convivencia adaptadas a los diferentes grupos de edad e intereses de la juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Infraestructuras, Urbanismo y Festejos.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de ocio realizadas",
+              "Número de participantes, desagregado por sexo y edad",
+              "Número de modalidades de ocio ofertadas",
+              "Número de actividades desarrolladas en periodos vacacionales",
+              "Grado de satisfacción de las personas participantes",
+              "Número de propuestas juveniles incorporadas a la programación"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-2.1.2",
+            "codigo_simple": "2.2",
+            "titulo": "Impulsar actividades de ocio alternativo y saludable durante los fines de semana, periodos vacacionales y celebraciones municipales.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Infraestructuras, Urbanismo y Festejos.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de ocio alternativo realizadas",
+              "Número de participantes",
+              "Número de actividades desarrolladas durante fines de semana y vacaciones",
+              "Número de actividades gratuitas o accesibles",
+              "Número de entidades colaboradoras",
+              "Valoración de las actividades por parte de la juventud"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-2.1.3",
+            "codigo_simple": "2.3",
+            "titulo": "Promover la participación de la juventud en el diseño de las actividades de ocio mediante encuestas, reuniones y propuestas juveniles.",
+            "responsable": "Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de consultas y encuestas realizadas",
+              "Número de jóvenes participantes en el proceso de consulta",
+              "Número de propuestas recibidas",
+              "Número de propuestas incorporadas a la programación",
+              "Porcentaje de participación por sexo y edad",
+              "Grado de satisfacción con las actividades programadas"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Promover el acceso y la participación de las personas jóvenes en actividades culturales, artísticas y creativas, impulsando el conocimiento y la expresión del talento juvenil.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-2.2.1",
+            "codigo_simple": "2.4",
+            "titulo": "Organizar talleres culturales, artísticos y creativos relacionados con la música, la pintura, la fotografía, el teatro, la escritura y otras disciplinas de interés juvenil.",
+            "responsable": "Concejalía de Hacienda, Cultura y Seguridad y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres culturales y artísticos realizados",
+              "Número de participantes",
+              "Número de disciplinas artísticas ofertadas",
+              "Número de profesionales o entidades colaboradoras",
+              "Número de jóvenes que participan en más de una actividad",
+              "Grado de satisfacción de las personas asistentes"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-2.2.2",
+            "codigo_simple": "2.5",
+            "titulo": "Crear espacios y actividades para la exposición y difusión de las creaciones y talentos de las personas jóvenes de Orcera.",
+            "responsable": "Concejalía de Hacienda, Cultura y Seguridad y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de exposiciones, muestras o actuaciones realizadas",
+              "Número de jóvenes participantes",
+              "Número de creaciones presentadas",
+              "Número de espacios municipales utilizados",
+              "Número de personas asistentes a las actividades",
+              "Alcance de la difusión en medios y redes sociales"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-2.2.3",
+            "codigo_simple": "2.6",
+            "titulo": "Facilitar la participación juvenil en actividades culturales del municipio, incluyendo celebraciones, encuentros, concursos y proyectos artísticos.",
+            "responsable": "Concejalía de Hacienda, Cultura y Seguridad; Concejalía de Infraestructuras, Urbanismo y Festejos; y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades culturales con participación juvenil",
+              "Número de jóvenes participantes, desagregado por sexo",
+              "Número de iniciativas culturales desarrolladas",
+              "Número de entidades o asociaciones colaboradoras",
+              "Número de actividades realizadas en celebraciones municipales",
+              "Valoración de la participación por parte de la juventud"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Fomentar la práctica deportiva y los hábitos de vida saludables como herramientas para mejorar el bienestar físico, prevenir conductas de riesgo y fortalecer las relaciones sociales.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-2.3.1",
+            "codigo_simple": "2.7",
+            "titulo": "Desarrollar una programación deportiva juvenil que incluya actividades individuales, colectivas y al aire libre adaptadas a diferentes edades y capacidades.",
+            "responsable": "Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades deportivas realizadas",
+              "Número de participantes",
+              "Número de modalidades deportivas ofertadas",
+              "Número de actividades inclusivas o adaptadas",
+              "Frecuencia de las actividades desarrolladas",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-2.3.2",
+            "codigo_simple": "2.8",
+            "titulo": "Organizar campañas y talleres de sensibilización sobre alimentación equilibrada, descanso, actividad física y prevención de hábitos perjudiciales para la salud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de campañas y talleres realizados",
+              "Número de participantes",
+              "Número de contenidos relacionados con hábitos saludables",
+              "Número de profesionales o entidades colaboradoras",
+              "Materiales informativos difundidos",
+              "Resultados de los cuestionarios de conocimiento y valoración"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-2.3.3",
+            "codigo_simple": "2.9",
+            "titulo": "Promover actividades deportivas inclusivas y de convivencia que favorezcan las relaciones sociales y la participación de jóvenes con diferentes capacidades.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades deportivas inclusivas",
+              "Número de participantes, desagregado por sexo y edad",
+              "Número de jóvenes con diferentes capacidades participantes",
+              "Número de medidas de adaptación incorporadas",
+              "Número de entidades colaboradoras",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eje_numero": 3,
+    "eje_titulo": "EMANCIPACIÓN, EMPLEO, FORMACIÓN Y VIVIENDA",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Facilitar el acceso de la juventud a recursos de formación y cualificación que mejoren sus capacidades y sus oportunidades académicas y profesionales.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-3.1.1",
+            "codigo_simple": "3.1",
+            "titulo": "Difundir información actualizada sobre ciclos formativos, estudios universitarios, becas, cursos de formación y otras oportunidades de cualificación.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de recursos formativos difundidos",
+              "Número de becas y convocatorias publicitadas",
+              "Número de publicaciones realizadas",
+              "Alcance de la información difundida",
+              "Número de consultas recibidas",
+              "Número de áreas formativas incluidas"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-3.1.2",
+            "codigo_simple": "3.2",
+            "titulo": "Organizar sesiones de orientación académica y profesional para ayudar a la juventud a conocer las opciones formativas disponibles y los itinerarios de acceso.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de sesiones de orientación realizadas",
+              "Número de jóvenes participantes",
+              "Número de centros o entidades colaboradoras",
+              "Número de itinerarios formativos presentados",
+              "Número de consultas individuales atendidas",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-3.1.3",
+            "codigo_simple": "3.3",
+            "titulo": "Facilitar el acceso a cursos de formación presencial y online relacionados con las necesidades e intereses de la población joven.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de cursos difundidos o desarrollados",
+              "Número de participantes",
+              "Número de cursos presenciales y online ofertados",
+              "Número de áreas formativas abordadas",
+              "Número de jóvenes que finalizan la formación",
+              "Valoración de la utilidad de los cursos"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Favorecer el acceso al empleo y el emprendimiento juvenil, acercando a las personas jóvenes los recursos de orientación, formación y oportunidades laborales disponibles en el territorio.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-3.2.1",
+            "codigo_simple": "3.4",
+            "titulo": "Difundir ofertas de empleo, programas de contratación, bolsas de trabajo, prácticas y recursos de orientación laboral dirigidos a la población joven.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de ofertas y recursos laborales difundidos",
+              "Número de publicaciones realizadas",
+              "Número de programas de empleo publicitados",
+              "Alcance de la información difundida",
+              "Número de consultas recibidas",
+              "Número de jóvenes que acceden a recursos de empleo"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-3.2.2",
+            "codigo_simple": "3.5",
+            "titulo": "Organizar talleres de orientación laboral sobre elaboración de currículos, entrevistas de trabajo, búsqueda activa de empleo y competencias profesionales.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres de orientación laboral realizados",
+              "Número de participantes",
+              "Número de currículos elaborados o revisados",
+              "Número de simulaciones de entrevistas realizadas",
+              "Número de entidades colaboradoras",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-3.2.3",
+            "codigo_simple": "3.6",
+            "titulo": "Promover sesiones informativas sobre emprendimiento, autoempleo y recursos de apoyo para la creación de iniciativas empresariales juveniles.",
+            "responsable": "Concejalía de Hacienda, Cultura y Seguridad y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de sesiones de emprendimiento realizadas",
+              "Número de participantes",
+              "Número de recursos de apoyo difundidos",
+              "Número de entidades colaboradoras",
+              "Número de consultas sobre autoempleo recibidas",
+              "Número de iniciativas emprendedoras identificadas"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Facilitar el acceso a información y recursos relacionados con la vivienda y la emancipación, contribuyendo a generar condiciones que permitan a la juventud desarrollar su proyecto de vida en el municipio.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-3.3.1",
+            "codigo_simple": "3.7",
+            "titulo": "Difundir información sobre ayudas al alquiler, programas de vivienda, subvenciones y recursos disponibles para la emancipación juvenil.",
+            "responsable": "Concejalía de Infraestructuras, Urbanismo y Festejos y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de ayudas y programas de vivienda difundidos",
+              "Número de publicaciones realizadas",
+              "Alcance de la información difundida",
+              "Número de consultas recibidas",
+              "Número de recursos relacionados con el alquiler y la emancipación",
+              "Número de jóvenes que solicitan información adicional"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-3.3.2",
+            "codigo_simple": "3.8",
+            "titulo": "Organizar sesiones informativas sobre los trámites, requisitos y recursos relacionados con el acceso a la vivienda y la emancipación.",
+            "responsable": "Concejalía de Infraestructuras, Urbanismo y Festejos y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de sesiones informativas realizadas",
+              "Número de participantes",
+              "Número de contenidos abordados",
+              "Número de consultas atendidas",
+              "Número de materiales informativos distribuidos",
+              "Grado de satisfacción de las personas asistentes"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-3.3.3",
+            "codigo_simple": "3.9",
+            "titulo": "Estudiar las necesidades de vivienda de la población joven mediante consultas y mecanismos de participación que permitan identificar posibles actuaciones municipales.",
+            "responsable": "Concejalía de Infraestructuras, Urbanismo y Festejos y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de consultas realizadas a la población joven",
+              "Número de jóvenes participantes",
+              "Número de necesidades identificadas",
+              "Número de propuestas elaboradas",
+              "Resultados desagregados por sexo y grupo de edad",
+              "Número de actuaciones municipales propuestas"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eje_numero": 4,
+    "eje_titulo": "PARTICIPACIÓN JUVENIL, CIUDADANÍA ACTIVA Y VOLUNTARIADO",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Crear y consolidar espacios y canales estables de participación que permitan a la juventud expresar sus necesidades, opiniones y propuestas e intervenir en los asuntos de interés municipal.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-4.1.1",
+            "codigo_simple": "4.1",
+            "titulo": "Crear espacios periódicos de encuentro entre la juventud y el Ayuntamiento para recoger necesidades, propuestas e iniciativas relacionadas con el municipio.",
+            "responsable": "Concejalía de Género, Juventud y Deportes. responsable",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de encuentros realizados",
+              "Número de jóvenes participantes",
+              "Número de propuestas y necesidades recogidas",
+              "Número de áreas municipales abordadas",
+              "Participación desagregada por sexo y edad",
+              "Número de propuestas trasladadas a los órganos municipales"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-4.1.2",
+            "codigo_simple": "4.2",
+            "titulo": "Crear o reforzar canales digitales de participación juvenil para facilitar la comunicación entre la población joven y el Ayuntamiento.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de canales digitales habilitados",
+              "Número de consultas y propuestas recibidas",
+              "Número de publicaciones participativas realizadas",
+              "Número de jóvenes usuarios y usuarias",
+              "Número de respuestas emitidas por el Ayuntamiento",
+              "Alcance de los canales de participación"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-4.1.3",
+            "codigo_simple": "4.3",
+            "titulo": "Promover consultas juveniles sobre la planificación y valoración de las actividades y políticas municipales dirigidas a la juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de consultas juveniles realizadas",
+              "Número de participantes",
+              "Número de propuestas recibidas",
+              "Número de propuestas incorporadas",
+              "Porcentaje de participación por sexo y edad",
+              "Grado de satisfacción con los mecanismos de consulta"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Impulsar el asociacionismo juvenil y apoyar la capacidad de organización e iniciativa de las personas jóvenes como herramienta de dinamización social y comunitaria.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-4.2.1",
+            "codigo_simple": "4.4",
+            "titulo": "Difundir información sobre los requisitos, trámites y ventajas de la creación y participación en asociaciones juveniles.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de acciones informativas realizadas",
+              "Número de jóvenes participantes",
+              "Número de materiales divulgativos elaborados",
+              "Número de consultas sobre asociacionismo",
+              "Número de asociaciones juveniles identificadas",
+              "Número de entidades colaboradoras"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-4.2.2",
+            "codigo_simple": "4.5",
+            "titulo": "Facilitar espacios y recursos municipales para el desarrollo de reuniones, actividades y proyectos promovidos por asociaciones y grupos juveniles.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Infraestructuras, Urbanismo y Festejos.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de asociaciones o grupos juveniles apoyados",
+              "Número de actividades desarrolladas en instalaciones municipales",
+              "Número de jóvenes participantes",
+              "Número de espacios y recursos cedidos",
+              "Número de solicitudes recibidas",
+              "Grado de satisfacción de las entidades usuarias"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-4.2.3",
+            "codigo_simple": "4.6",
+            "titulo": "Impulsar convocatorias o iniciativas de apoyo a proyectos juveniles que contribuyan a la dinamización social, cultural y comunitaria de Orcera.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Hacienda, Cultura y Seguridad.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de proyectos juveniles presentados",
+              "Número de proyectos apoyados",
+              "Número de participantes",
+              "Número de entidades colaboradoras",
+              "Número de actividades desarrolladas",
+              "Recursos económicos o materiales destinados a los proyectos"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Fomentar el voluntariado y otras formas de participación solidaria y ciudadana que contribuyan al compromiso de la juventud con su comunidad y con el municipio.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-4.3.1",
+            "codigo_simple": "4.7",
+            "titulo": "Organizar campañas de información y sensibilización sobre el voluntariado y las posibilidades de participación solidaria existentes en el municipio y su entorno.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de campañas de voluntariado realizadas",
+              "Número de materiales informativos difundidos",
+              "Número de jóvenes participantes",
+              "Número de entidades de voluntariado identificadas",
+              "Alcance de las campañas",
+              "Número de consultas recibidas"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-4.3.2",
+            "codigo_simple": "4.8",
+            "titulo": "Promover la participación juvenil en actividades solidarias, medioambientales, culturales y comunitarias.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Turismo, Medio Ambiente y Agricultura.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades solidarias realizadas",
+              "Número de jóvenes participantes",
+              "Número de entidades colaboradoras",
+              "Número de horas de participación o voluntariado",
+              "Número de ámbitos de actuación desarrollados",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-4.3.3",
+            "codigo_simple": "4.9",
+            "titulo": "Establecer colaboraciones con asociaciones y entidades sociales para facilitar la incorporación de jóvenes a proyectos de voluntariado.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de entidades colaboradoras",
+              "Número de proyectos de voluntariado desarrollados",
+              "Número de jóvenes incorporados a las iniciativas",
+              "Número de acuerdos de colaboración establecidos",
+              "Número de actividades realizadas",
+              "Porcentaje de jóvenes que continúan participando en los proyectos"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eje_numero": 5,
+    "eje_titulo": "SALUD, BIENESTAR EMOCIONAL E INCLUSIÓN SOCIAL",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Promover hábitos de vida saludables y desarrollar acciones de prevención y sensibilización relacionadas con la salud y las principales conductas de riesgo que pueden afectar a la población joven.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-5.1.1",
+            "codigo_simple": "5.1",
+            "titulo": "Desarrollar campañas de prevención y sensibilización sobre consumo de alcohol, tabaco, otras sustancias, juego problemático y uso excesivo de las tecnologías.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de campañas de prevención realizadas",
+              "Número de participantes",
+              "Número de conductas de riesgo abordadas",
+              "Número de materiales divulgativos difundidos",
+              "Alcance de las campañas digitales",
+              "Número de entidades o profesionales colaboradores"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-5.1.2",
+            "codigo_simple": "5.2",
+            "titulo": "Organizar talleres sobre alimentación saludable, descanso, higiene personal, actividad física y prevención de conductas perjudiciales para la salud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres realizados",
+              "Número de jóvenes participantes",
+              "Número de contenidos relacionados con hábitos saludables",
+              "Número de profesionales colaboradores",
+              "Grado de satisfacción de las personas asistentes",
+              "Resultados de los cuestionarios de valoración"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-5.1.3",
+            "codigo_simple": "5.3",
+            "titulo": "Difundir información sobre los recursos sanitarios y de prevención disponibles para la población joven.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de recursos sanitarios y preventivos difundidos",
+              "Número de publicaciones realizadas",
+              "Número de materiales distribuidos",
+              "Alcance de la información",
+              "Número de consultas recibidas",
+              "Número de entidades sanitarias colaboradoras"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Favorecer el cuidado de la salud mental y el bienestar emocional de la juventud, proporcionando herramientas para la gestión emocional, la autoestima, las relaciones interpersonales y el afrontamiento de situaciones de dificultad.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-5.2.1",
+            "codigo_simple": "5.4",
+            "titulo": "Organizar talleres de educación emocional sobre autoestima, gestión de emociones, resolución de dificultades y desarrollo de habilidades personales.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres de educación emocional realizados",
+              "Número de participantes",
+              "Número de contenidos trabajados",
+              "Número de profesionales colaboradores",
+              "Grado de satisfacción de las personas asistentes",
+              "Porcentaje de participantes que manifiestan haber adquirido nuevas herramientas"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-5.2.2",
+            "codigo_simple": "5.5",
+            "titulo": "Desarrollar acciones de sensibilización para prevenir el estigma relacionado con la salud mental y favorecer la búsqueda de ayuda profesional.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de acciones de sensibilización realizadas",
+              "Número de participantes",
+              "Número de materiales divulgativos difundidos",
+              "Alcance de las campañas",
+              "Número de recursos de apoyo dados a conocer",
+              "Resultados de las encuestas de valoración"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-5.2.3",
+            "codigo_simple": "5.6",
+            "titulo": "Difundir información sobre los servicios de atención psicológica, orientación y apoyo emocional disponibles para la población joven.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de recursos de apoyo emocional difundidos",
+              "Número de publicaciones realizadas",
+              "Número de consultas recibidas",
+              "Número de servicios y entidades identificados",
+              "Alcance de la información",
+              "Número de jóvenes derivados o informados sobre recursos especializados"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Prevenir situaciones de exclusión y vulnerabilidad social, facilitando el conocimiento y acceso de las personas jóvenes a los recursos, servicios y apoyos disponibles.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-5.3.1",
+            "codigo_simple": "5.7",
+            "titulo": "Elaborar y difundir información accesible sobre los recursos sociales, educativos, sanitarios y de orientación disponibles para la juventud.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de recursos sociales, educativos y sanitarios difundidos",
+              "Número de materiales informativos elaborados",
+              "Número de publicaciones realizadas",
+              "Alcance de la información",
+              "Número de consultas recibidas",
+              "Número de áreas de apoyo incluidas"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-5.3.2",
+            "codigo_simple": "5.8",
+            "titulo": "Promover acciones de sensibilización sobre inclusión social, diversidad, discapacidad y prevención de la discriminación.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de sensibilización realizadas",
+              "Número de participantes",
+              "Número de ámbitos de diversidad abordados",
+              "Número de entidades colaboradoras",
+              "Número de materiales divulgativos difundidos",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-5.3.3",
+            "codigo_simple": "5.9",
+            "titulo": "Facilitar la orientación y derivación de jóvenes en situación de vulnerabilidad hacia los servicios y recursos de apoyo correspondientes.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de orientaciones realizadas",
+              "Número de jóvenes atendidos, desagregado por sexo y edad",
+              "Número de derivaciones a recursos especializados",
+              "Número de servicios y entidades colaboradoras",
+              "Número de necesidades sociales identificadas",
+              "Seguimiento de las derivaciones realizadas"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eje_numero": 6,
+    "eje_titulo": "IGUALDAD, DIVERSIDAD Y CONVIVENCIA",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Promover la igualdad entre mujeres y hombres y prevenir los estereotipos, roles y actitudes discriminatorias por razón de género entre la población joven.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-6.1.1",
+            "codigo_simple": "6.1",
+            "titulo": "Organizar talleres y campañas de sensibilización sobre igualdad de género, estereotipos, roles y corresponsabilidad dirigidos a la población joven.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres y campañas realizados",
+              "Número de participantes",
+              "Número de contenidos relacionados con la igualdad abordados",
+              "Número de entidades colaboradoras",
+              "Grado de satisfacción de las personas participantes",
+              "Resultados de los cuestionarios de aprendizaje y valoración"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-6.1.2",
+            "codigo_simple": "6.2",
+            "titulo": "Desarrollar actividades de prevención de la violencia de género y de sensibilización sobre relaciones igualitarias y libres de violencia.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de prevención realizadas",
+              "Número de jóvenes participantes",
+              "Número de materiales informativos difundidos",
+              "Número de contenidos relacionados con las relaciones igualitarias",
+              "Alcance de las campañas",
+              "Número de entidades y profesionales colaboradores"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-6.1.3",
+            "codigo_simple": "6.3",
+            "titulo": "Promover el uso de un lenguaje inclusivo y la eliminación de estereotipos sexistas en las actividades y comunicaciones municipales dirigidas a la juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de materiales municipales revisados",
+              "Número de materiales elaborados con lenguaje inclusivo",
+              "Número de acciones de sensibilización realizadas",
+              "Número de publicaciones revisadas",
+              "Número de áreas municipales implicadas",
+              "Grado de cumplimiento de los criterios de lenguaje inclusivo"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Fomentar el respeto y reconocimiento de la diversidad, previniendo cualquier forma de discriminación y favoreciendo la inclusión de todas las personas jóvenes.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-6.2.1",
+            "codigo_simple": "6.4",
+            "titulo": "Organizar actividades de sensibilización sobre diversidad cultural, funcional, sexual y de género, promoviendo el respeto y la igualdad de trato.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de sensibilización realizadas",
+              "Número de participantes",
+              "Número de ámbitos de diversidad abordados",
+              "Número de entidades colaboradoras",
+              "Número de materiales divulgativos difundidos",
+              "Grado de satisfacción de las personas asistentes"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-6.2.2",
+            "codigo_simple": "6.5",
+            "titulo": "Incorporar criterios de accesibilidad e inclusión en las actividades juveniles organizadas por el Ayuntamiento.",
+            "responsable": "Concejalía de Género, Juventud y Deportes; Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías; y Concejalía de Infraestructuras, Urbanismo y Festejos.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades adaptadas",
+              "Número de medidas de accesibilidad incorporadas",
+              "Número de jóvenes participantes",
+              "Número de recursos adaptados disponibles",
+              "Número de incidencias relacionadas con la accesibilidad",
+              "Valoración de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-6.2.3",
+            "codigo_simple": "6.6",
+            "titulo": "Desarrollar campañas de prevención de cualquier forma de discriminación, acoso o discurso de odio entre la población joven.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de campañas realizadas",
+              "Número de participantes",
+              "Número de materiales difundidos",
+              "Número de contenidos relacionados con la discriminación y el acoso",
+              "Alcance de las campañas",
+              "Número de entidades colaboradoras"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Mejorar la convivencia y la resolución pacífica de conflictos, promoviendo valores de respeto, diálogo, tolerancia y responsabilidad compartida.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-6.3.1",
+            "codigo_simple": "6.7",
+            "titulo": "Organizar talleres sobre comunicación, empatía, diálogo, resolución pacífica de conflictos y convivencia.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de talleres realizados",
+              "Número de participantes",
+              "Número de contenidos trabajados",
+              "Número de profesionales colaboradores",
+              "Grado de satisfacción de las personas asistentes",
+              "Resultados de los cuestionarios de valoración"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-6.3.2",
+            "codigo_simple": "6.8",
+            "titulo": "Promover actividades grupales y comunitarias que favorezcan la convivencia, la cooperación y las relaciones respetuosas entre la juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Infraestructuras, Urbanismo y Festejos.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades de convivencia realizadas",
+              "Número de jóvenes participantes",
+              "Número de entidades colaboradoras",
+              "Número de actividades cooperativas desarrolladas",
+              "Participación desagregada por sexo y edad",
+              "Grado de satisfacción de las personas participantes"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-6.3.3",
+            "codigo_simple": "6.9",
+            "titulo": "Difundir pautas y recursos para la prevención y gestión de conflictos en los espacios educativos, digitales, familiares y comunitarios.",
+            "responsable": "Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías y Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de materiales informativos elaborados y difundidos",
+              "Número de acciones realizadas",
+              "Número de publicaciones en redes sociales",
+              "Alcance de la información",
+              "Número de recursos y pautas difundidos",
+              "Número de consultas recibidas"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "eje_numero": 7,
+    "eje_titulo": "GOBERNANZA, INNOVACIÓN Y EVALUACIÓN DE LAS POLÍTICAS DE JUVENTUD",
+    "objetivos": {
+      "1": {
+        "obj_num": 1,
+        "obj_titulo": "Mejorar la coordinación entre las diferentes áreas municipales y los agentes sociales, educativos y económicos implicados en el desarrollo de políticas de juventud.",
+        "acciones": [
+          {
+            "act_num": 1,
+            "codigo": "ACC-7.1.1",
+            "codigo_simple": "7.1",
+            "titulo": "Establecer mecanismos periódicos de coordinación entre las concejalías municipales para planificar y desarrollar las actuaciones dirigidas a la juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y el responsable resto de concejalías municipales implicadas.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de reuniones de coordinación realizadas",
+              "Número de concejalías participantes",
+              "Número de acuerdos adoptados",
+              "Número de actuaciones planificadas conjuntamente",
+              "Número de documentos de coordinación elaborados",
+              "Grado de cumplimiento de los acuerdos"
+            ]
+          },
+          {
+            "act_num": 2,
+            "codigo": "ACC-7.1.2",
+            "codigo_simple": "7.2",
+            "titulo": "Impulsar la colaboración con centros educativos, asociaciones, entidades sociales y agentes económicos para el desarrollo de actuaciones juveniles.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de entidades colaboradoras",
+              "Número de reuniones o encuentros de coordinación",
+              "Número de actuaciones conjuntas desarrolladas",
+              "Número de acuerdos de colaboración establecidos",
+              "Número de sectores implicados",
+              "Valoración de las entidades participantes"
+            ]
+          },
+          {
+            "act_num": 3,
+            "codigo": "ACC-7.1.3",
+            "codigo_simple": "7.3",
+            "titulo": "Elaborar una agenda o planificación coordinada de las actividades municipales dirigidas a la población joven.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y las concejalías responsables de las actividades programadas.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Agenda coordinada elaborada y actualizada",
+              "Número de actividades incorporadas",
+              "Número de áreas municipales participantes",
+              "Número de actualizaciones realizadas",
+              "Número de actividades difundidas a través de la agenda",
+              "Grado de cumplimiento de la planificación"
+            ]
+          }
+        ]
+      },
+      "2": {
+        "obj_num": 2,
+        "obj_titulo": "Incorporar metodologías, herramientas y formas de trabajo innovadoras que permitan adaptar las políticas municipales a los cambios y nuevas necesidades de la población joven.",
+        "acciones": [
+          {
+            "act_num": 4,
+            "codigo": "ACC-7.2.1",
+            "codigo_simple": "7.4",
+            "titulo": "Incorporar herramientas digitales y participativas para conocer los intereses, necesidades y propuestas de la población joven.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de herramientas digitales utilizadas",
+              "Número de consultas y encuestas realizadas",
+              "Número de jóvenes participantes",
+              "Número de propuestas recibidas",
+              "Participación desagregada por sexo y edad",
+              "Número de decisiones o actuaciones basadas en los resultados"
+            ]
+          },
+          {
+            "act_num": 5,
+            "codigo": "ACC-7.2.2",
+            "codigo_simple": "7.5",
+            "titulo": "Promover metodologías dinámicas y participativas en las actividades juveniles, adaptándolas a las diferentes edades, intereses y características de la población destinataria.",
+            "responsable": "Concejalía de Género, Juventud y Deportes.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de actividades que incorporan nuevas metodologías",
+              "Número de participantes",
+              "Número de herramientas participativas utilizadas",
+              "Número de propuestas juveniles incorporadas",
+              "Grado de satisfacción de las personas participantes",
+              "Valoración de la utilidad de las metodologías aplicadas"
+            ]
+          },
+          {
+            "act_num": 6,
+            "codigo": "ACC-7.2.3",
+            "codigo_simple": "7.6",
+            "titulo": "Identificar y difundir buenas prácticas y experiencias innovadoras desarrolladas en otros municipios y entidades en materia de juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y Concejalía de Bienestar Social, Personal, Educación y Nuevas Tecnologías.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de buenas prácticas identificadas",
+              "Número de experiencias difundidas",
+              "Número de municipios o entidades analizados",
+              "Número de propuestas de adaptación elaboradas",
+              "Número de metodologías incorporadas al municipio",
+              "Número de áreas municipales implicadas"
+            ]
+          }
+        ]
+      },
+      "3": {
+        "obj_num": 3,
+        "obj_titulo": "Consolidar un sistema de seguimiento y evaluación que permita medir el grado de ejecución de las actuaciones, valorar sus resultados y orientar la mejora de las políticas municipales de juventud.",
+        "acciones": [
+          {
+            "act_num": 7,
+            "codigo": "ACC-7.3.1",
+            "codigo_simple": "7.7",
+            "titulo": "Establecer un sistema anual de seguimiento del III Plan Municipal de Juventud que permita registrar el grado de ejecución de las acciones previstas.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y las concejalías responsables de cada actuación.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de acciones objeto de seguimiento",
+              "Porcentaje de actuaciones con información actualizada",
+              "Grado de ejecución de las acciones previstas",
+              "Número de áreas municipales que aportan información",
+              "Número de fichas de seguimiento cumplimentadas",
+              "Número de incidencias o dificultades identificadas"
+            ]
+          },
+          {
+            "act_num": 8,
+            "codigo": "ACC-7.3.2",
+            "codigo_simple": "7.8",
+            "titulo": "Elaborar informes anuales de evaluación que recojan las actuaciones desarrolladas, los resultados obtenidos, las dificultades encontradas y las propuestas de mejora.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y las concejalías responsables de cada actuación.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Número de informes anuales elaborados",
+              "Porcentaje de acciones evaluadas",
+              "Número de indicadores analizados",
+              "Número de resultados y dificultades identificados",
+              "Número de propuestas de mejora formuladas",
+              "Número de propuestas incorporadas a la planificación posterior"
+            ]
+          },
+          {
+            "act_num": 9,
+            "codigo": "ACC-7.3.3",
+            "codigo_simple": "7.9",
+            "titulo": "Realizar una evaluación final del Plan de Juventud para valorar su impacto y orientar la elaboración de futuras políticas municipales de juventud.",
+            "responsable": "Concejalía de Género, Juventud y Deportes y las concejalías municipales implicadas.",
+            "recursos": "Recursos propios del Ayuntamiento",
+            "indicadores": [
+              "Evaluación final elaborada",
+              "Porcentaje de objetivos específicos evaluados",
+              "Grado de cumplimiento de las acciones",
+              "Número de personas y entidades consultadas",
+              "Resultados obtenidos en relación con los objetivos del Plan",
+              "Número de propuestas de mejora para el siguiente plan"
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

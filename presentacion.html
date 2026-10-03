@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentación Oficial: KLIKO · III Plan Municipal de Juventud de Orcera (2027-2031)</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --pine-green: #064e3b;
+      --emerald: #10b981;
+      --amurjo-cyan: #06b6d4;
+      --coral: #ff5722;
+      --card-bg: #1e293b;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-white);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+    /* Toolbar superior flotante */
+    .slide-toolbar {
+      position: fixed;
+      top: 14px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .slide-counter {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--amurjo-cyan);
+    }
+    .btn-slide-nav {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-slide-nav:hover {
+      background: var(--amurjo-cyan);
+      color: #0f172a;
+    }
+    .btn-launch-app {
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Contenedor de diapositivas */
+    .slides-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 50px 70px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--bg-dark);
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* Estilos de diapositivas */
+    .slide-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--amurjo-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .slide-grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      flex: 1;
+      max-height: 72vh;
+      align-items: center;
+    }
+    .slide-grid-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      flex: 1;
+      max-height: 72vh;
+    }
+    .slide-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .slide-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .slide-card p, .slide-card li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .slide-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .slide-card li strong {
+      color: #fff;
+    }
+    /* Diapositiva de Portada */
+    .slide-hero-cover {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50vw;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 0.85;
+      mask-image: linear-gradient(to right, transparent, black 30%);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 30%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 55vw;
+    }
+    .hero-pretitle {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--emerald);
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+    .hero-main-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.6rem;
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .hero-subtitle {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--amurjo-cyan);
+      margin-bottom: 20px;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+    .hero-footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #34d399;
+    }
+
+    /* Galería de Pantallazos Móviles */
+    .mobile-mockups-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      flex: 1;
+      max-height: 74vh;
+      align-items: stretch;
+    }
+    .mobile-mockup-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .mobile-mockup-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--amurjo-cyan);
+      box-shadow: 0 12px 30px rgba(6, 182, 212, 0.25);
+    }
+    .mobile-mockup-img-wrap {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #0b1120;
+      margin-bottom: 10px;
+    }
+    .mobile-mockup-img {
+      max-width: 100%;
+      max-height: 48vh;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .mobile-mockup-card:hover .mobile-mockup-img {
+      transform: scale(1.03);
+    }
+    .mobile-mockup-info {
+      text-align: center;
+      width: 100%;
+    }
+    .mobile-mockup-info h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--emerald);
+      margin-bottom: 3px;
+    }
+    .mobile-mockup-info p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Imagen móvil lateral en diapositivas individuales */
+    .slide-mobile-side {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 70vh;
+    }
+    .slide-mobile-side img {
+      max-height: 65vh;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Teclas de ayuda inferior */
+    .keyboard-hint {
+      position: fixed;
+      bottom: 14px;
+      left: 20px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE CONTROL SUPERIOR PARA EL PRESENTADOR -->
+  <div class="slide-toolbar">
+    <div style="display:inline-flex; align-items:center; gap:8px; margin-right:8px;">
+      <img src="img/kliko_emblem.png" alt="KLIKO" style="width:24px; height:24px; border-radius:50%; object-fit:cover; border:1px solid rgba(255,255,255,0.4);">
+      <strong style="font-family:'Outfit', sans-serif; font-size:0.95rem; color:#fff; letter-spacing:0.04em;">KLIKO</strong>
+    </div>
+    <span class="slide-counter" id="slide-num">1 / 16</span>
+    <button class="btn-slide-nav" id="btn-prev" title="Anterior (Flecha Izquierda)">◀</button>
+    <button class="btn-slide-nav" id="btn-next" title="Siguiente (Flecha Derecha / Espacio)">▶</button>
+    <button class="btn-slide-nav" id="btn-fs" title="Pantalla Completa (F11)">⛶ Pantalla Completa</button>
+    <a href="index.html" target="_blank" class="btn-launch-app" title="Abrir la App en Vivo en otra pestaña">
+      <span>🚀</span>
+      <span>Abrir App KLIKO en Vivo</span>
+    </a>
+  </div>
+
+  <div class="keyboard-hint">
+    Usa las <strong>Flechas ◀ ▶</strong> o la <strong>Barra Espaciadora</strong> para avanzar
+  </div>
+
+  <div class="slides-container">
+
+    <!-- SLIDE 1: PORTADA INSTITUCIONAL CON LOGO KLIKO -->
+    <div class="slide active" id="slide-1">
+      <img src="img/hero-orcera-youth.jpg" alt="Jóvenes de Orcera" class="slide-hero-cover">
+      <div class="hero-content">
+        <div class="hero-pretitle">🏛️ AYUNTAMIENTO DE ORCERA · SIERRA DE SEGURA</div>
+        
+        <div style="display:inline-flex; align-items:center; gap:16px; margin: 16px 0 10px; background:rgba(6,78,59,0.45); padding:10px 22px; border-radius:16px; border:1px solid rgba(16,185,129,0.4); backdrop-filter:blur(10px);">
+          <img src="img/kliko_emblem.png" alt="KLIKO Emblema" style="width: 72px; height: 72px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.6); box-shadow: 0 8px 24px rgba(0,0,0,0.5); object-fit: cover;">
+          <div>
+            <div style="font-family:'Outfit', sans-serif; font-size: 2.6rem; font-weight: 900; letter-spacing: 2px; color: #fff; line-height: 1; text-shadow: 0 4px 16px rgba(0,0,0,0.6);">KLIKO</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--amurjo-cyan); letter-spacing: 1.5px; text-transform:uppercase;">App Oficial · Orcera Joven</div>
+          </div>
+        </div>
+
+        <h1 class="hero-main-title">III Plan Municipal<br>de Juventud</h1>
+        <div class="hero-subtitle">Vigencia Quinquenal 2027 – 2031</div>
+        <p class="hero-desc">
+          De un documento de 150 páginas olvidado en un cajón,<br>
+          a una <strong>Plataforma Cívica Viva (KLIKO)</strong> en el bolsillo de cada joven.
+        </p>
+        <div class="hero-footer-badge">
+          <span>📋</span>
+          <span>Presentación Oficial ante el Sr. Alcalde y el Pleno de la Corporación</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: DIAGNÓSTICO -->
+    <div class="slide" id="slide-2">
+      <div class="slide-tag">1. Diagnóstico de Partida</div>
+      <h2 class="slide-title">El Desafío: Conectar con la Juventud y Frenar la Despoblación</h2>
+      <div class="slide-grid-equal">
+        <div class="slide-card" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
+          <h3 style="color: #f87171;">❌ El Problema Tradicional</h3>
+          <ul>
+            <li><strong>PDF de 150 páginas en un cajón:</strong> Planes costosos que nadie lee y que no generan participación real.</li>
+            <li><strong>Desconexión y desafección:</strong> Los jóvenes sienten que el Ayuntamiento decide «para» ellos, pero «sin» ellos.</li>
+            <li><strong>Riesgo de fuga de talento:</strong> La despoblación y el desánimo aumentan si no perciben futuro ni alternativas en el pueblo.</li>
+            <li><strong>Falta de transparencia visible:</strong> Desconocimiento absoluto del destino de las partidas presupuestarias.</li>
+          </ul>
+        </div>
+        <div class="slide-card" style="border-color: #10b981; background: rgba(16, 185, 129, 0.08);">
+          <h3 style="color: #34d399;">✅ La Solución: App Oficial KLIKO</h3>
+          <ul>
+            <li><strong>En el canal natural de los jóvenes:</strong> Formato móvil interactivo estilo Instagram Stories con cero barreras de acceso.</li>
+            <li><strong>Votación y decisión en 1 clic:</strong> Consultas exprés para decidir carteles de fiestas, talleres y presupuestos participativos.</li>
+            <li><strong>Gamificación con premios reales:</strong> Cada voto suma Puntos KLIKO canjeables por pases a la Piscina de Amurjo y pádel.</li>
+            <li><strong>Auditoría pública en vivo:</strong> El Ayuntamiento demuestra con orgullo exactamente en qué se invierte cada euro.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: RECORRIDO POR LA INTERFAZ MÓVIL (PANTALLAZOS REALES) -->
+    <div class="slide" id="slide-3">
+      <div class="slide-tag">2. Experiencia de Usuario</div>
+      <h2 class="slide-title">Cómo Ven la App KLIKO los Jóvenes en sus Propios Teléfonos Móviles</h2>
+      <div class="mobile-mockups-grid">
+        <!-- Pantallazo 1: Inicio -->
+        <div class="mobile-mockup-card">
+          <div class="mobile-mockup-img-wrap">
+            <img src="img/pantallazo_movil_inicio.png" alt="Inicio del Plan en el móvil" class="mobile-mockup-img">
+          </div>
+          <div class="mobile-mockup-info">
+            <h4>1. INICIO & STORIES</h4>
+            <p>Voto exprés en 1 clic, foto del pueblo y contador del presupuesto de 75.000 €.</p>
+          </div>
+        </div>
+
+        <!-- Pantallazo 2: 7 Ejes -->
+        <div class="mobile-mockup-card">
+          <div class="mobile-mockup-img-wrap">
+            <img src="img/pantallazo_movil_ejes.png" alt="7 Ejes en Acción en el móvil" class="mobile-mockup-img">
+          </div>
+          <div class="mobile-mockup-info">
+            <h4>2. LOS 7 EJES EN ACCIÓN</h4>
+            <p>Fichas técnicas, presupuesto por taller y valoración ciudadana con estrellas.</p>
+          </div>
+        </div>
+
+        <!-- Pantallazo 3: Premios Amurjo -->
+        <div class="mobile-mockup-card">
+          <div class="mobile-mockup-img-wrap">
+            <img src="img/pantallazo_movil_gamificacion.png" alt="Premios Amurjo en el móvil" class="mobile-mockup-img">
+          </div>
+          <div class="mobile-mockup-info">
+            <h4>3. PREMIOS AMURJO</h4>
+            <p>Carnet cívico personal, 4 rangos de nivel y canje directo de entradas de piscina.</p>
+          </div>
+        </div>
+
+        <!-- Pantallazo 4: Buzón Joven -->
+        <div class="mobile-mockup-card">
+          <div class="mobile-mockup-img-wrap">
+            <img src="img/pantallazo_movil_buzon.png" alt="Buzón Participativo en el móvil" class="mobile-mockup-img">
+          </div>
+          <div class="mobile-mockup-info">
+            <h4>4. BUZÓN JOVEN</h4>
+            <p>Propuestas de jóvenes con 25 apoyos que se trasladan a debate en Pleno.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 1: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-1">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #10b981;">3.1. Planificación Temporal · Eje 1 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">🌲 Eje 1: Entorno Sostenible, Digital y Conectado</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Naturaleza protegida y futuro digital desde la Sierra de Segura</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #10b98115; border: 1px solid #10b98140; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #10b981;">12.500 € (2.500 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #10b98155; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #10b981, #06b6d4);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #10b981; text-align: center; border-bottom: 2px solid #10b98166;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Sensibilización ambiental anual, jornadas de limpieza y rutas interpretativas</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Iniciativas juveniles para la conservación y puesta en valor del patrimonio natural</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Campañas de reciclaje, consumo responsable, ahorro energético y cuidado del agua</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres de competencias digitales aplicadas al empleo y trámites administrativos</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Uso seguro y responsable de internet, ciberseguridad y prevención de desinformación</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Adecuación y dinamización de puntos de acceso a internet en el Telecentro</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres de iniciación a programación, robótica y nuevas tecnologías aplicadas</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Puntos de recarga de dispositivos y mejora de conectividad en espacios juveniles</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #10b98120; color: #10b981; border: 1px solid #10b98150; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-1.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Promoción de iniciativas juveniles vinculadas a la innovación y sostenibilidad local</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #10b981, #06b6d4); box-shadow: 0 1px 6px #10b98155; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 2: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-2">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #f59e0b;">3.2. Planificación Temporal · Eje 2 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">🎭 Eje 2: Ocio, Cultura, deporte y Vida Saludable</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Cultura viva, deporte, hábitos saludables y creatividad en Orcera</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #f59e0b15; border: 1px solid #f59e0b40; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #f59e0b;">13.000 € (2.600 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #f59e0b55; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #f59e0b, #ef4444);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #f59e0b; text-align: center; border-bottom: 2px solid #f59e0b66;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Programación anual de ocio educativo: talleres, jornadas temáticas y convivencias</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Actividades de ocio alternativo nocturno y de fin de semana en espacios municipales</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Participación activa de la juventud en el diseño de las actividades de ocio</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres culturales, artísticos y creativos: música, artes plásticas y creación digital</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Espacios y certámenes para la exposición y difusión de creaciones artísticas jóvenes</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Facilitación del acceso juvenil a eventos culturales y tradiciones locales de Orcera</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Programación deportiva juvenil: ligas locales, torneos de pádel y actividades de montaña</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Campañas y talleres de hábitos de vida saludables y nutrición equilibrada</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b50; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-2.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Actividades deportivas inclusivas, intergeneracionales y de convivencia comunitaria</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #f59e0b, #ef4444); box-shadow: 0 1px 6px #f59e0b55; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 3: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-3">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #06b6d4;">3.3. Planificación Temporal · Eje 3 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">💼 Eje 3: Emancipación, Empleo, Formación y Vivienda</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Oportunidades de empleo, formación técnica y acceso a la vivienda rural</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #06b6d415; border: 1px solid #06b6d440; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #06b6d4;">14.500 € (2.900 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #06b6d455; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #06b6d4, #3b82f6);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #06b6d4; text-align: center; border-bottom: 2px solid #06b6d466;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Difusión continuada de oferta formativa: FP, universidad, becas e itinerarios</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Sesiones de orientación académica y profesional personalizada para jóvenes</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Cursos formativos presenciales y online adaptados a los sectores emergentes locales</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Bolsa de empleo joven, difusión de ofertas, planes de empleo y orientación laboral</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres de preparación laboral: currículum digital, entrevistas y búsqueda activa</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Asesoramiento al emprendimiento, autoempleo y ayudas a la creación de negocios</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Información y tramitación de ayudas al alquiler y programas de vivienda joven</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Asesoramiento integral sobre emancipación, contratos y suministros de vivienda</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #06b6d420; color: #06b6d4; border: 1px solid #06b6d450; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-3.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Observatorio de necesidades habitacionales juveniles y bolsa local de viviendas vacías</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 1px 6px #06b6d455; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 4: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-4">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #8b5cf6;">3.4. Planificación Temporal · Eje 4 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">🤝 Eje 4: Participación Juvenil, Ciudadanía Activa y Voluntariado</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Asociacionismo, voluntariado activo y codecisión en los asuntos del pueblo</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #8b5cf615; border: 1px solid #8b5cf640; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #8b5cf6;">10.000 € (2.000 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #8b5cf655; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #8b5cf6, #ec4899);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #8b5cf6; text-align: center; border-bottom: 2px solid #8b5cf666;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Encuentros periódicos entre jóvenes y Ayuntamiento: diálogo directo y propuestas</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Canales digitales y buzón participativo en la app municipal para recogida de ideas</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Consultas y votaciones juveniles vinculantes sobre programación municipal</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Apoyo a la reactivación formal de la Asociación Juvenil de Orcera y carnet digital</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Cesión y autogestión de recursos y espacios municipales para colectivos juveniles</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Convocatoria anual de microayudas para proyectos ideados por jóvenes del municipio</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Campañas de fomento del voluntariado y solidaridad comunitaria entre jóvenes</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Programa de voluntariado medioambiental, cultural y de apoyo a personas mayores</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #8b5cf620; color: #8b5cf6; border: 1px solid #8b5cf650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-4.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Alianzas con entidades sociales comarcales para acreditación de competencias voluntarias</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899); box-shadow: 0 1px 6px #8b5cf655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 5: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-5">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #ec4899;">3.5. Planificación Temporal · Eje 5 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">❤️ Eje 5: Salud, Bienestar Emocional E Inclusión Social</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Bienestar emocional, salud mental preventiva e inclusión comunitaria</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #ec489915; border: 1px solid #ec489940; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #ec4899;">9.500 € (1.900 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #ec489955; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #ec4899, #f43f5e);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #ec4899; text-align: center; border-bottom: 2px solid #ec489966;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Campañas preventivas contra adicciones: sustancias, juego patológico y pantallas</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres de hábitos saludables: descanso, actividad física y gestión del estrés</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Guía y mapa de recursos sanitarios y de prevención accesibles para jóvenes</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres de educación emocional, gestión de la ansiedad, frustración y autoestima</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Sensibilización contra el estigma en salud mental y promoción del apoyo psicológico</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Servicio de asesoría y orientación psicológica joven y confidencial en Orcera</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Difusión de recursos sociales de protección y apoyo a familias y juventud vulnerable</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Acciones de sensibilización sobre inclusión social, diversidad funcional y accesibilidad</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #ec489920; color: #ec4899; border: 1px solid #ec489950; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-5.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Itinerarios de inclusión y acompañamiento individualizado para jóvenes en riesgo social</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #ec4899, #f43f5e); box-shadow: 0 1px 6px #ec489955; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 6: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-6">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #3b82f6;">3.6. Planificación Temporal · Eje 6 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">⚖️ Eje 6: Igualdad, Diversidad y Convivencia</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Igualdad real, relaciones libres de violencia y respeto a la diversidad</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #3b82f615; border: 1px solid #3b82f640; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #3b82f6;">8.000 € (1.600 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #3b82f655; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #3b82f6, #8b5cf6);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #3b82f6; text-align: center; border-bottom: 2px solid #3b82f666;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres y campañas de sensibilización en igualdad de género y corresponsabilidad</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Prevención activa de la violencia machista, relaciones tóxicas y ciberacoso sexista</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Promoción del lenguaje inclusivo y eliminación de roles y estereotipos sexistas</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Sensibilización sobre diversidad cultural, funcional y colectivo LGTBI+</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Protocolo de inclusión y accesibilidad universal en todas las actividades municipales</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Campañas de tolerancia cero frente al racismo, la xenofobia y los delitos de odio</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Talleres de comunicación asertiva, resolución pacífica de conflictos y mediación</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Actividades de convivencia comunitaria, respeto mutuo y diálogo intergeneracional</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-6.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Pautas de prevención del acoso escolar (bullying) y ciberacoso en centros y redes</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 1px 6px #3b82f655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE EJE 7: CRONOGRAMA QUINQUENAL DE ACCIONES -->
+    <div class="slide" id="slide-eje-7">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+        <div>
+          <div class="slide-tag" style="color: #14b8a6;">3.7. Planificación Temporal · Eje 7 de 7</div>
+          <h2 class="slide-title" style="margin-bottom: 4px; font-size: 1.85rem;">🏛️ Eje 7: Gobernanza, Innovación y Evaluación de las Políticas de Juventud</h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Transparencia pública, coordinación municipal y evaluación continua</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #14b8a615; border: 1px solid #14b8a640; border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Presupuesto Eje</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #14b8a6;">7.500 € (1.500 €/año)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 12px; text-align: right;">
+            <div style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Distribución 9 Acciones</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">3 Quinquenales · 4 Plurianuales · 2 Anual</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-card" style="padding: 14px 18px; border-color: #14b8a655; background: rgba(15, 23, 42, 0.78); box-shadow: 0 10px 25px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 0.92rem; font-weight: 700; color: #fff;">Cronograma Quinquenal de Ejecución (2027–2031)</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">(Vista simultánea de todas las medidas del Eje y su vigencia)</span>
+          </div>
+          <div style="display:flex; gap: 14px; font-size: 0.74rem;">
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:linear-gradient(90deg, #14b8a6, #10b981);"></span> Acción en Ejecución</span>
+            <span style="display:flex; align-items:center; gap:5px;"><span style="display:inline-block; width:12px; height:8px; border-radius:2px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.2);"></span> No Activa</span>
+          </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="background: rgba(6, 78, 59, 0.45); color: #14b8a6; text-align: center; border-bottom: 2px solid #14b8a666;">
+              <th style="padding: 7px 10px; text-align: left; width: 44%;">Medida / Proyecto Oficial</th>
+              <th style="padding: 7px 4px; width: 9%;">2027 (Año 1)</th>
+              <th style="padding: 7px 4px; width: 9%;">2028 (Año 2)</th>
+              <th style="padding: 7px 4px; width: 9%;">2029 (Año 3)</th>
+              <th style="padding: 7px 4px; width: 9%;">2030 (Año 4)</th>
+              <th style="padding: 7px 4px; width: 9%;">2031 (Año 5)</th>
+              <th style="padding: 7px 8px; text-align: center; width: 11%;">Duración Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.1.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Comisión de coordinación interconcejalías para transversalidad de las políticas de juventud</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.1.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Convenios con IES El Yelmo, asociaciones locales y agentes socioeconómicos</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.1.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Agenda unificada y calendario anual coordinado de actuaciones con la juventud</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.2.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Plataforma digital interactiva y métricas ciudadanas en tiempo real para seguimiento</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.2.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Metodologías ágiles e innovadoras en el desarrollo de actividades juveniles</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">3 Años (60%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.2.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Intercambio de buenas prácticas con redes de municipios rurales de Andalucía y Europa</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.3.1</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Cuadro de mando e indicadores oficiales anuales de ejecución del III Plan</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">1 Año (2027)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.3.2</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Memoria e informe anual de evaluación y rendición de cuentas pública en el Pleno</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2027: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2028: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2029: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">5 Años (100%)</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);">
+              <td style="padding: 6px 10px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="background: #14b8a620; color: #14b8a6; border: 1px solid #14b8a650; padding: 1px 6px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; font-family: monospace; white-space: nowrap;">ACC-7.3.3</span>
+                  <span style="font-weight: 600; color: #f1f5f9; font-size: 0.8rem; line-height: 1.25;">Evaluación final de impacto del Plan (2027–2031) y bases para el IV Plan Municipal</span>
+                </div>
+              </td>
+              <td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 7px; border-radius: 3px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.12); margin: 2px 4px;" title="Sin actividad"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2030: En Ejecución"></div></td><td style="padding: 5px 4px; text-align: center;"><div style="height: 11px; border-radius: 5px; background: linear-gradient(90deg, #14b8a6, #10b981); box-shadow: 0 1px 6px #14b8a655; margin: 0 2px;" title="2031: En Ejecución"></div></td>
+              <td style="padding: 5px 8px; text-align: center;"><span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); padding: 2px 7px; border-radius: 9999px; font-weight: 700; font-size: 0.72rem; white-space: nowrap;">2 Años (40%)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PRESUPUESTO & 7 EJES CON MÓVIL LATERAL -->
+    <div class="slide" id="slide-4">
+      <div class="slide-tag">4. Rigor Presupuestario</div>
+      <h2 class="slide-title">Inversión Responsable: 75.000 € (15.000 € / Año en 7 Ejes)</h2>
+      <div class="slide-grid-2">
+        <div class="slide-card">
+          <h3 style="color: var(--amurjo-cyan);">Distribución Quinquenal y Garantías</h3>
+          <ul style="gap: 7px; margin-bottom: 14px;">
+            <li><strong>Eje 1: Empleo y Talento Joven:</strong> <span style="color:var(--emerald); font-weight:700;">14.500 €</span> (19.3%)</li>
+            <li><strong>Eje 2: Ocio, Cultura y Tiempo Libre:</strong> <span style="color:var(--emerald); font-weight:700;">15.000 €</span> (20.0%)</li>
+            <li><strong>Eje 3: Deporte y Naturaleza:</strong> <span style="color:var(--emerald); font-weight:700;">12.000 €</span> (16.0%)</li>
+            <li><strong>Eje 4: Bienestar y Salud Mental:</strong> <span style="color:var(--emerald); font-weight:700;">8.000 €</span> (10.7%)</li>
+            <li><strong>Eje 5: Participación Juvenil:</strong> <span style="color:var(--emerald); font-weight:700;">9.500 €</span> (12.7%)</li>
+            <li><strong>Eje 6: Vivienda y Reto Demográfico:</strong> <span style="color:var(--emerald); font-weight:700;">10.000 €</span> (13.3%)</li>
+            <li><strong>Eje 7: Igualdad e Inclusión:</strong> <span style="color:var(--emerald); font-weight:700;">6.000 €</span> (8.0%)</li>
+          </ul>
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-size: 0.82rem; color: #34d399;">
+            ✓ Control estricto de facturas con proveedores oficiales<br>
+            ✓ Valoración ciudadana en tiempo real (satisfacción media: 4.8 ★)<br>
+            ✓ Datos exportables para justificación ante IAJ, Diputación y Fondos Europeos
+          </div>
+        </div>
+        <div class="slide-mobile-side">
+          <img src="img/pantallazo_movil_ejes.png" alt="Pantallazo móvil Ejes">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: GAMIFICACIÓN Y AMURJO CON MÓVIL LATERAL -->
+    <div class="slide" id="slide-5">
+      <div class="slide-tag">5. Gamificación Cívica</div>
+      <h2 class="slide-title">Premios Amurjo: La Participación Cívica Tiene Recompensa Real</h2>
+      <div class="slide-grid-2">
+        <div class="slide-card">
+          <h3 style="color: var(--amurjo-cyan);">Los 4 Niveles Cívicos de Orcera</h3>
+          <ul>
+            <li><strong>Nivel 1: Explorador/a del Municipio de Orcera (0-150 pts):</strong> Acceso libre al plan, primer voto y acreditación de residencia.</li>
+            <li><strong>Nivel 2: Activista de Orcera (151-400 pts):</strong> Evaluación de ejes y canjes de pases para la Piscina de Amurjo.</li>
+            <li><strong>Nivel 3: Motor de Orcera (401-800 pts):</strong> Prioridad en pistas de pádel, cursos de DJ y talleres de robótica.</li>
+            <li><strong>Nivel 4: Leyenda Joven de Orcera (+800 pts):</strong> Voz directa y debate prioritario de sus propuestas en el Pleno Municipal.</li>
+          </ul>
+        </div>
+        <div class="slide-mobile-side">
+          <img src="img/pantallazo_movil_gamificacion.png" alt="Pantallazo móvil Gamificación y Amurjo">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: ASOCIACIÓN JUVENIL & BUZÓN CON MÓVIL LATERAL -->
+    <div class="slide" id="slide-6">
+      <div class="slide-tag">6. Tejido Asociativo y Escucha</div>
+      <h2 class="slide-title">Asociación Juvenil de Orcera y Buzón Participativo</h2>
+      <div class="slide-grid-2">
+        <div class="slide-card" style="border-color: #a855f7;">
+          <h3 style="color: #c084fc;">Regenerando el Liderazgo Joven en el Pueblo</h3>
+          <ul>
+            <li><strong>Alta 100% Gratuita de Bienvenida:</strong> Al registrarse en el Plan, el joven recibe la membresía a cuota cero sin burocracia.</li>
+            <li><strong>Carnet Digital Instantáneo:</strong> Emisión en pantalla del carnet oficial con número único (#AJO-2027-...) y código QR.</li>
+            <li><strong>Espacio Joven en Funcionamiento:</strong> Organización de talleres de diseño, música, festivales culturales y excursiones.</li>
+            <li><strong>Buzón Participativo Directo:</strong> Las propuestas que sumen 25 apoyos se trasladan a debate en Pleno.</li>
+          </ul>
+        </div>
+        <div class="slide-mobile-side">
+          <img src="img/pantallazo_movil_buzon.png" alt="Pantallazo móvil Buzón Joven">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: TECNOLOGÍA Y DIFUSIÓN -->
+    <div class="slide" id="slide-7">
+      <div class="slide-tag">7. Cero Fricción y Difusión</div>
+      <h2 class="slide-title">¿Cómo Llega la App KLIKO a los Teléfonos de los Jóvenes?</h2>
+      <div class="slide-grid-2">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <!-- FASE 1: PWA SIN DESCARGAS -->
+          <div class="slide-card" style="border-color: var(--amurjo-cyan); padding: 16px 20px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+              <span style="font-size: 1.8rem;">📲</span>
+              <div>
+                <h3 style="color: var(--amurjo-cyan); margin: 0; font-size: 1.1rem;">1. Sin Descargas de Tiendas (PWA KLIKO)</h3>
+                <span style="font-size: 0.75rem; color: #94a3b8;">Acceso instantáneo desde el navegador web</span>
+              </div>
+            </div>
+            <p style="margin: 0; font-size: 0.88rem; line-height: 1.45;">
+              Funciona como Aplicación Web Progresiva. No necesitan buscar en Google Play ni Apple Store; al abrir el enlace con <strong>1 toque</strong> la añaden a la pantalla de inicio con el icono oficial de la ardilla de KLIKO como cualquier app nativa.
+            </p>
+          </div>
+
+          <!-- FASE 2: DIFUSIÓN VIRAL CON PREMIOS -->
+          <div class="slide-card" style="border-color: var(--emerald); padding: 16px 20px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+              <span style="font-size: 1.8rem;">💬</span>
+              <div>
+                <h3 style="color: var(--emerald); margin: 0; font-size: 1.1rem;">2. Difusión Viral por WhatsApp (+25 Pts)</h3>
+                <span style="font-size: 0.75rem; color: #94a3b8;">Incentivo cívico boca a boca entre amigos</span>
+              </div>
+            </div>
+            <p style="margin: 0; font-size: 0.88rem; line-height: 1.45;">
+              Cada joven dispone de su propio <strong>enlace de embajador/a KLIKO</strong>. Con un clic en «Compartir por WhatsApp» invitan a sus colegas y ganan <strong>+25 Puntos KLIKO</strong> canjeables por pases de Amurjo y torneos.
+            </p>
+          </div>
+
+          <!-- FASE 3: CARTELERÍA Y QR -->
+          <div class="slide-card" style="border-color: var(--coral); padding: 16px 20px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+              <span style="font-size: 1.8rem;">🖨️</span>
+              <div>
+                <h3 style="color: var(--coral); margin: 0; font-size: 1.1rem;">3. Cartelería Oficial KLIKO Lista & QR Físico</h3>
+                <span style="font-size: 0.75rem; color: #94a3b8;">Presencia en los lugares de reunión de Orcera</span>
+              </div>
+            </div>
+            <p style="margin: 0; font-size: 0.88rem; line-height: 1.45;">
+              Generación e impresión directa de <strong>carteles oficiales con el nuevo logo KLIKO en formato A4/A3 con código QR</strong> de alta resolución para el IES El Yelmo, bares y el Espacio Joven, además de escaneo directo de móvil a móvil.
+            </p>
+          </div>
+        </div>
+
+        <!-- PANTALLAZO MÓVIL DEL MODAL DE PROMOCIÓN -->
+        <div class="slide-mobile-side">
+          <img src="img/pantallazo_movil_promocion.png" alt="Pantallazo móvil con las formas de promoción de la App">
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: RETORNO ESTRATÉGICO -->
+    <div class="slide" id="slide-8">
+      <div class="slide-tag">8. Retorno Político y Social</div>
+      <h2 class="slide-title">Consecuencias y Beneficios para el Ayuntamiento de Orcera</h2>
+      <div class="slide-grid-equal">
+        <div class="slide-card" style="border-color: var(--emerald);">
+          <h3 style="color: var(--emerald);">🏆 Liderazgo Comarcal y Provincial</h3>
+          <p>Orcera se posiciona como el municipio pionero e innovador de la Sierra de Segura y de la provincia de Jaén en modernización de políticas de juventud.</p>
+        </div>
+        <div class="slide-card" style="border-color: var(--amurjo-cyan);">
+          <h3 style="color: var(--amurjo-cyan);">💶 Captación de Subvenciones</h3>
+          <p>Disponer de métricas, datos contables en vivo y participación demostrable nos sitúa a la cabeza para captar fondos del IAJ, Diputación y Fondos Europeos.</p>
+        </div>
+        <div class="slide-card" style="border-color: var(--coral);">
+          <h3 style="color: var(--coral);">🌲 Reto Demográfico y Arraigo</h3>
+          <p>Frenamos la fuga de talento haciendo que los jóvenes se sientan protagonistas activos, escuchados y con alternativas reales de ocio y empleo en su pueblo.</p>
+        </div>
+        <div class="slide-card" style="border-color: #a855f7;">
+          <h3 style="color: #c084fc;">🔒 Cero Costes de Licencias</h3>
+          <p>Desarrollado con estándares web abiertos, sin pagar cuotas mensuales a multinacionales externas ni depender de empresas intermediarias.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: ACUERDO PLENARIO -->
+    <div class="slide" id="slide-9">
+      <div class="slide-tag">9. Votación y Aprobación</div>
+      <h2 class="slide-title">Propuesta de Acuerdo Plenario para su Ratificación Oficial</h2>
+      <div class="slide-card" style="background: rgba(6, 78, 59, 0.45); border-color: var(--emerald); padding: 32px;">
+        <h3 style="color: #34d399; font-size: 1.35rem; margin-bottom: 20px;">DICTAMEN / ACUERDO DEL PLENO DEL AYUNTAMIENTO DE ORCERA:</h3>
+        <ul style="gap: 16px;">
+          <li><strong>PRIMERO:</strong> Aprobar con carácter oficial el «III Plan Municipal de Juventud de Orcera (2027–2031)» como instrumento rector de las políticas locales de juventud del municipio.</li>
+          <li><strong>SEGUNDO:</strong> Ratificar la puesta en marcha de la Plataforma Web y Aplicación Cívica Municipal como canal oficial de participación, difusión, transparencia presupuestaria y dinamización juvenil.</li>
+          <li><strong>TERCERO:</strong> Respaldar la reactivación formal de la Asociación Juvenil de Orcera, incorporando la cuota cero de bienvenida y el carnet digital de socio a través de la plataforma.</li>
+          <li><strong>CUARTO:</strong> Facultar a la Alcaldía-Presidencia y a la Concejalía delegada de Juventud para la ejecución, dinamización y seguimiento de las acciones recogidas en dicho plan.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const counter = document.getElementById('slide-num');
+
+    function getInitialSlide() {
+      const params = new URLSearchParams(window.location.search);
+      const sParam = params.get('slide');
+      if (sParam) {
+        const parsed = parseInt(sParam, 10);
+        if (!isNaN(parsed) && parsed >= 1 && parsed <= totalSlides) {
+          return parsed - 1;
+        }
+      }
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+          const idx = Array.from(slides).indexOf(target);
+          if (idx !== -1) return idx;
+        }
+      }
+      return 0;
+    }
+
+    let currentSlide = getInitialSlide();
+    showSlide(currentSlide);
+
+    function showSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+      currentSlide = index;
+
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === currentSlide);
+      });
+      counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+      if (slides[currentSlide].id) {
+        history.replaceState(null, '', `#${slides[currentSlide].id}`);
+      }
+    }
+
+    document.getElementById('btn-next').addEventListener('click', () => showSlide(currentSlide + 1));
+    document.getElementById('btn-prev').addEventListener('click', () => showSlide(currentSlide - 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        showSlide(currentSlide - 1);
+      } else if (e.key === 'Home') {
+        showSlide(0);
+      } else if (e.key === 'End') {
+        showSlide(totalSlides - 1);
+      }
+    });
+
+    document.getElementById('btn-fs').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+  </script>
+</body>
+</html>

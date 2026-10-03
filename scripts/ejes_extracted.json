@@ -1,0 +1,730 @@
+[
+  {
+    "numero": 1,
+    "titulo": "Entorno Sostenible, Digital y Conectado",
+    "acciones": [
+      {
+        "codigo": "ACC-1.1.1",
+        "titulo": "Organizar anualmente actividades de sensibilización ambiental dirigidas a la población joven, incluyendo talleres, jornadas de limpieza del entorno, rutas interpretativas y actividades de conocimiento del patrimonio natural y cultural de Orcera.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-1.1.2",
+        "titulo": "Promover iniciativas juveniles relacionadas con la protección del medio ambiente, la conservación del patrimonio y la puesta en valor de los recursos naturales y culturales del municipio.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-1.1.3",
+        "titulo": "Desarrollar campañas de sensibilización sobre reciclaje, consumo responsable, ahorro energético, cuidado del agua y conservación del entorno, utilizando medios presenciales y digitales.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-1.2.1",
+        "titulo": "Organizar talleres prácticos sobre competencias digitales aplicadas a la formación, el empleo, la realización de trámites administrativos y el acceso a recursos públicos.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-1.2.2",
+        "titulo": "Desarrollar acciones de sensibilización sobre el uso seguro y responsable de internet y las redes sociales, abordando la privacidad, la protección de datos, la desinformación y los riesgos digitales.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-1.2.3",
+        "titulo": "Difundir información sobre cursos, plataformas y herramientas digitales gratuitas o de bajo coste que favorezcan la formación y el desarrollo personal y profesional de la juventud.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-1.3.1",
+        "titulo": "Crear y mantener un espacio digital de información juvenil que reúna recursos, servicios, actividades, convocatorias, oportunidades formativas, empleo y programas de movilidad.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-1.3.2",
+        "titulo": "Difundir periódicamente oportunidades de formación, empleo, participación, movilidad y ocio a través de los canales digitales municipales.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-1.3.3",
+        "titulo": "Facilitar el acceso de la juventud a espacios municipales equipados con conexión a internet y recursos tecnológicos para actividades académicas, formativas, laborales y de participación.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  },
+  {
+    "numero": 2,
+    "titulo": "Ocio, Cultura, deporte y Vida Saludable",
+    "acciones": [
+      {
+        "codigo": "ACC-2.1.1",
+        "titulo": "Elaborar una programación anual de ocio juvenil que incluya actividades lúdicas, recreativas y de convivencia adaptadas a los diferentes grupos de edad e intereses de la juventud.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-2.1.2",
+        "titulo": "Impulsar actividades de ocio alternativo y saludable durante los fines de semana, periodos vacacionales y celebraciones municipales.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-2.1.3",
+        "titulo": "Promover la participación de la juventud en el diseño de las actividades de ocio mediante encuestas, reuniones y propuestas juveniles.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-2.2.1",
+        "titulo": "Organizar talleres culturales, artísticos y creativos relacionados con la música, la pintura, la fotografía, el teatro, la escritura y otras disciplinas de interés juvenil.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-2.2.2",
+        "titulo": "Crear espacios y actividades para la exposición y difusión de las creaciones y talentos de las personas jóvenes de Orcera.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-2.2.3",
+        "titulo": "Facilitar la participación juvenil en actividades culturales del municipio, incluyendo celebraciones, encuentros, concursos y proyectos artísticos.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-2.3.1",
+        "titulo": "Desarrollar una programación deportiva juvenil que incluya actividades individuales, colectivas y al aire libre adaptadas a diferentes edades y capacidades.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-2.3.2",
+        "titulo": "Organizar campañas y talleres de sensibilización sobre alimentación equilibrada, descanso, actividad física y prevención de hábitos perjudiciales para la salud.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-2.3.3",
+        "titulo": "Promover actividades deportivas inclusivas y de convivencia que favorezcan las relaciones sociales y la participación de jóvenes con diferentes capacidades.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  },
+  {
+    "numero": 3,
+    "titulo": "Emancipación, Empleo, Formación y Vivienda",
+    "acciones": [
+      {
+        "codigo": "ACC-3.1.1",
+        "titulo": "Difundir información actualizada sobre ciclos formativos, estudios universitarios, becas, cursos de formación y otras oportunidades de cualificación.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-3.1.2",
+        "titulo": "Organizar sesiones de orientación académica y profesional para ayudar a la juventud a conocer las opciones formativas disponibles y los itinerarios de acceso.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-3.1.3",
+        "titulo": "Facilitar el acceso a cursos de formación presencial y online relacionados con las necesidades e intereses de la población joven.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-3.2.1",
+        "titulo": "Difundir ofertas de empleo, programas de contratación, bolsas de trabajo, prácticas y recursos de orientación laboral dirigidos a la población joven.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-3.2.2",
+        "titulo": "Organizar talleres de orientación laboral sobre elaboración de currículos, entrevistas de trabajo, búsqueda activa de empleo y competencias profesionales.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-3.2.3",
+        "titulo": "Promover sesiones informativas sobre emprendimiento, autoempleo y recursos de apoyo para la creación de iniciativas empresariales juveniles.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-3.3.1",
+        "titulo": "Difundir información sobre ayudas al alquiler, programas de vivienda, subvenciones y recursos disponibles para la emancipación juvenil.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-3.3.2",
+        "titulo": "Organizar sesiones informativas sobre los trámites, requisitos y recursos relacionados con el acceso a la vivienda y la emancipación.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-3.3.3",
+        "titulo": "Estudiar las necesidades de vivienda de la población joven mediante consultas y mecanismos de participación que permitan identificar posibles actuaciones municipales.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  },
+  {
+    "numero": 4,
+    "titulo": "Participación Juvenil, Ciudadanía Activa y Voluntariado",
+    "acciones": [
+      {
+        "codigo": "ACC-4.1.1",
+        "titulo": "Crear espacios periódicos de encuentro entre la juventud y el Ayuntamiento para recoger necesidades, propuestas e iniciativas relacionadas con el municipio.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-4.1.2",
+        "titulo": "Crear o reforzar canales digitales de participación juvenil para facilitar la comunicación entre la población joven y el Ayuntamiento.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-4.1.3",
+        "titulo": "Promover consultas juveniles sobre la planificación y valoración de las actividades y políticas municipales dirigidas a la juventud.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-4.2.1",
+        "titulo": "Difundir información sobre los requisitos, trámites y ventajas de la creación y participación en asociaciones juveniles.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-4.2.2",
+        "titulo": "Facilitar espacios y recursos municipales para el desarrollo de reuniones, actividades y proyectos promovidos por asociaciones y grupos juveniles.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-4.2.3",
+        "titulo": "Impulsar convocatorias o iniciativas de apoyo a proyectos juveniles que contribuyan a la dinamización social, cultural y comunitaria de Orcera.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-4.3.1",
+        "titulo": "Organizar campañas de información y sensibilización sobre el voluntariado y las posibilidades de participación solidaria existentes en el municipio y su entorno.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-4.3.2",
+        "titulo": "Promover la participación juvenil en actividades solidarias, medioambientales, culturales y comunitarias.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-4.3.3",
+        "titulo": "Establecer colaboraciones con asociaciones y entidades sociales para facilitar la incorporación de jóvenes a proyectos de voluntariado.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  },
+  {
+    "numero": 5,
+    "titulo": "Salud, Bienestar Emocional E Inclusión Social",
+    "acciones": [
+      {
+        "codigo": "ACC-5.1.1",
+        "titulo": "Desarrollar campañas de prevención y sensibilización sobre consumo de alcohol, tabaco, otras sustancias, juego problemático y uso excesivo de las tecnologías.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-5.1.2",
+        "titulo": "Organizar talleres sobre alimentación saludable, descanso, higiene personal, actividad física y prevención de conductas perjudiciales para la salud.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-5.1.3",
+        "titulo": "Difundir información sobre los recursos sanitarios y de prevención disponibles para la población joven.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-5.2.1",
+        "titulo": "Organizar talleres de educación emocional sobre autoestima, gestión de emociones, resolución de dificultades y desarrollo de habilidades personales.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-5.2.2",
+        "titulo": "Desarrollar acciones de sensibilización para prevenir el estigma relacionado con la salud mental y favorecer la búsqueda de ayuda profesional.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-5.2.3",
+        "titulo": "Difundir información sobre los servicios de atención psicológica, orientación y apoyo emocional disponibles para la población joven.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-5.3.1",
+        "titulo": "Elaborar y difundir información accesible sobre los recursos sociales, educativos, sanitarios y de orientación disponibles para la juventud.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-5.3.2",
+        "titulo": "Promover acciones de sensibilización sobre inclusión social, diversidad, discapacidad y prevención de la discriminación.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-5.3.3",
+        "titulo": "Facilitar la orientación y derivación de jóvenes en situación de vulnerabilidad hacia los servicios y recursos de apoyo correspondientes.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  },
+  {
+    "numero": 6,
+    "titulo": "Igualdad, Diversidad y Convivencia",
+    "acciones": [
+      {
+        "codigo": "ACC-6.1.1",
+        "titulo": "Organizar talleres y campañas de sensibilización sobre igualdad de género, estereotipos, roles y corresponsabilidad dirigidos a la población joven.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-6.1.2",
+        "titulo": "Desarrollar actividades de prevención de la violencia de género y de sensibilización sobre relaciones igualitarias y libres de violencia.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-6.1.3",
+        "titulo": "Promover el uso de un lenguaje inclusivo y la eliminación de estereotipos sexistas en las actividades y comunicaciones municipales dirigidas a la juventud.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-6.2.1",
+        "titulo": "Organizar actividades de sensibilización sobre diversidad cultural, funcional, sexual y de género, promoviendo el respeto y la igualdad de trato.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-6.2.2",
+        "titulo": "Incorporar criterios de accesibilidad e inclusión en las actividades juveniles organizadas por el Ayuntamiento.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-6.2.3",
+        "titulo": "Desarrollar campañas de prevención de cualquier forma de discriminación, acoso o discurso de odio entre la población joven.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-6.3.1",
+        "titulo": "Organizar talleres sobre comunicación, empatía, diálogo, resolución pacífica de conflictos y convivencia.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-6.3.2",
+        "titulo": "Promover actividades grupales y comunitarias que favorezcan la convivencia, la cooperación y las relaciones respetuosas entre la juventud.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-6.3.3",
+        "titulo": "Difundir pautas y recursos para la prevención y gestión de conflictos en los espacios educativos, digitales, familiares y comunitarios.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  },
+  {
+    "numero": 7,
+    "titulo": "Gobernanza, Innovación y Evaluación de las Políticas de Juventud",
+    "acciones": [
+      {
+        "codigo": "ACC-7.1.1",
+        "titulo": "Establecer mecanismos periódicos de coordinación entre las concejalías municipales para planificar y desarrollar las actuaciones dirigidas a la juventud.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-7.1.2",
+        "titulo": "Impulsar la colaboración con centros educativos, asociaciones, entidades sociales y agentes económicos para el desarrollo de actuaciones juveniles.",
+        "anos": [
+          2027,
+          2028
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2027–2028)"
+      },
+      {
+        "codigo": "ACC-7.1.3",
+        "titulo": "Elaborar una agenda o planificación coordinada de las actividades municipales dirigidas a la población joven.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-7.2.1",
+        "titulo": "Incorporar herramientas digitales y participativas para conocer los intereses, necesidades y propuestas de la población joven.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-7.2.2",
+        "titulo": "Promover metodologías dinámicas y participativas en las actividades juveniles, adaptándolas a las diferentes edades, intereses y características de la población destinataria.",
+        "anos": [
+          2028,
+          2029,
+          2030
+        ],
+        "duracionTipo": "3_anos",
+        "vigencia": "3 años (2028–2030)"
+      },
+      {
+        "codigo": "ACC-7.2.3",
+        "titulo": "Identificar y difundir buenas prácticas y experiencias innovadoras desarrolladas en otros municipios y entidades en materia de juventud.",
+        "anos": [
+          2029,
+          2030
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2029–2030)"
+      },
+      {
+        "codigo": "ACC-7.3.1",
+        "titulo": "Establecer un sistema anual de seguimiento del III Plan Municipal de Juventud que permita registrar el grado de ejecución de las acciones previstas.",
+        "anos": [
+          2027
+        ],
+        "duracionTipo": "1_ano",
+        "vigencia": "1 año (2027)"
+      },
+      {
+        "codigo": "ACC-7.3.2",
+        "titulo": "Elaborar informes anuales de evaluación que recojan las actuaciones desarrolladas, los resultados obtenidos, las dificultades encontradas y las propuestas de mejora.",
+        "anos": [
+          2027,
+          2028,
+          2029,
+          2030,
+          2031
+        ],
+        "duracionTipo": "5_anos",
+        "vigencia": "Quinquenal (2027–2031)"
+      },
+      {
+        "codigo": "ACC-7.3.3",
+        "titulo": "Realizar una evaluación final del Plan de Juventud para valorar su impacto y orientar la elaboración de futuras políticas municipales de juventud.",
+        "anos": [
+          2030,
+          2031
+        ],
+        "duracionTipo": "2_anos",
+        "vigencia": "2 años (2030–2031)"
+      }
+    ]
+  }
+]
