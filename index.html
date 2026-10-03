@@ -22,51 +22,10 @@
   <link rel="stylesheet" href="css/styles.css?v=kliko_brand_v1">
 </head>
 <body>
-  <!-- CONTENEDOR GLOBAL CON SWITCHER DE DISPOSITIVO (MÓVIL / PANTALLA COMPLETA) -->
+  <!-- CONTENEDOR GLOBAL (PANTALLA LIMPIA NATIVA) -->
   <div class="app-layout">
     
-    <!-- BARRA SUPERIOR DE HERRAMIENTAS DE PREVISUALIZACIÓN -->
-    <header class="preview-toolbar">
-      <div class="toolbar-brand">
-        <img src="img/kliko_emblem.png" alt="KLIKO" class="toolbar-logo-icon">
-        <div class="toolbar-brand-text">
-          <strong class="toolbar-kliko-title">KLIKO</strong>
-          <span class="toolbar-sub">· Orcera Joven 2027–2031</span>
-        </div>
-      </div>
-      <div class="toolbar-controls">
-        <div id="supabase-status-badge" class="supabase-badge" title="Conectando a Supabase...">
-          <span class="cloud-dot online"></span>
-          <span>Supabase En Vivo</span>
-        </div>
-        <button id="btn-promo-share-toolbar" class="btn-tool" title="Promocionar la App (+25 Pts)" style="color:var(--cyber-coral); border-color:rgba(255,87,34,0.4); font-weight:700;">
-          <span>📣</span>
-          <span class="btn-text">¡Promocionar! (+25 Pts)</span>
-        </button>
-        <a href="presentacion.html" target="_blank" id="btn-presentacion-toolbar" class="btn-tool" title="Proyectar Transparencias PPT para el Alcalde y el Pleno" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)); border-color: rgba(16, 185, 129, 0.5); color: #34d399; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-          <span>📽️</span>
-          <span class="btn-text">Presentación PPT</span>
-        </a>
-        <button id="btn-admin-access" class="btn-tool" title="Panel de Gestión Municipal (Concejalía y Técnico)" style="background: linear-gradient(135deg, rgba(6, 78, 59, 0.4), rgba(6, 182, 212, 0.2)); border-color: var(--amurjo-cyan); font-weight:700;">
-          <span>🏛️</span>
-          <span class="btn-text">Panel Municipal</span>
-        </button>
-        <button id="user-toolbar-btn" class="btn-tool" title="Identidad Cívica y Cambio de Usuario">
-          <span id="toolbar-avatar-icon">👤</span>
-          <span class="btn-text" id="toolbar-user-name">Sara (Sesión)</span>
-        </button>
-        <button id="toggle-device-view" class="btn-tool" title="Alternar marco de smartphone">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg>
-          <span class="btn-text">Modo Móvil / Libre</span>
-        </button>
-        <button id="theme-toggle" class="btn-tool" title="Alternar Modo Oscuro/Claro">
-          <span id="theme-icon">🌙</span>
-          <span class="btn-text">Tema</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- CHASIS DE DISPOSITIVO MÓVIL (SIMULADOR SMARTPHONE) -->
+    <!-- CHASIS DE DISPOSITIVO MÓVIL (SIMULADOR SMARTPHONE / PANTALLA COMPLETA) -->
     <div class="phone-frame-wrapper" id="frame-wrapper">
       <div class="smartphone-chassis" id="smartphone-chassis">
         <!-- NOTCH / ISLA DINÁMICA -->
@@ -88,14 +47,40 @@
         <!-- CONTENIDO SCROLLABLE DE LA APP -->
         <div class="mobile-viewport" id="mobile-viewport">
           
-          <!-- BARRA DE MARCA SUPERIOR KLIKO -->
+          <!-- BARRA SUPERIOR INTEGRADA: MARCA + ACCIONES RÁPIDAS (INTERNA Y RESPONSIVE) -->
           <div class="kliko-mobile-brand-bar">
             <div class="kliko-brand-badge">
               <img src="img/kliko_emblem.png" alt="KLIKO Emblema" class="kliko-brand-logo-img">
-              <span class="kliko-brand-title">KLIKO</span>
-              <span class="kliko-brand-pill">Orcera Joven</span>
+              <div class="kliko-brand-info">
+                <div class="kliko-title-row">
+                  <span class="kliko-brand-title">KLIKO</span>
+                  <div id="supabase-status-badge" class="supabase-micro-badge" title="Supabase Cloud Conectado">
+                    <span class="cloud-dot online"></span>
+                    <span class="cloud-status-text">En Vivo</span>
+                  </div>
+                </div>
+                <span class="kliko-brand-pill">Orcera 2027–2031</span>
+              </div>
             </div>
-            <div class="kliko-brand-tag">2027–2031</div>
+
+            <!-- CONTROLES ESENCIALES INTEGRADOS DENTRO DE LA PANTALLA -->
+            <div class="kliko-top-actions">
+              <a href="presentacion.html" target="_blank" id="btn-presentacion-toolbar" class="app-top-action-btn" title="Proyectar Presentación PPT para el Pleno">
+                <span class="btn-action-icon">📽️</span>
+                <span class="btn-action-label">PPT</span>
+              </a>
+              <button id="btn-admin-access" class="app-top-action-btn" title="Panel de Gestión Municipal (Concejalía y Técnico)">
+                <span class="btn-action-icon">🏛️</span>
+                <span class="btn-action-label">Gestión</span>
+              </button>
+              <button id="toggle-device-view" class="app-top-action-btn desktop-only" title="Alternar entre modo smartphone y pantalla completa libre">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg>
+                <span class="btn-action-label">Libre</span>
+              </button>
+              <button id="theme-toggle" class="app-top-action-btn theme-action-btn" title="Alternar Modo Oscuro/Claro">
+                <span id="theme-icon">🌙</span>
+              </button>
+            </div>
           </div>
 
           <!-- CABECERA DE LA APP CON PERFIL Y PUNTOS CÍVICOS -->

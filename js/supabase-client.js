@@ -44,15 +44,15 @@ class KlikoDatabaseService {
     const badge = document.getElementById("supabase-status-badge");
     if (badge) {
       if (connected) {
-        badge.innerHTML = `<span class="cloud-dot online"></span> <span>Supabase En Vivo</span>`;
+        badge.innerHTML = `<span class="cloud-dot online"></span><span class="cloud-status-text">En Vivo</span>`;
         badge.classList.remove("offline");
         badge.classList.add("online");
-        badge.title = "Conectado a la base de datos oficial en la nube de Orcera (Supabase PostgreSQL)";
+        badge.title = "Supabase Cloud Conectado (Orcera)";
       } else {
-        badge.innerHTML = `<span class="cloud-dot offline"></span> <span>Modo Local</span>`;
+        badge.innerHTML = `<span class="cloud-dot offline"></span><span class="cloud-status-text">Local</span>`;
         badge.classList.remove("online");
         badge.classList.add("offline");
-        badge.title = "Trabajando con almacenamiento local en este dispositivo";
+        badge.title = "Trabajando en modo local";
       }
     }
   }

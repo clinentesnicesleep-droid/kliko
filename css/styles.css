@@ -95,94 +95,29 @@ body {
               var(--segura-dark);
 }
 
-.preview-toolbar {
-  width: 100%;
-  max-width: 1100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  background: var(--segura-surface);
-  border-bottom: 1px solid var(--segura-border);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.toolbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-}
-
-.badge-segura {
-  background: linear-gradient(135deg, var(--pine-green), var(--pine-light));
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.toolbar-sub {
-  color: var(--text-muted);
-  font-weight: 400;
-  display: none;
-}
-@media (min-width: 640px) {
-  .toolbar-sub { display: inline; }
-}
-
-.toolbar-logo-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.toolbar-brand-text {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.toolbar-kliko-title {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Barra de Identidad KLIKO en Móvil */
+/* Barra de Identidad KLIKO y Acciones Rápidas Integradas dentro de la App */
 .kliko-mobile-brand-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 10px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  margin-bottom: 8px;
+  padding: 8px 12px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 10px;
+  gap: 8px;
+  background: rgba(6, 78, 59, 0.2);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
 .kliko-brand-badge {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
 }
 
 .kliko-brand-logo-img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1.5px solid rgba(6, 182, 212, 0.4);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -190,9 +125,22 @@ body {
   flex-shrink: 0;
 }
 
+.kliko-brand-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.kliko-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .kliko-brand-title {
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1.12rem;
   font-weight: 900;
   letter-spacing: 0.05em;
   color: var(--text-main);
@@ -202,19 +150,120 @@ body {
   font-size: 0.65rem;
   font-weight: 700;
   color: var(--amurjo-cyan);
-  background: rgba(6, 182, 212, 0.12);
-  border: 1px solid rgba(6, 182, 212, 0.25);
-  padding: 1px 7px;
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
-.kliko-brand-tag {
-  font-size: 0.68rem;
+.supabase-micro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-full);
+  padding: 1px 6px;
+  font-size: 0.62rem;
   font-weight: 700;
-  color: var(--text-muted);
-  font-family: monospace;
+  color: #34d399;
+}
+.supabase-micro-badge.offline {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+/* Grupo de botones esenciales integrados en cabecera */
+.kliko-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.app-top-action-btn {
+  background: var(--segura-surface-elevated);
+  border: 1px solid var(--segura-border);
+  color: var(--text-main);
+  padding: 5px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.73rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  transition: all 0.2s var(--ease-smooth);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.app-top-action-btn:hover {
+  background: var(--segura-border);
+  border-color: var(--amurjo-cyan);
+  transform: translateY(-1px);
+}
+
+.app-top-action-btn:active {
+  transform: scale(0.95);
+}
+
+.app-top-action-btn.active {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--amurjo-cyan);
+  color: var(--amurjo-cyan);
+}
+
+.app-top-action-btn.theme-action-btn {
+  padding: 5px 8px;
+  font-size: 0.85rem;
+}
+
+.btn-action-icon {
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-action-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
+}
+
+/* Adaptación responsive para móviles reales */
+@media (max-width: 600px) {
+  .phone-frame-wrapper {
+    padding: 0 !important;
+  }
+  .smartphone-chassis {
+    max-width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .device-notch {
+    display: none !important;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+  .cloud-status-text {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .btn-action-label {
+    display: none;
+  }
+  .app-top-action-btn {
+    padding: 6px;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    border-radius: 50%;
+  }
 }
 
 /* Hero Brand Lockup */

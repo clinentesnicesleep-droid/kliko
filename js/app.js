@@ -214,14 +214,20 @@ function initTheme() {
 function initDeviceToggle() {
   const btn = document.getElementById("toggle-device-view");
   const wrapper = document.getElementById("frame-wrapper");
+  if (!btn || !wrapper) return;
   btn.addEventListener("click", () => {
     AppState.isFreeMode = !AppState.isFreeMode;
+    const txt = btn.querySelector(".btn-text") || btn.querySelector(".btn-action-label");
     if (AppState.isFreeMode) {
       wrapper.classList.add("free-mode");
-      btn.querySelector(".btn-text").textContent = "Modo Smartphone";
+      if (txt) txt.textContent = "Móvil";
+      btn.title = "Volver a marco de smartphone";
+      btn.classList.add("active");
     } else {
       wrapper.classList.remove("free-mode");
-      btn.querySelector(".btn-text").textContent = "Modo Libre";
+      if (txt) txt.textContent = "Libre";
+      btn.title = "Alternar a pantalla completa libre";
+      btn.classList.remove("active");
     }
   });
 }
