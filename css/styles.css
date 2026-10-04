@@ -5787,7 +5787,7 @@ body {
 
 /* Modal de Políticas Legales */
 #eu-policies-modal {
-  z-index: 9999 !important;
+  z-index: 99999 !important;
 }
 #eu-policies-modal.active {
   display: flex !important;

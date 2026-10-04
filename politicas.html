@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Marco Legal y Políticas Públicas · KLIKO · Ayuntamiento de Orcera</title>
+  <meta name="description" content="Marco regulatorio, Política de Privacidad, Protección de Datos (RGPD), Aviso Legal, Cookies y Accesibilidad del III Plan Municipal de Juventud de Orcera (2027-2031).">
+  
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #060b13;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --bg-card-elevated: rgba(22, 33, 54, 0.95);
+      --surface-border: rgba(255, 255, 255, 0.1);
+      --surface-border-subtle: rgba(255, 255, 255, 0.05);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --pine-green: #064e3b;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amurjo-cyan: #06b6d4;
+      --amber: #f59e0b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f0f4f8;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-elevated: #ffffff;
+      --surface-border: rgba(0, 0, 0, 0.1);
+      --surface-border-subtle: rgba(0, 0, 0, 0.05);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --emerald-glow: rgba(16, 185, 129, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.7;
+      padding-bottom: 80px;
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* BARRA DE NAVEGACIÓN SUPERIOR */
+    .legal-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(6, 11, 19, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    [data-theme="light"] .legal-nav {
+      background: rgba(240, 244, 248, 0.92);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .nav-brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 3px;
+      border: 1px solid var(--surface-border);
+    }
+    .nav-brand-text h1 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .nav-brand-text span {
+      font-size: 0.72rem;
+      color: var(--emerald);
+      font-weight: 600;
+      display: block;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: var(--emerald);
+      color: #062b1f;
+      border-color: var(--emerald);
+      transform: translateY(-1px);
+    }
+    .nav-btn-primary {
+      background: var(--emerald);
+      color: #062b1f;
+      border-color: var(--emerald);
+    }
+    .nav-btn-primary:hover {
+      background: #34d399;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .legal-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 20px 0;
+    }
+
+    /* CABECERA DEL PORTAL */
+    .legal-hero {
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .legal-hero::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, var(--emerald-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .legal-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald);
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .legal-hero h2 {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .legal-hero p {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin-bottom: 18px;
+    }
+    .legal-entity-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      font-size: 0.8rem;
+    }
+    .legal-entity-item strong {
+      color: var(--text-main);
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
+    .legal-entity-item span {
+      color: var(--text-muted);
+    }
+
+    /* PESTAÑAS DE NAVEGACIÓN ENTRE POLÍTICAS */
+    .legal-tabs-wrapper {
+      position: sticky;
+      top: 65px;
+      z-index: 900;
+      background: var(--bg-dark);
+      padding: 10px 0 16px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .legal-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 4px;
+    }
+    .tab-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .tab-link:hover {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--text-main);
+      border-color: var(--emerald);
+    }
+    .tab-link.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 78, 59, 0.5) 100%);
+      color: #34d399;
+      border-color: var(--emerald);
+      box-shadow: 0 0 16px var(--emerald-glow);
+    }
+
+    /* TARJETAS DE CONTENIDO LEGAL */
+    .policy-section {
+      background: var(--bg-card);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 32px 30px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      scroll-margin-top: 130px;
+    }
+    .policy-section.highlighted {
+      border-color: var(--emerald);
+      box-shadow: 0 0 25px var(--emerald-glow);
+    }
+
+    .policy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .policy-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .policy-intro {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      line-height: 1.7;
+    }
+
+    /* CUADRÍCULA DE ESPECIFICACIONES LEGALES */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (min-width: 768px) {
+      .spec-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .spec-card {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--surface-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    [data-theme="light"] .spec-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+    .spec-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      transform: translateY(-2px);
+    }
+    .spec-card-full {
+      grid-column: 1 / -1;
+    }
+    .spec-card strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .spec-card strong span {
+      color: var(--emerald);
+    }
+    .spec-card p, .spec-card span {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .spec-card code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: var(--amurjo-cyan);
+      font-size: 0.82rem;
+    }
+
+    /* TABLA RESUMEN / MATRIZ */
+    .legal-table-wrapper {
+      overflow-x: auto;
+      margin: 18px 0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--surface-border);
+    }
+    .legal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+    .legal-table th, .legal-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .legal-table th {
+      background: rgba(0, 0, 0, 0.35);
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: 0.74rem;
+    }
+    [data-theme="light"] .legal-table th {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .legal-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ALERTA O CALLOUT DESTACADO */
+    .callout-box {
+      background: rgba(6, 78, 59, 0.25);
+      border-left: 4px solid var(--emerald);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+    .callout-box strong {
+      color: #34d399;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* FOOTER INSTITUCIONAL */
+    .legal-footer {
+      border-top: 1px solid var(--surface-border);
+      padding-top: 30px;
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .legal-footer p {
+      margin-bottom: 8px;
+    }
+    .legal-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .legal-footer-links a {
+      color: var(--emerald);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .legal-footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media print {
+      .legal-nav, .legal-tabs-wrapper, .nav-controls, .nav-btn {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .policy-section {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+      }
+      .spec-card {
+        background: #f9f9f9 !important;
+        border: 1px solid #eee !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN SUPERIOR -->
+  <nav class="legal-nav" aria-label="Navegación Institucional">
+    <a href="index.html" class="nav-brand" title="Volver a la App Principal de KLIKO">
+      <img src="img/kliko_emblem.png" alt="KLIKO" class="nav-brand-logo">
+      <div class="nav-brand-text">
+        <h1>KLIKO · MARCO LEGAL</h1>
+        <span>Ayuntamiento de Orcera · Jaén</span>
+      </div>
+    </a>
+    <div class="nav-controls">
+      <button type="button" class="nav-btn" id="theme-toggle" title="Cambiar tema">
+        <span id="theme-icon">🌙</span> <span id="theme-text">Oscuro</span>
+      </button>
+      <button type="button" class="nav-btn" onclick="window.print()" title="Imprimir o guardar PDF">
+        🖨️ <span class="hide-mobile">Imprimir PDF</span>
+      </button>
+      <a href="index.html" class="nav-btn nav-btn-primary" title="Abrir la App KLIKO">
+        🚀 <span>Abrir KLIKO</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="legal-container">
+
+    <!-- HERO PRINCIPAL DE TRANSPARENCIA -->
+    <header class="legal-hero">
+      <div class="legal-hero-badge">
+        <span>⚖️ Transparencia & Cumplimiento Normativo UE/España</span>
+      </div>
+      <h2>Marco Jurídico Institucional y Garantías Cívicas</h2>
+      <p>
+        KLIKO es la plataforma digital de participación juvenil oficial del <strong>Ayuntamiento de Orcera</strong> (Jaén), desarrollada en el marco del <strong>III Plan Municipal de Juventud (2027–2031)</strong>. Diseñada bajo el principio de <em>Privacidad desde el Diseño y por Defecto</em>, cumple rigurosamente con el RGPD, la LOPDGDD, la LSSI-CE y el Real Decreto 1112/2018 sobre accesibilidad del sector público.
+      </p>
+
+      <div class="legal-entity-box">
+        <div class="legal-entity-item">
+          <strong>Organismo Titular:</strong>
+          <span>Excmo. Ayuntamiento de Orcera (Concejalía de Juventud)</span>
+        </div>
+        <div class="legal-entity-item">
+          <strong>NIF / CIF Oficial:</strong>
+          <span>P-2306500-G</span>
+        </div>
+        <div class="legal-entity-item">
+          <strong>Sede Institucional:</strong>
+          <span>Plaza del Ayuntamiento, 1, 23370 Orcera (Jaén)</span>
+        </div>
+        <div class="legal-entity-item">
+          <strong>Contacto de Transparencia:</strong>
+          <span><code>ayuntamiento@orcera.es</code> · Tel: 953 49 60 11</span>
+        </div>
+        <div class="legal-entity-item">
+          <strong>Delegado de Protección de Datos (DPD):</strong>
+          <span><code>dpd@orcera.es</code> (Servicio Jurídico de Asistencia Local)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PESTAÑAS DE NAVEGACIÓN DIRECTA -->
+    <div class="legal-tabs-wrapper">
+      <nav class="legal-tabs" aria-label="Secciones Legales">
+        <a href="#privacidad" class="tab-link active" data-target="privacidad">
+          <span>🔒</span> 1. Política de Privacidad
+        </a>
+        <a href="#legal" class="tab-link" data-target="legal">
+          <span>⚖️</span> 2. Aviso Legal y Términos
+        </a>
+        <a href="#proteccion-datos" class="tab-link" data-target="proteccion-datos">
+          <span>🛡️</span> 3. Protección de Datos (RGPD)
+        </a>
+        <a href="#cookies" class="tab-link" data-target="cookies">
+          <span>🍪</span> 4. Cookies & Almacenamiento
+        </a>
+        <a href="#accesibilidad" class="tab-link" data-target="accesibilidad">
+          <span>♿</span> 5. Declaración Accesibilidad
+        </a>
+      </nav>
+    </div>
+
+    <!-- 1. POLÍTICA DE PRIVACIDAD -->
+    <section id="privacidad" class="policy-section">
+      <div class="policy-badge">
+        <span>🔒 Artículo 13 y 14 RGPD (UE 2016/679)</span>
+      </div>
+      <h3>🔒 1. Política de Privacidad y Tratamiento de Información</h3>
+      <p class="policy-intro">
+        El Ayuntamiento de Orcera garantiza el tratamiento confidencial, seguro y leal de toda la información manejada a través de la aplicación web y PWA de KLIKO. No recopilamos datos con fines comerciales ni compartimos identificadores con anunciantes.
+      </p>
+
+      <div class="callout-box">
+        <strong>Principio de Minimización de Datos (Art. 5.1.c RGPD)</strong>
+        Para participar en las votaciones comunitarias y sugerencias no se solicita DNI en el teléfono. Solo se vincula al padrón municipal de forma disociada mediante código cívico si el usuario desea canjear entradas gratuitas en la taquilla física de la Piscina de Amurjo o tramitar el carnet de la Asociación Juvenil.
+      </div>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <strong><span>🏛️</span> Responsable del Tratamiento</strong>
+          <p>
+            Ayuntamiento de Orcera, con CIF P-2306500-G y sede en Plaza del Ayuntamiento, 1, 23370 Orcera (Jaén). Canal de atención: <code>ayuntamiento@orcera.es</code>.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>⚖️</span> Base Jurídica de Legitimación</strong>
+          <p>
+            Cumplimiento de una misión realizada en <strong>interés público</strong> y ejercicio de potestades públicas (Art. 6.1.e RGPD) conf. a la Ley 7/1985 de Bases de Régimen Local para fomento asociativo y juvenil, sumado al <strong>consentimiento expreso</strong> (Art. 6.1.a RGPD).
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>🎯</span> Finalidades Específicas</strong>
+          <p>
+            1. Registro y moderación de propuestas en el Buzón Joven vecinal.<br>
+            2. Cómputo democrático de votos en presupuestos participativos.<br>
+            3. Asignación transparente de Puntos Orcera y bonos canjeables.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>⏳</span> Plazo de Conservación</strong>
+          <p>
+            Los registros se conservarán mientras dure la ejecución del III Plan Municipal de Juventud (2027–2031) o hasta que la persona interesada ejerza su derecho de supresión de cuenta.
+          </p>
+        </div>
+
+        <div class="spec-card spec-card-full">
+          <strong><span>🛡️</span> Ejercicio de Derechos ARCO-POL</strong>
+          <p>
+            Cualquier persona puede ejercer gratuitamente sus derechos de <strong>Acceso, Rectificación, Supresión ("derecho al olvido"), Limitación del tratamiento, Portabilidad y Oposición</strong> enviando escrito firmado con fotocopia de documento de identidad a <code>ayuntamiento@orcera.es</code> o en el Registro Municipal. Si considera vulnerados sus derechos, puede reclamar ante la <strong>Agencia Española de Protección de Datos (AEPD)</strong> en <code>www.aepd.es</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. AVISO LEGAL Y CONDICIONES DE USO -->
+    <section id="legal" class="policy-section">
+      <div class="policy-badge">
+        <span>⚖️ Ley 34/2002 de Servicios de la Sociedad de la Información (LSSI-CE)</span>
+      </div>
+      <h3>⚖️ 2. Aviso Legal y Condiciones Generales de Uso</h3>
+      <p class="policy-intro">
+        El acceso y utilización de la plataforma KLIKO atribuye la condición de usuaria/o e implica la aceptación plena de las presentes condiciones, concebidas para salvaguardar la convivencia democrática y el uso constructivo de los recursos públicos.
+      </p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <strong><span>📜</span> Objeto del Servicio Cívico</strong>
+          <p>
+            KLIKO es un canal digital participativo municipal, gratuito y universal, destinado a la juventud orcereña y serrana para canalizar demandas, proyectos de ocio saludable y presupuestos de inversión.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>🚫</span> Código de Conducta y Moderación</strong>
+          <p>
+            No se admiten mensajes que constituyan delitos de odio, calumnias, difamaciones, publicidad comercial ajena ni contenidos que atenten contra la dignidad o intimidad vecinal. La Concejalía de Juventud se reserva el derecho de archivar propuestas contrarias a las normas de convivencia.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>💡</span> Propiedad Intelectual y Licencias</strong>
+          <p>
+            Las marcas KLIKO, el escudo institucional de Orcera y los manuales del III Plan son propiedad municipal. Las propuestas vecinales se aportan bajo espíritu de cocreación ciudadana abierta en beneficio común del municipio.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>⚙️</span> Régimen de Disponibilidad Técnica</strong>
+          <p>
+            El Ayuntamiento adopta medidas de vanguardia para la disponibilidad 24/7 y la seguridad mediante arquitectura PWA, aunque no se responsabiliza de cortes derivados de fuerza mayor o fallos en las redes de telecomunicaciones.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PROTECCIÓN DE DATOS Y GARANTÍAS A MENORES -->
+    <section id="proteccion-datos" class="policy-section">
+      <div class="policy-badge">
+        <span>🛡️ Ley Orgánica 3/2018 (LOPDGDD) y Protocolo Juvenil</span>
+      </div>
+      <h3>🛡️ 3. Protección de Datos y Protocolo Especial para la Juventud</h3>
+      <p class="policy-intro">
+        En cumplimiento del <strong>artículo 7 de la LOPDGDD</strong> y el artículo 8 del RGPD, establecemos un protocolo riguroso para velar por los derechos digitales y la indemnidad de las personas menores de edad en el ecosistema virtual.
+      </p>
+
+      <div class="callout-box">
+        <strong>Capacidad de Consentimiento Autónomo (Art. 7 LOPDGDD España)</strong>
+        El ordenamiento jurídico español fija en <strong>14 años</strong> la edad a partir de la cual los jóvenes pueden prestar su consentimiento autónomo para servicios de la sociedad de la información. Para jóvenes de entre 12 y 13 años, el Ayuntamiento solicita la confirmación o conocimiento de tutores en el momento de expedición de credenciales presenciales.
+      </div>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <strong><span>🔒</span> Ausencia de Perfiles Comerciales</strong>
+          <p>
+            KLIKO no realiza perfilado algorítmico automatizado, venta de tendencias conductuales ni segmentación publicitaria dirigida. El uso de la app es 100% público y cívico.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>🛡️</span> Cifrado y Esquema Nacional de Seguridad</strong>
+          <p>
+            Las transferencias de datos se realizan bajo protocolo criptográfico seguro HTTPS/TLS con certificados de última generación. Los servidores de base de datos residen en la Unión Europea conforme al Esquema Nacional de Seguridad (ENS).
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>🤝</span> Asociación Juvenil de Orcera</strong>
+          <p>
+            Al solicitar la adhesión asociativa, los datos identificativos son tratados conjuntamente por el Ayuntamiento y la directiva de la Asociación Juvenil de Orcera exclusivamente para emitir el carnet de socio y organizar asambleas.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>🏊‍♂️</span> Control Antifraude en Recompensas</strong>
+          <p>
+            Los códigos QR generados son tokens unívocos de uso personal e intransferible. El personal de control en Amurjo o en eventos municipales solo verifica la validez del bono sin exponer historial personal del teléfono.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. COOKIES Y ALMACENAMIENTO TÉCNICO -->
+    <section id="cookies" class="policy-section">
+      <div class="policy-badge">
+        <span>🍪 Directiva ePrivacy y Art. 22.2 LSSI-CE</span>
+      </div>
+      <h3>🍪 4. Política de Cookies y Almacenamiento Local (PWA)</h3>
+      <p class="policy-intro">
+        KLIKO aplica una estricta política de higiene digital. <strong>No utilizamos cookies de seguimiento de terceros, píxeles de Facebook ni herramientas invasivas de analítica publicitaria</strong>.
+      </p>
+
+      <div class="legal-table-wrapper">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th>Tipo de Tecnología</th>
+              <th>Nombre / Clave</th>
+              <th>Finalidad</th>
+              <th>Temporalidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Almacenamiento Local Técnico</strong></td>
+              <td><code>kliko_theme</code></td>
+              <td>Recordar tu elección de modo oscuro o claro para no deslumbrar la vista.</td>
+              <td>Persistente en tu dispositivo</td>
+            </tr>
+            <tr>
+              <td><strong>Almacenamiento Local Técnico</strong></td>
+              <td><code>kliko_user_session</code></td>
+              <td>Mantener iniciada la sesión cívica local sin pedir contraseña en cada voto.</td>
+              <td>Hasta cerrar sesión</td>
+            </tr>
+            <tr>
+              <td><strong>Service Worker Cache</strong></td>
+              <td><code>kliko-cache-v10</code></td>
+              <td>Almacenar hojas de estilo e imágenes para permitir uso sin cobertura en la Sierra.</td>
+              <td>Controlado por el navegador</td>
+            </tr>
+            <tr>
+              <td><strong>Cookies de Terceros</strong></td>
+              <td><em>Ninguna instalada</em></td>
+              <td>No se insertan scripts publicitarios ni rastreadores ajenos al Ayuntamiento.</td>
+              <td>Exentas (0 cookies)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="spec-card spec-card-full">
+        <strong><span>⚙️</span> Gestión y Limpieza de Almacenamiento</strong>
+        <p>
+          Puedes eliminar los datos locales en cualquier momento desde los ajustes de tu navegador (Chrome, Safari, Firefox, Edge) borrando los datos del sitio o pulsando el botón "Cerrar Sesión y Limpiar Datos" en la sección de tu Perfil Joven.
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. DECLARACIÓN DE ACCESIBILIDAD UNIVERSAL -->
+    <section id="accesibilidad" class="policy-section">
+      <div class="policy-badge">
+        <span>♿ Real Decreto 1112/2018 y Norma UNE-EN 301 549</span>
+      </div>
+      <h3>♿ 5. Declaración de Accesibilidad Universal</h3>
+      <p class="policy-intro">
+        El Ayuntamiento de Orcera se ha comprometido a hacer plenamente accesible la aplicación KLIKO a toda la juventud, incluidas las personas con discapacidad física, visual, auditiva o cognitiva, en consonancia con la <strong>Directiva (UE) 2016/2102</strong> y las pautas WCAG 2.1 nivel AA.
+      </p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <strong><span>👁️</span> Contraste y Tipografía Adaptable</strong>
+          <p>
+            Ratios de contraste superiores a 4.5:1 en todos los textos e iconos, con tipografías sans-serif optimizadas (Outfit y Plus Jakarta Sans) legibles a cualquier tamaño de pantalla.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>⌨️</span> Navegación Completa por Teclado</strong>
+          <p>
+            Todos los elementos interactivos, formularios y modales son operables mediante teclado (Tab, Enter, Espacio, Escape) con indicadores visuales claros de foco.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>🔊</span> Compatibilidad con Lectores de Pantalla</strong>
+          <p>
+            Etiquetado semántico HTML5 estructurado (h1, h2, h3, nav, main, article) y atributos <code>aria-label</code>, <code>role="dialog"</code> y descripciones textuales en todos los botones y gráficos.
+          </p>
+        </div>
+
+        <div class="spec-card">
+          <strong><span>📮</span> Canal de Sugerencias y Quejas</strong>
+          <p>
+            Si detectas alguna barrera de accesibilidad o necesitas información en un formato alternativo, contáctanos en <code>ayuntamiento@orcera.es</code> con el asunto "Accesibilidad KLIKO". Tramitaremos tu solicitud en un plazo máximo de 7 días hábiles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIE INSTITUCIONAL -->
+    <footer class="legal-footer">
+      <p><strong>III Plan Municipal de Juventud de Orcera (2027–2031)</strong></p>
+      <p>Excmo. Ayuntamiento de Orcera · Concejalía de Juventud · Asociación Juvenil de Orcera</p>
+      <p>Parque Natural Sierras de Cazorla, Segura y Las Villas · Jaén, España</p>
+
+      <div class="legal-footer-links">
+        <a href="index.html">🚀 Abrir App KLIKO</a>
+        <a href="manual.html">📖 Manual de Usuario</a>
+        <a href="presentacion.html">📊 Presentación del Plan</a>
+        <a href="javascript:window.scrollTo({top:0, behavior:'smooth'})">⬆️ Subir al inicio</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Gestión de modo oscuro / claro sincronizado
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+    const themeText = document.getElementById("theme-text");
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("kliko_theme", theme);
+      if (theme === "light") {
+        themeIcon.textContent = "☀️";
+        themeText.textContent = "Claro";
+      } else {
+        themeIcon.textContent = "🌙";
+        themeText.textContent = "Oscuro";
+      }
+    }
+
+    const savedTheme = localStorage.getItem("kliko_theme") || "dark";
+    applyTheme(savedTheme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme") || "dark";
+        applyTheme(current === "dark" ? "light" : "dark");
+      });
+    }
+
+    // Navegación por pestañas y lectura de parámetros URL / Hash
+    const tabs = document.querySelectorAll(".tab-link");
+    const sections = document.querySelectorAll(".policy-section");
+
+    function activateSection(targetId) {
+      if (!targetId) targetId = "privacidad";
+      
+      // Normalizar alias
+      if (targetId === "rgpd") targetId = "proteccion-datos";
+      if (targetId === "eprivacy") targetId = "cookies";
+      if (targetId === "dsa") targetId = "legal";
+
+      tabs.forEach(t => {
+        const isMatch = t.getAttribute("data-target") === targetId;
+        t.classList.toggle("active", isMatch);
+      });
+
+      sections.forEach(sec => {
+        const isMatch = sec.id === targetId;
+        sec.classList.toggle("highlighted", isMatch);
+      });
+
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    // Escuchar clics en las pestañas
+    tabs.forEach(tab => {
+      tab.addEventListener("click", (e) => {
+        e.preventDefault();
+        const target = tab.getAttribute("data-target");
+        activateSection(target);
+        history.replaceState(null, null, "#" + target);
+      });
+    });
+
+    // Detectar hash o query param en la carga inicial
+    window.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get("tab");
+      const hash = window.location.hash.replace("#", "");
+      
+      const initialTarget = tabParam || hash || "privacidad";
+      activateSection(initialTarget);
+    });
+
+    window.addEventListener("hashchange", () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) activateSection(hash);
+    });
+  </script>
+</body>
+</html>

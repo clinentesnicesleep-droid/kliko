@@ -35,7 +35,7 @@
     });
   </script>
   
-  <link rel="stylesheet" href="css/styles.css?v=pwa_legal_v8">
+  <link rel="stylesheet" href="css/styles.css?v=pwa_legal_v10">
   <style>
     /* Estilo contextual prioritario de botones de políticas de la Sierra (nunca blanco) */
     .btn-eu-policy {
@@ -255,7 +255,7 @@
             <!-- BENTO HERO CARD: IMPACTO Y DATOS ECONÓMICOS/ESTADÍSTICOS (SOLO EN INICIO) -->
             <section class="hero-bento-card">
               <div class="hero-bento-cover">
-                <img src="img/hero-orcera-youth.jpg" alt="Jóvenes de Orcera participando en el III Plan Municipal de Juventud" class="hero-bento-img" loading="eager" />
+                <img src="img/hero-orcera-youth.jpg?v=sierra_mirador_v2" alt="Jóvenes de Orcera participando en el III Plan Municipal de Juventud" class="hero-bento-img" loading="eager" />
                 <span class="hero-cover-tag-top">🏔️ Orcera · Sierra de Segura</span>
               </div>
               <div class="hero-header-meta-row">
@@ -822,21 +822,21 @@
               </div>
 
               <div class="eu-policies-links">
-                <button type="button" class="btn-eu-policy" onclick="openEuModal('privacidad')" data-eu-open="privacidad" title="Política de Privacidad">
+                <a href="politicas.html?tab=privacidad#privacidad" class="btn-eu-policy" onclick="openEuModal('privacidad'); return false;" data-eu-open="privacidad" title="Política de Privacidad Oficial (RGPD)">
                   🔒 Privacidad
-                </button>
-                <button type="button" class="btn-eu-policy" onclick="openEuModal('legal')" data-eu-open="legal" title="Aviso Legal y Condiciones de Uso">
+                </a>
+                <a href="politicas.html?tab=legal#legal" class="btn-eu-policy" onclick="openEuModal('legal'); return false;" data-eu-open="legal" title="Aviso Legal y Condiciones de Uso (LSSI-CE)">
                   ⚖️ Aviso Legal
-                </button>
-                <button type="button" class="btn-eu-policy" onclick="openEuModal('proteccion-datos')" data-eu-open="proteccion-datos" title="Protección de Datos Personales (RGPD / LOPDGDD)">
+                </a>
+                <a href="politicas.html?tab=proteccion-datos#proteccion-datos" class="btn-eu-policy" onclick="openEuModal('proteccion-datos'); return false;" data-eu-open="proteccion-datos" title="Protección de Datos Personales y Garantías a la Juventud (LOPDGDD)">
                   🛡️ Protección de Datos
-                </button>
-                <button type="button" class="btn-eu-policy" onclick="openEuModal('cookies')" data-eu-open="cookies" title="Política de Cookies y Almacenamiento Técnico">
+                </a>
+                <a href="politicas.html?tab=cookies#cookies" class="btn-eu-policy" onclick="openEuModal('cookies'); return false;" data-eu-open="cookies" title="Política de Cookies y Almacenamiento Técnico Local">
                   🍪 Cookies
-                </button>
-                <button type="button" class="btn-eu-policy" onclick="openEuModal('accesibilidad')" data-eu-open="accesibilidad" title="Declaración de Accesibilidad Universal (EN 301 549)">
+                </a>
+                <a href="politicas.html?tab=accesibilidad#accesibilidad" class="btn-eu-policy" onclick="openEuModal('accesibilidad'); return false;" data-eu-open="accesibilidad" title="Declaración de Accesibilidad Universal (RD 1112/2018 / EN 301 549)">
                   ♿ Accesibilidad
-                </button>
+                </a>
               </div>
 
               <p class="eu-legal-note">
@@ -1693,8 +1693,10 @@
         </div>
       </div>
     </div>
+  </div> <!-- /promo-poster-modal -->
+
   <!-- MODAL DE POLÍTICAS Y MARCO REGULATORIO -->
-  <div class="modal-overlay" id="eu-policies-modal" role="dialog" aria-hidden="true" aria-labelledby="eu-modal-title" style="z-index: 9999;">
+  <div class="modal-overlay" id="eu-policies-modal" role="dialog" aria-hidden="true" aria-labelledby="eu-modal-title" style="z-index: 99999;">
     <div class="eu-policies-modal-box">
       <button type="button" class="btn-close-modal" id="close-eu-policies-modal" onclick="closeEuModal()" aria-label="Cerrar modal de políticas">&times;</button>
       
@@ -1705,6 +1707,9 @@
             <h3 id="eu-modal-title">Marco Legal y Políticas Públicas</h3>
             <p>Ayuntamiento de Orcera · III Plan Municipal de Juventud (2027–2031)</p>
           </div>
+          <a href="politicas.html" target="_blank" class="eu-portal-direct-btn" style="margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(16,185,129,0.18); border: 1px solid var(--emerald); border-radius: 9999px; color: #34d399; font-size: 0.76rem; font-weight: 700; text-decoration: none;" title="Abrir portal web oficial en pantalla completa">
+            <span>🌐 Portal Legal Completo ↗</span>
+          </a>
         </div>
       </div>
 
@@ -1876,7 +1881,10 @@
 
       </div>
 
-      <div class="eu-modal-footer">
+      <div class="eu-modal-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <a href="politicas.html" target="_blank" style="color: var(--emerald); font-size: 0.82rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+          📄 Ver Portal Web de Políticas Completo ↗
+        </a>
         <button type="button" class="btn-primary" id="btn-close-eu-modal-action" onclick="closeEuModal()" style="padding: 10px 24px; font-weight: 800;">
           Cerrar y Aceptar
         </button>
@@ -1921,7 +1929,7 @@
 
   <script src="js/qrcode.min.js"></script>
   <script src="js/data-ejes.js?v=finanzas_anualizadas_v5"></script>
-  <script src="js/app.js?v=pwa_legal_v8"></script>
+  <script src="js/app.js?v=pwa_legal_v10"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
