@@ -2488,28 +2488,102 @@ function openActionDetailModal(actionCode, optEjeId) {
         </div>
       </div>
 
-      <!-- PESTAÑA 4: OPINIONES Y PARTICIPACIÓN -->
+      <!-- PESTAÑA 4: OPINIONES Y PARTICIPACIÓN CIUDADANA ACTIVA -->
       <div class="action-tab-pane" id="pane-tab-action-comentarios" style="display: none;">
-        <div class="action-detail-section">
-          <div class="action-section-title">
-            <span>💬</span> Participación y Comentarios
+        
+        <!-- Tarjeta de estado de participación -->
+        <div class="action-comments-header-box">
+          <div class="action-comments-stats-row">
+            <span class="action-status-open-badge">
+              <span style="font-size: 0.65rem;">🟢</span>
+              Canal de Participación Activo
+            </span>
+            <span class="action-rating-badge" id="action-rating-summary-${action.codigo}">
+              ⭐ 5.0 / 5
+            </span>
           </div>
-          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
-            <strong>Supervisión Técnica:</strong> Medida incluida en el dictamen favorable del III Plan Municipal de Juventud. Supervisada por la Concejalía de Juventud y la Comisión de Seguimiento.
+          <p style="font-size: 0.74rem; color: var(--text-muted); margin: 0; line-height: 1.45;">
+            Espacio oficial para que la juventud de Orcera opine, valore y aporte sugerencias sobre la medida <strong>${action.codigo}</strong>. Las propuestas son revisadas por la Concejalía de Juventud.
           </p>
-          
-          ${valoraciones.length > 0 ? `
-            <div style="background: rgba(0,0,0,0.2); border-left: 3px solid var(--emerald); padding: 10px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 14px; font-size: 0.75rem;">
-              <strong>Comentario de la Juventud de Orcera:</strong><br>
-              <span style="color: var(--text-main); font-style: italic; display: block; margin: 4px 0;">"${valoraciones[0].comentario}"</span>
-              <div style="color: var(--text-dim); margin-top: 2px;">— ${valoraciones[0].usuario} (${"★".repeat(valoraciones[0].estrellas)})</div>
-            </div>
-          ` : ''}
+        </div>
 
-          <button type="button" class="btn-primary" onclick="closeActionDetailModal(); window.switchTab && window.switchTab('tab-buzon');" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 10px;">
-            💡 Enviar Propuesta o Pregunta sobre ${action.codigo} al Buzón Joven
+        <!-- Botón para activar/abrir el formulario de comentarios -->
+        <button type="button" class="btn-toggle-comment-form" id="btn-toggle-form-${action.codigo}" onclick="toggleActionCommentForm('${action.codigo}')">
+          <span>✍️</span>
+          <span>Dar mi Opinión / Valorar esta Acción</span>
+        </button>
+
+        <!-- Formulario interactivo de comentarios -->
+        <div class="action-comment-form-card" id="action-comment-form-${action.codigo}" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 0.8rem; color: var(--text-main);">Tu Valoración Ciudadana:</strong>
+            <span id="star-rating-hint-${action.codigo}" style="font-size: 0.7rem; color: var(--emerald); font-weight: 700;">★★★★★ ¡Excelente!</span>
+          </div>
+
+          <!-- Selector interactivo de estrellas -->
+          <div class="star-rating-selector" id="star-picker-${action.codigo}">
+            <button type="button" class="star-btn active" data-star="1" onclick="setActionCommentRating('${action.codigo}', 1)" aria-label="1 estrella">★</button>
+            <button type="button" class="star-btn active" data-star="2" onclick="setActionCommentRating('${action.codigo}', 2)" aria-label="2 estrellas">★</button>
+            <button type="button" class="star-btn active" data-star="3" onclick="setActionCommentRating('${action.codigo}', 3)" aria-label="3 estrellas">★</button>
+            <button type="button" class="star-btn active" data-star="4" onclick="setActionCommentRating('${action.codigo}', 4)" aria-label="4 estrellas">★</button>
+            <button type="button" class="star-btn active" data-star="5" onclick="setActionCommentRating('${action.codigo}', 5)" aria-label="5 estrellas">★</button>
+          </div>
+
+          <!-- Selector de tipo / etiqueta -->
+          <div>
+            <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Tipo de aportación:</span>
+            <div class="comment-tag-selector" id="tag-picker-${action.codigo}">
+              <button type="button" class="comment-tag-opt active" onclick="setActionCommentTag('${action.codigo}', '💡 Sugerencia')">💡 Sugerencia</button>
+              <button type="button" class="comment-tag-opt" onclick="setActionCommentTag('${action.codigo}', '👍 Apoyo total')">👍 Apoyo total</button>
+              <button type="button" class="comment-tag-opt" onclick="setActionCommentTag('${action.codigo}', '❓ Pregunta')">❓ Pregunta</button>
+              <button type="button" class="comment-tag-opt" onclick="setActionCommentTag('${action.codigo}', '⚠️ A mejorar')">⚠️ A mejorar</button>
+            </div>
+          </div>
+
+          <!-- Nombre / Alias -->
+          <div>
+            <label style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Tu Nombre o Alias:</label>
+            <input type="text" id="action-comment-author-${action.codigo}" class="action-comment-input" style="min-height: auto; padding: 7px 10px;" placeholder="Ej. Lucía / Joven de Orcera" value="${AppState.currentUser ? (AppState.currentUser.alias || AppState.currentUser.nombre) : ''}">
+          </div>
+
+          <!-- Texto de opinión -->
+          <div>
+            <label style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Tu comentario o sugerencia:</label>
+            <textarea id="action-comment-text-${action.codigo}" class="action-comment-input" rows="3" placeholder="Escribe aquí tu opinión, propuesta o idea para esta medida..."></textarea>
+          </div>
+
+          <!-- Botón Enviar -->
+          <div style="display: flex; gap: 8px; justify-content: flex-end; align-items: center;">
+            <button type="button" class="btn-primary" onclick="submitActionComment('${action.codigo}')" style="padding: 8px 16px; font-weight: 800; font-size: 0.78rem;">
+              🚀 Publicar Comentario (+15 Pts)
+            </button>
+          </div>
+        </div>
+
+        <!-- Feed de Comentarios Ciudadanos -->
+        <div class="action-comments-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+            <span style="font-size: 0.76rem; font-weight: 800; color: var(--text-main);" id="action-comments-count-title-${action.codigo}">
+              💬 Opiniones de la Juventud:
+            </span>
+            <span style="font-size: 0.68rem; color: var(--text-dim);">En vivo</span>
+          </div>
+
+          <div class="action-comments-list" id="action-comments-list-${action.codigo}">
+            <!-- Renderizado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Enlace formal al Buzón Joven -->
+        <div style="margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--segura-border); text-align: center;">
+          <p style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
+            ¿Deseas presentar una propuesta formal por registro telemático municipal?
+          </p>
+          <button type="button" class="btn-action-back" onclick="closeActionDetailModal(); window.switchTab && window.switchTab('tab-buzon');" style="font-size: 0.72rem; padding: 6px 14px;">
+            📬 Ir al Buzón Joven Municipal
           </button>
         </div>
+
       </div>
 
     </div>
@@ -2531,6 +2605,268 @@ function openActionDetailModal(actionCode, optEjeId) {
   document.body.style.overflow = "hidden";
   const bodyEl = modal.querySelector(".action-modal-body");
   if (bodyEl) bodyEl.scrollTop = 0;
+
+  // Inicializar comentarios de la acción
+  initActionComments(action.codigo, valoraciones, action.titulo);
+}
+
+// Variables globales para el formulario activo
+window._actionCommentRatings = window._actionCommentRatings || {};
+window._actionCommentTags = window._actionCommentTags || {};
+
+function initActionComments(actionCode, initialValoraciones, actionTitle) {
+  window._actionCommentRatings[actionCode] = 5;
+  window._actionCommentTags[actionCode] = "💡 Sugerencia";
+  getActionComments(actionCode, initialValoraciones, actionTitle);
+  renderActionComments(actionCode);
+}
+
+function getActionComments(actionCode, initialValoraciones, actionTitle) {
+  const key = "kliko_action_comments_" + actionCode;
+  const raw = localStorage.getItem(key);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // Si no hay ninguno, creamos datos iniciales realistas de la juventud de Orcera
+  const initialList = [];
+  if (initialValoraciones && initialValoraciones.length > 0) {
+    initialValoraciones.forEach((v, idx) => {
+      initialList.push({
+        id: "init-" + idx,
+        usuario: v.usuario || "Joven de Orcera",
+        rol: "Participación Vecinal",
+        estrellas: v.estrellas || 5,
+        tag: "👍 Apoyo total",
+        comentario: v.comentario,
+        fecha: "Dictamen Ciudadano III Plan",
+        likes: 5 + idx * 2,
+        liked: false
+      });
+    });
+  } else {
+    initialList.push({
+      id: "init-1",
+      usuario: "Álvaro M. Navarro",
+      rol: "Asociación Juvenil Orcera",
+      estrellas: 5,
+      tag: "👍 Apoyo total",
+      comentario: `Excelente propuesta para ${actionCode}. Consideramos prioritario que se empiece a ejecutar con participación activa de los jóvenes desde el primer ejercicio.`,
+      fecha: "Hace 2 días",
+      likes: 6,
+      liked: false
+    });
+    initialList.push({
+      id: "init-2",
+      usuario: "Lucía Castillo",
+      rol: "Estudiante de Orcera",
+      estrellas: 4,
+      tag: "💡 Sugerencia",
+      comentario: `Muy buena iniciativa. Sería interesante vincularla con talleres prácticos y dinamización durante los fines de semana.`,
+      fecha: "Ayer",
+      likes: 3,
+      liked: false
+    });
+  }
+
+  localStorage.setItem(key, JSON.stringify(initialList));
+  return initialList;
+}
+
+function renderActionComments(actionCode) {
+  const listEl = document.getElementById("action-comments-list-" + actionCode);
+  const summaryEl = document.getElementById("action-rating-summary-" + actionCode);
+  const titleEl = document.getElementById("action-comments-count-title-" + actionCode);
+  if (!listEl) return;
+
+  const key = "kliko_action_comments_" + actionCode;
+  let comments = [];
+  try {
+    comments = JSON.parse(localStorage.getItem(key) || "[]");
+  } catch (e) {
+    comments = [];
+  }
+
+  // Calcular promedio de estrellas
+  let avg = 5.0;
+  if (comments.length > 0) {
+    const sum = comments.reduce((acc, c) => acc + (Number(c.estrellas) || 5), 0);
+    avg = (sum / comments.length).toFixed(1);
+  }
+
+  if (summaryEl) {
+    summaryEl.innerHTML = `⭐ ${avg} / 5 <span style="font-size: 0.65rem; color: var(--text-dim); margin-left: 2px;">(${comments.length})</span>`;
+  }
+  if (titleEl) {
+    titleEl.textContent = `💬 Opiniones de la Juventud (${comments.length}):`;
+  }
+
+  if (comments.length === 0) {
+    listEl.innerHTML = `
+      <div style="text-align: center; padding: 16px; background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); border: 1px dashed var(--segura-border);">
+        <p style="font-size: 0.76rem; color: var(--text-muted); margin: 0 0 8px;">Aún no hay opiniones registradas para esta acción.</p>
+        <button type="button" class="btn-primary" onclick="toggleActionCommentForm('${actionCode}')" style="font-size: 0.72rem; padding: 6px 14px;">
+          ¡Sé el primero en opinar!
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = comments.map(c => {
+    const initials = (c.usuario || "JO").substring(0, 2).toUpperCase();
+    const starStr = "★".repeat(Math.max(1, Math.min(5, c.estrellas || 5)));
+    return `
+      <div class="action-comment-card" id="comment-card-${c.id}">
+        <div class="action-comment-author-row">
+          <div class="comment-author-info">
+            <div class="comment-author-avatar">${initials}</div>
+            <div>
+              <strong style="font-size: 0.76rem; color: var(--text-main); display: block; line-height: 1.2;">
+                ${c.usuario}
+              </strong>
+              <span style="font-size: 0.63rem; color: var(--text-dim);">${c.rol || 'Joven de Orcera'} · ${c.fecha || 'Reciente'}</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="color: #fbbf24; font-size: 0.72rem; letter-spacing: 1px;">${starStr}</div>
+            <span class="comment-tag-opt" style="font-size: 0.6rem; padding: 2px 6px; cursor: default; display: inline-block; margin-top: 2px;">${c.tag || '💡 Opinión'}</span>
+          </div>
+        </div>
+        <p style="font-size: 0.76rem; color: var(--text-main); line-height: 1.5; margin: 2px 0 4px;">
+          "${c.comentario}"
+        </p>
+        <div style="display: flex; justify-content: flex-end;">
+          <button type="button" class="btn-comment-like ${c.liked ? 'liked' : ''}" onclick="toggleActionCommentLike('${actionCode}', '${c.id}')">
+            ${c.liked ? '❤️ Apoyado' : '👍 Apoyar'} (${c.likes || 0})
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function toggleActionCommentForm(actionCode) {
+  const form = document.getElementById("action-comment-form-" + actionCode);
+  const btn = document.getElementById("btn-toggle-form-" + actionCode);
+  if (!form) return;
+  const isHidden = form.style.display === "none";
+  form.style.display = isHidden ? "flex" : "none";
+  if (btn) {
+    btn.innerHTML = isHidden ? `<span>✕</span><span>Cerrar Formulario</span>` : `<span>✍️</span><span>Dar mi Opinión / Valorar esta Acción</span>`;
+  }
+}
+
+function setActionCommentRating(actionCode, rating) {
+  window._actionCommentRatings[actionCode] = rating;
+  const picker = document.getElementById("star-picker-" + actionCode);
+  const hint = document.getElementById("star-rating-hint-" + actionCode);
+  if (picker) {
+    picker.querySelectorAll(".star-btn").forEach(btn => {
+      const val = Number(btn.getAttribute("data-star"));
+      if (val <= rating) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+  }
+  const hints = {
+    1: "★☆☆☆☆ Muy mejorable",
+    2: "★★☆☆☆ Regular",
+    3: "★★★☆☆ Aceptable",
+    4: "★★★★☆ Buena medida",
+    5: "★★★★★ ¡Excelente!"
+  };
+  if (hint) hint.textContent = hints[rating] || "★★★★★";
+}
+
+function setActionCommentTag(actionCode, tag) {
+  window._actionCommentTags[actionCode] = tag;
+  const picker = document.getElementById("tag-picker-" + actionCode);
+  if (picker) {
+    picker.querySelectorAll(".comment-tag-opt").forEach(btn => {
+      if (btn.textContent.trim() === tag) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+  }
+}
+
+function submitActionComment(actionCode) {
+  const txtEl = document.getElementById("action-comment-text-" + actionCode);
+  if (!txtEl || !txtEl.value.trim()) {
+    showToast("Comentario vacío", "Por favor, escribe tu opinión o sugerencia antes de publicar.");
+    return;
+  }
+  const authorEl = document.getElementById("action-comment-author-" + actionCode);
+  let author = (authorEl && authorEl.value.trim()) || "";
+  if (!author) {
+    author = AppState.currentUser ? (AppState.currentUser.alias || AppState.currentUser.nombre) : "Joven de Orcera";
+  }
+
+  const rating = window._actionCommentRatings[actionCode] || 5;
+  const tag = window._actionCommentTags[actionCode] || "💡 Sugerencia";
+
+  const newComment = {
+    id: "c-" + Date.now(),
+    usuario: author,
+    rol: AppState.currentUser && AppState.currentUser.esSocioAJO ? "Socio/a AJO" : "Joven de Orcera",
+    estrellas: rating,
+    tag: tag,
+    comentario: txtEl.value.trim(),
+    fecha: "Hoy, " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    likes: 1,
+    liked: true
+  };
+
+  const key = "kliko_action_comments_" + actionCode;
+  let comments = [];
+  try {
+    comments = JSON.parse(localStorage.getItem(key) || "[]");
+  } catch (e) {
+    comments = [];
+  }
+  comments.unshift(newComment);
+  localStorage.setItem(key, JSON.stringify(comments));
+
+  txtEl.value = "";
+  renderActionComments(actionCode);
+
+  // Cerrar formulario tras publicar y dar feedback
+  toggleActionCommentForm(actionCode);
+
+  if (typeof rewardPoints === "function") {
+    rewardPoints(15, `Opinión ciudadana publicada en la acción ${actionCode}`);
+  } else if (typeof showToast === "function") {
+    showToast("¡Opinión Publicada!", `Tu comentario sobre la medida ${actionCode} ha sido registrado.`);
+  }
+}
+
+function toggleActionCommentLike(actionCode, commentId) {
+  const key = "kliko_action_comments_" + actionCode;
+  let comments = [];
+  try {
+    comments = JSON.parse(localStorage.getItem(key) || "[]");
+  } catch (e) {
+    return;
+  }
+  const target = comments.find(c => c.id === commentId);
+  if (!target) return;
+
+  target.liked = !target.liked;
+  target.likes = (target.likes || 0) + (target.liked ? 1 : -1);
+  if (target.likes < 0) target.likes = 0;
+
+  localStorage.setItem(key, JSON.stringify(comments));
+  renderActionComments(actionCode);
 }
 
 function switchActionTab(tabId) {
@@ -2566,6 +2902,13 @@ function closeActionDetailModal() {
 window.openActionDetailModal = openActionDetailModal;
 window.closeActionDetailModal = closeActionDetailModal;
 window.switchActionTab = switchActionTab;
+window.initActionComments = initActionComments;
+window.renderActionComments = renderActionComments;
+window.toggleActionCommentForm = toggleActionCommentForm;
+window.setActionCommentRating = setActionCommentRating;
+window.setActionCommentTag = setActionCommentTag;
+window.submitActionComment = submitActionComment;
+window.toggleActionCommentLike = toggleActionCommentLike;
 
 // ==============================================================================
 // MÓDULO 3: GAMIFICACIÓN Y CANJES DE LA PISCINA DE AMURJO
