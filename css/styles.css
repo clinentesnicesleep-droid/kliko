@@ -252,19 +252,27 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Adaptación responsive para pantallas táctiles y modo Standalone (PWA nativa) */
-@media (max-width: 900px), (display-mode: standalone) {
+/* Adaptación responsive para móviles reales */
+@media (max-width: 600px) {
+  .phone-frame-wrapper {
+    padding: 0 !important;
+  }
+  .smartphone-chassis {
+    max-width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .device-notch {
+    display: none !important;
+  }
   .desktop-only {
     display: none !important;
   }
   .cloud-status-text {
     display: none;
-  }
-  .kliko-mobile-brand-bar {
-    padding-top: max(8px, env(safe-area-inset-top));
-  }
-  .mobile-viewport {
-    padding-bottom: max(75px, calc(60px + env(safe-area-inset-bottom)));
   }
 }
 
@@ -394,81 +402,45 @@ body {
   50% { opacity: 0.45; transform: scale(0.85); }
 }
 
-/* ============================================================================== */
-/* ESTRUCTURA NATIVA MOBILE-FIRST (100% PANTALLA COMPLETA EN MÓVILES Y PWA)       */
-/* ============================================================================== */
+/* Teléfono Móvil Simulador */
 .phone-frame-wrapper {
-  padding: 0 !important;
-  margin: 0 !important;
+  padding: 24px 16px 40px;
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
   display: flex;
   justify-content: center;
   transition: all 0.3s var(--ease-smooth);
 }
 
-/* Modo nativo a pantalla completa por defecto para todos los dispositivos */
+/* Modo teléfono estándar */
 .smartphone-chassis {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-height: 100dvh;
+  width: 100%;
+  max-width: 430px;
+  height: 880px;
   background: var(--segura-surface);
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  border: none !important;
+  border-radius: 46px;
+  box-shadow: 0 0 0 10px #1e293b,
+              0 24px 60px rgba(0, 0, 0, 0.7),
+              0 0 40px var(--pine-glow);
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.12);
   transition: all 0.3s var(--ease-elastic);
 }
 
-/* En teléfonos y PWA ocultar por defecto todos los adornos de simulación */
-.device-notch,
-.status-bar,
-.device-home-indicator {
-  display: none !important;
+/* Modo pantalla libre / responsive */
+.phone-frame-wrapper.free-mode .smartphone-chassis {
+  max-width: 900px;
+  height: auto;
+  min-height: 85vh;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--segura-border);
 }
-
-/* SIMULADOR DE TELÉFONO: EXCLUSIVO para navegadores de escritorio en pantallas anchas con ratón */
-@media (min-width: 900px) and (hover: hover) and (display-mode: browser) {
-  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) {
-    padding: 24px 16px 40px !important;
-    align-items: center;
-  }
-  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .smartphone-chassis {
-    max-width: 430px !important;
-    height: 880px !important;
-    min-height: auto !important;
-    border-radius: 46px !important;
-    box-shadow: 0 0 0 10px #1e293b,
-                0 24px 60px rgba(0, 0, 0, 0.7),
-                0 0 40px var(--pine-glow) !important;
-    border: 2px solid rgba(255, 255, 255, 0.12) !important;
-  }
-  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .device-notch {
-    display: flex !important;
-  }
-  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .status-bar {
-    display: flex !important;
-  }
-  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .device-home-indicator {
-    display: block !important;
-  }
-
-  /* Modo pantalla libre / responsive en monitor de escritorio */
-  .phone-frame-wrapper.free-mode .smartphone-chassis {
-    max-width: 900px !important;
-    height: auto !important;
-    min-height: 85vh !important;
-    border-radius: var(--radius-lg) !important;
-    box-shadow: var(--shadow-md) !important;
-    border: 1px solid var(--segura-border) !important;
-  }
+.phone-frame-wrapper.free-mode .device-notch,
+.phone-frame-wrapper.free-mode .device-home-indicator {
+  display: none;
 }
 
 /* Notch & Status Bar */
@@ -2658,296 +2630,13 @@ body {
   color: var(--cyber-coral);
 }
 
-/* Footer Mobile y Cumplimiento Unión Europea */
+/* Footer Mobile */
 .mobile-footer {
   text-align: center;
-  padding: 24px 0 20px;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.footer-manual-link {
-  display: flex;
-  justify-content: center;
-}
-
-.footer-guide-cta {
-  background: rgba(6, 182, 212, 0.12);
-  border: 1px solid rgba(6, 182, 212, 0.35);
-  color: var(--amurjo-cyan);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 8px 16px;
-  border-radius: var(--radius-full);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
-
-.footer-guide-cta:hover {
-  background: rgba(6, 182, 212, 0.22);
-  transform: translateY(-1px);
-}
-
-/* Tarjeta Institucional de Políticas de la Unión Europea */
-.eu-compliance-badge {
-  background: linear-gradient(145deg, rgba(30, 58, 138, 0.25) 0%, rgba(15, 23, 42, 0.5) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.35);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  text-align: left;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.eu-flag-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.eu-flag-emblem {
-  font-size: 1.6rem;
-  line-height: 1;
-}
-
-.eu-flag-text strong {
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 0.82rem;
-  color: #93c5fd;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
-.eu-flag-text span {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-}
-
-.eu-policies-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.btn-eu-policy {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text-main);
-  padding: 5px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.68rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.2s ease;
-}
-
-.btn-eu-policy:hover {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: #60a5fa;
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
-.eu-legal-note {
-  font-size: 0.64rem;
-  color: var(--text-muted);
-  line-height: 1.45;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 8px;
-  margin-top: 4px;
-}
-
-.footer-institutional-credits {
+  padding: 24px 0 10px;
   font-size: 0.68rem;
   color: var(--text-dim);
-}
-
-.footer-geo-tag {
-  color: var(--emerald);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-/* Modal de Políticas de la UE */
-.eu-policies-modal-box {
-  background: var(--segura-surface-elevated);
-  border: 1px solid var(--segura-border);
-  border-radius: var(--radius-lg);
-  width: 95%;
-  max-width: 620px;
-  max-height: 88vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
-  animation: modalScaleIn 0.25s var(--ease-smooth);
-}
-
-.eu-modal-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--segura-border);
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(6, 78, 59, 0.2));
-}
-
-.eu-modal-title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.eu-flag-large {
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.eu-modal-header h3 {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--text-main);
-  line-height: 1.2;
-}
-
-.eu-modal-header p {
-  font-size: 0.72rem;
-  color: #93c5fd;
-  margin-top: 2px;
-}
-
-.eu-modal-tabs {
-  display: flex;
-  overflow-x: auto;
-  gap: 4px;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid var(--segura-border);
-  scrollbar-width: none;
-}
-
-.eu-modal-tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.eu-tab-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-muted);
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.73rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.2s ease;
-}
-
-.eu-tab-btn.active {
-  background: rgba(59, 130, 246, 0.25);
-  border-color: #3b82f6;
-  color: #ffffff;
-}
-
-.eu-modal-body {
-  padding: 18px 20px;
-  overflow-y: auto;
-  flex: 1;
-  font-size: 0.84rem;
-  line-height: 1.6;
-}
-
-.eu-policy-pane {
-  display: none;
-  animation: fadeIn 0.2s ease;
-}
-
-.eu-policy-pane.active {
-  display: block;
-}
-
-.policy-header-badge {
-  margin-bottom: 10px;
-}
-
-.policy-badge-pill {
-  display: inline-block;
-  background: rgba(59, 130, 246, 0.18);
-  border: 1px solid rgba(59, 130, 246, 0.4);
-  color: #93c5fd;
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-}
-
-.eu-policy-pane h4 {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 6px;
-}
-
-.eu-policy-pane p {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: 14px;
-}
-
-.legal-spec-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  padding: 14px;
-}
-
-.spec-item {
-  font-size: 0.8rem;
   line-height: 1.5;
-}
-
-.spec-item strong {
-  color: #93c5fd;
-  display: block;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.spec-item span {
-  color: var(--text-main);
-}
-
-.spec-item code {
-  background: rgba(0, 0, 0, 0.35);
-  padding: 1px 5px;
-  border-radius: 4px;
-  font-size: 0.78rem;
-  color: var(--emerald);
-}
-
-.eu-modal-footer {
-  padding: 12px 20px;
-  border-top: 1px solid var(--segura-border);
-  display: flex;
-  justify-content: flex-end;
-  background: rgba(0, 0, 0, 0.15);
 }
 
 /* Barra de Navegación Inferior (Nativa Mobile) */
@@ -5344,134 +5033,233 @@ body {
 
 
 /* ============================================================================== */
-/* SISTEMA DE INSTALACIÓN RÁPIDA PWA (1-CLIC NATIVO) */
+/* GUÍA VISUAL DETALLADA DE INSTALACIÓN EN MÓVIL (PWA) */
 /* ============================================================================== */
-.btn-install-highlight {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)) !important;
-  border: 1px solid rgba(6, 182, 212, 0.6) !important;
-  color: var(--amurjo-cyan) !important;
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.25);
-  font-weight: 800 !important;
-  transition: all 0.25s ease;
-}
-.btn-install-highlight:hover {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(6, 182, 212, 0.4)) !important;
-  box-shadow: 0 0 14px rgba(6, 182, 212, 0.45);
-  transform: translateY(-1px);
-}
-
-/* Banner Flotante Inferior de Instalación */
-.pwa-quick-install-banner {
-  position: sticky;
-  bottom: 60px;
-  left: 0;
-  right: 0;
-  margin: 8px 12px 10px;
-  padding: 10px 14px;
-  background: linear-gradient(135deg, rgba(11, 19, 25, 0.95), rgba(15, 23, 42, 0.95));
+.pwa-guide-box {
+  background: linear-gradient(145deg, rgba(6, 78, 59, 0.45), rgba(6, 182, 212, 0.15));
   border: 1px solid rgba(6, 182, 212, 0.4);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(6, 182, 212, 0.2);
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.pwa-guide-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  z-index: 100;
-  animation: pwaBannerFadeUp 0.3s ease-out;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-@keyframes pwaBannerFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.pwa-banner-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-  min-width: 0;
-}
-
-.pwa-banner-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  flex-shrink: 0;
-}
-
-.pwa-banner-text {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-.pwa-banner-text strong {
-  font-size: 0.82rem;
-  color: #fff;
-  font-weight: 800;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.pwa-banner-text span {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.pwa-banner-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.btn-pwa-banner-action {
-  background: linear-gradient(135deg, #10b981, #06b6d4);
-  color: #fff;
-  border: none;
-  padding: 7px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.74rem;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-.btn-pwa-banner-action:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5);
-}
-
-.btn-pwa-banner-close {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+.pwa-header-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--amurjo-cyan), var(--pine-green));
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: color 0.2s ease;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(6, 182, 212, 0.3);
 }
-.btn-pwa-banner-close:hover {
+
+.pwa-guide-title {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: block;
+  line-height: 1.3;
+}
+
+.pwa-guide-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin: 3px 0 0;
+  line-height: 1.35;
+}
+
+.pwa-notice-pill {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.71rem;
+  color: #fbbf24;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.btn-pwa-direct-install {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #06b6d4);
   color: #fff;
-  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+.btn-pwa-direct-install:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.55);
+}
+
+.pwa-tabs-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pwa-tab-btn {
+  flex: 1;
+  background: var(--segura-surface);
+  border: 1px solid var(--segura-border);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.pwa-tab-btn.active {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--amurjo-cyan);
+  color: var(--amurjo-cyan);
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.2);
+}
+
+.pwa-platform-card {
+  background: var(--segura-surface-elevated);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pwa-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pwa-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--amurjo-cyan);
+  color: #0f172a;
+  font-size: 0.72rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pwa-step-text {
+  flex: 1;
+  font-size: 0.73rem;
+  line-height: 1.4;
+  color: var(--text-main);
+}
+.pwa-step-text strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.pwa-step-text span {
+  color: var(--text-muted);
+}
+
+.pwa-visual-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  margin-top: 6px;
+}
+
+.pwa-browser-badge {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.pwa-key-symbol {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--amurjo-cyan);
+  background: rgba(6, 182, 212, 0.2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pwa-badge-hint {
+  font-size: 0.68rem;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.pwa-action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  margin-top: 6px;
+  color: #34d399;
+}
+.pwa-action-badge strong {
+  color: #34d399 !important;
+  margin: 0 !important;
+  display: inline !important;
+}
+.pwa-action-badge small {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.pwa-step-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin-top: 2px;
 }
 
 
