@@ -1,5 +1,5 @@
 // Service Worker para KLIKO (PWA Oficial de Orcera)
-const CACHE_NAME = 'kliko-cache-v8';
+const CACHE_NAME = 'kliko-cache-v9';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

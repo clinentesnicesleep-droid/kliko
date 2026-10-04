@@ -5786,6 +5786,13 @@ body {
 }
 
 /* Modal de Políticas Legales */
+#eu-policies-modal {
+  z-index: 9999 !important;
+}
+#eu-policies-modal.active {
+  display: flex !important;
+}
+
 .eu-policies-modal-box {
   background: var(--segura-surface);
   border: 1px solid var(--segura-border);

@@ -822,35 +822,21 @@
               </div>
 
               <div class="eu-policies-links">
-                <button type="button" class="btn-eu-policy" data-eu-open="privacidad" title="Política de Privacidad">
+                <button type="button" class="btn-eu-policy" onclick="openEuModal('privacidad')" data-eu-open="privacidad" title="Política de Privacidad">
                   🔒 Privacidad
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="legal" title="Aviso Legal y Condiciones de Uso">
+                <button type="button" class="btn-eu-policy" onclick="openEuModal('legal')" data-eu-open="legal" title="Aviso Legal y Condiciones de Uso">
                   ⚖️ Aviso Legal
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="proteccion-datos" title="Protección de Datos Personales (RGPD / LOPDGDD)">
+                <button type="button" class="btn-eu-policy" onclick="openEuModal('proteccion-datos')" data-eu-open="proteccion-datos" title="Protección de Datos Personales (RGPD / LOPDGDD)">
                   🛡️ Protección de Datos
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="cookies" title="Política de Cookies y Almacenamiento Técnico">
+                <button type="button" class="btn-eu-policy" onclick="openEuModal('cookies')" data-eu-open="cookies" title="Política de Cookies y Almacenamiento Técnico">
                   🍪 Cookies
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="accesibilidad" title="Declaración de Accesibilidad Universal (EN 301 549)">
+                <button type="button" class="btn-eu-policy" onclick="openEuModal('accesibilidad')" data-eu-open="accesibilidad" title="Declaración de Accesibilidad Universal (EN 301 549)">
                   ♿ Accesibilidad
                 </button>
-              </div>
-
-              <!-- PANEL DESPLEGABLE INMEDIATO DE CADA POLÍTICA -->
-              <div id="eu-policy-expandable-box" class="eu-policy-expandable-box" style="display: none;">
-                <div class="eu-policy-expand-header">
-                  <span id="eu-expand-badge" class="policy-badge-pill">🔒 Política</span>
-                  <div style="display:flex; align-items:center; gap:8px;">
-                    <button type="button" id="btn-expand-open-modal" class="btn-policy-subaction" title="Abrir en pantalla completa">
-                      ⛶ Pantalla completa
-                    </button>
-                    <button type="button" id="btn-close-expand-policy" class="btn-policy-close" aria-label="Cerrar política">✕</button>
-                  </div>
-                </div>
-                <div id="eu-expand-content" class="eu-expand-content"></div>
               </div>
 
               <p class="eu-legal-note">
@@ -1708,9 +1694,9 @@
       </div>
     </div>
   <!-- MODAL DE POLÍTICAS Y MARCO REGULATORIO -->
-  <div class="modal-overlay" id="eu-policies-modal" role="dialog" aria-hidden="true" aria-labelledby="eu-modal-title">
+  <div class="modal-overlay" id="eu-policies-modal" role="dialog" aria-hidden="true" aria-labelledby="eu-modal-title" style="z-index: 9999;">
     <div class="eu-policies-modal-box">
-      <button class="btn-close-modal" id="close-eu-policies-modal" aria-label="Cerrar modal de políticas">&times;</button>
+      <button type="button" class="btn-close-modal" id="close-eu-policies-modal" onclick="closeEuModal()" aria-label="Cerrar modal de políticas">&times;</button>
       
       <div class="eu-modal-header">
         <div class="eu-modal-title-row">
@@ -1724,19 +1710,19 @@
 
       <!-- PESTAÑAS NAVEGABLES ENTRE POLÍTICAS -->
       <nav class="eu-modal-tabs" role="tablist">
-        <button class="eu-tab-btn active" data-eu-tab="privacidad" role="tab" aria-selected="true">
+        <button type="button" class="eu-tab-btn active" data-eu-tab="privacidad" onclick="openEuModal('privacidad')" role="tab" aria-selected="true">
           <span>🔒</span> Privacidad
         </button>
-        <button class="eu-tab-btn" data-eu-tab="legal" role="tab" aria-selected="false">
+        <button type="button" class="eu-tab-btn" data-eu-tab="legal" onclick="openEuModal('legal')" role="tab" aria-selected="false">
           <span>⚖️</span> Aviso Legal
         </button>
-        <button class="eu-tab-btn" data-eu-tab="proteccion-datos" role="tab" aria-selected="false">
+        <button type="button" class="eu-tab-btn" data-eu-tab="proteccion-datos" onclick="openEuModal('proteccion-datos')" role="tab" aria-selected="false">
           <span>🛡️</span> Protección de Datos
         </button>
-        <button class="eu-tab-btn" data-eu-tab="cookies" role="tab" aria-selected="false">
+        <button type="button" class="eu-tab-btn" data-eu-tab="cookies" onclick="openEuModal('cookies')" role="tab" aria-selected="false">
           <span>🍪</span> Cookies
         </button>
-        <button class="eu-tab-btn" data-eu-tab="accesibilidad" role="tab" aria-selected="false">
+        <button type="button" class="eu-tab-btn" data-eu-tab="accesibilidad" onclick="openEuModal('accesibilidad')" role="tab" aria-selected="false">
           <span>♿</span> Accesibilidad
         </button>
       </nav>
@@ -1891,7 +1877,7 @@
       </div>
 
       <div class="eu-modal-footer">
-        <button type="button" class="btn-primary" id="btn-close-eu-modal-action" style="padding: 10px 24px; font-weight: 800;">
+        <button type="button" class="btn-primary" id="btn-close-eu-modal-action" onclick="closeEuModal()" style="padding: 10px 24px; font-weight: 800;">
           Cerrar y Aceptar
         </button>
       </div>
@@ -1947,6 +1933,62 @@
         window.location.reload();
       });
     }
+  </script>
+  <script>
+    // Gestor directo e instantáneo para abrir las políticas en ventana modal
+    window.openEuModal = function(policyKey) {
+      var modal = document.getElementById("eu-policies-modal");
+      if (!modal) return;
+      
+      var key = policyKey || "privacidad";
+      if (key === "rgpd") key = "proteccion-datos";
+      if (key === "eprivacy") key = "cookies";
+      if (key === "dsa") key = "legal";
+      
+      var tabs = modal.querySelectorAll(".eu-tab-btn");
+      tabs.forEach(function(btn) {
+        var isMatch = btn.getAttribute("data-eu-tab") === key;
+        btn.classList.toggle("active", isMatch);
+        btn.setAttribute("aria-selected", isMatch ? "true" : "false");
+      });
+      
+      var panes = modal.querySelectorAll(".eu-policy-pane");
+      panes.forEach(function(pane) {
+        var isPaneMatch = pane.id === "pane-eu-" + key;
+        pane.classList.toggle("active", isPaneMatch);
+        pane.style.display = isPaneMatch ? "block" : "none";
+      });
+      
+      modal.classList.add("active");
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      
+      var bodyEl = modal.querySelector(".eu-modal-body");
+      if (bodyEl) bodyEl.scrollTop = 0;
+    };
+
+    window.closeEuModal = function() {
+      var modal = document.getElementById("eu-policies-modal");
+      if (!modal) return;
+      modal.classList.remove("active");
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    };
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") window.closeEuModal();
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var m = document.getElementById("eu-policies-modal");
+      if (m) {
+        m.addEventListener("click", function(e) {
+          if (e.target === m) window.closeEuModal();
+        });
+      }
+    });
   </script>
 </body>
 </html>

@@ -5065,30 +5065,42 @@ function initEuPoliciesModal() {
   const btnExpandOpenModal = document.getElementById("btn-expand-open-modal");
 
   function switchPolicyTab(tabKey) {
+    const m = document.getElementById("eu-policies-modal");
+    if (!m) return;
     const key = normalizePolicyKey(tabKey);
-    tabBtns.forEach(btn => {
+    const tBtns = m.querySelectorAll(".eu-tab-btn");
+    const pPanes = m.querySelectorAll(".eu-policy-pane");
+    tBtns.forEach(btn => {
       const isMatch = btn.getAttribute("data-eu-tab") === key;
       btn.classList.toggle("active", isMatch);
       btn.setAttribute("aria-selected", isMatch ? "true" : "false");
     });
-    panes.forEach(pane => {
-      pane.classList.toggle("active", pane.id === `pane-eu-${key}`);
+    pPanes.forEach(pane => {
+      const isMatch = pane.id === `pane-eu-${key}`;
+      pane.classList.toggle("active", isMatch);
+      pane.style.display = isMatch ? "block" : "none";
     });
   }
 
   function openEuModal(tabKey = "privacidad") {
-    if (!modal) return;
+    const m = document.getElementById("eu-policies-modal");
+    if (!m) return;
     const key = normalizePolicyKey(tabKey);
     switchPolicyTab(key);
-    modal.classList.add("active");
-    modal.setAttribute("aria-hidden", "false");
+    m.classList.add("active");
+    m.style.display = "flex";
+    m.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    const bodyEl = m.querySelector(".eu-modal-body");
+    if (bodyEl) bodyEl.scrollTop = 0;
   }
 
   function closeEuModal() {
-    if (!modal) return;
-    modal.classList.remove("active");
-    modal.setAttribute("aria-hidden", "true");
+    const m = document.getElementById("eu-policies-modal");
+    if (!m) return;
+    m.classList.remove("active");
+    m.style.display = "none";
+    m.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
 
@@ -5098,14 +5110,7 @@ function initEuPoliciesModal() {
     if (trigger) {
       e.preventDefault();
       const policyKey = trigger.getAttribute("data-eu-open") || "privacidad";
-      
-      // Si el botón es del footer, abre y muestra la política en su propio botón (in-situ)
-      if (trigger.classList.contains("btn-eu-policy")) {
-        renderInlinePolicy(policyKey);
-      } else {
-        // Si es un enlace dentro de un formulario (o en otra parte), abre el modal completo
-        openEuModal(policyKey);
-      }
+      openEuModal(policyKey);
     }
   });
 
