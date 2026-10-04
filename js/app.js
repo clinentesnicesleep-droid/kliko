@@ -2278,221 +2278,248 @@ function openActionDetailModal(actionCode, optEjeId) {
   contentEl.innerHTML = `
     <!-- CABECERA DE LA FICHA DE ACCIÓN -->
     <div class="action-modal-header">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px;">
-        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <span class="action-code-tag" style="font-size: 0.85rem; padding: 4px 10px;">${action.codigo}</span>
+      <div class="action-modal-top-row">
+        <button type="button" class="btn-action-back" onclick="closeActionDetailModal()" aria-label="Volver al cronograma">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Volver
+        </button>
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+          <span class="action-code-tag" style="font-size: 0.82rem; padding: 4px 8px;">${action.codigo}</span>
           <span class="action-status-badge ${statusClass}">${statusName}</span>
           <span class="badge-duracion dur-${roadmap.duracionTipo}">⏱️ ${roadmap.vigencia}</span>
         </div>
+        <button type="button" onclick="closeActionDetailModal()" aria-label="Cerrar ficha" style="background: none; border: none; color: var(--text-muted); font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0 4px;">&times;</button>
       </div>
-      <h3 style="margin: 6px 0 8px; font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-main); line-height: 1.35;">
+      <h3 style="margin: 4px 0 6px; font-family: var(--font-heading); font-size: 1.05rem; color: var(--text-main); line-height: 1.35;">
         ${action.titulo}
       </h3>
-      <div style="display: flex; align-items: center; gap: 10px; font-size: 0.74rem; color: var(--text-muted); flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--text-muted); flex-wrap: wrap;">
         <span>🏛️ Eje ${eje.numero}: ${eje.titulo}</span>
         <span>•</span>
-        <span style="color: var(--amurjo-cyan); font-weight: 700;">🎯 ${oe ? oe.codigo : 'Objetivo'}: ${oe ? oe.titulo.substring(0, 48) + '...' : ''}</span>
+        <span style="color: var(--amurjo-cyan); font-weight: 700;">🎯 ${oe ? oe.codigo : 'Objetivo'}: ${oe ? (oe.titulo.length > 50 ? oe.titulo.substring(0, 50) + '...' : oe.titulo) : ''}</span>
       </div>
     </div>
 
-    <!-- CUERPO DETALLADO DE LA FICHA -->
+    <!-- SUBPESTAÑAS RÁPIDAS FIJAS DE NAVEGACIÓN MÓVIL -->
+    <nav class="action-quick-tabs" aria-label="Secciones de la ficha">
+      <button type="button" class="action-tab-btn active" data-action-tab="tab-action-info" onclick="switchActionTab('tab-action-info')">
+        📋 Ficha
+      </button>
+      <button type="button" class="action-tab-btn" data-action-tab="tab-action-presupuesto" onclick="switchActionTab('tab-action-presupuesto')">
+        💶 Fondos
+      </button>
+      <button type="button" class="action-tab-btn" data-action-tab="tab-action-indicadores" onclick="switchActionTab('tab-action-indicadores')">
+        📊 Metas
+      </button>
+      <button type="button" class="action-tab-btn" data-action-tab="tab-action-comentarios" onclick="switchActionTab('tab-action-comentarios')">
+        💬 Opinión
+      </button>
+    </nav>
+
+    <!-- CUERPO DETALLADO DE LA FICHA CON SCROLL 100% FLUIDO -->
     <div class="action-modal-body">
 
-      <!-- 1. OBJETIVO ESPECÍFICO Y FINALIDAD -->
-      <div class="action-detail-section">
-        <div class="action-section-title">
-          <span>🎯</span> Objetivo Específico Vinculado
-        </div>
-        <p style="font-size: 0.82rem; color: var(--text-main); margin-bottom: 6px; font-weight: 600;">
-          ${oe ? `${oe.codigo}: ${oe.titulo}` : 'Objetivo Estratégico Municipal'}
-        </p>
-        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
-          Esta medida contribuye a las metas operativas del Eje ${eje.numero}, garantizando derechos, formación y ocio de calidad para la juventud de Orcera en el marco del III Plan Municipal.
-        </p>
-      </div>
-
-      <!-- 2. DESCRIPCIÓN COMPLETA DE LA MEDIDA -->
-      <div class="action-detail-section">
-        <div class="action-section-title">
-          <span>📋</span> Descripción Completa y Alcance Oficial
-        </div>
-        <p style="font-size: 0.82rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px;">
-          ${action.descripcion || action.titulo}
-        </p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.76rem;">
-          <div style="background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--segura-border);">
-            <strong style="color: var(--emerald); display: block; font-size: 0.7rem; text-transform: uppercase;">Organismo Responsable:</strong>
-            <span style="color: var(--text-main);">${action.responsable || 'Concejalía de Juventud · Ayto. de Orcera'}</span>
+      <!-- PESTAÑA 1: FICHA Y CRONOGRAMA -->
+      <div class="action-tab-pane" id="pane-tab-action-info" style="display: flex;">
+        <!-- Objetivo Específico Vinculado -->
+        <div class="action-detail-section">
+          <div class="action-section-title">
+            <span>🎯</span> Objetivo Específico Vinculado
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--segura-border);">
-            <strong style="color: var(--amurjo-cyan); display: block; font-size: 0.7rem; text-transform: uppercase;">Recursos y Financiación:</strong>
-            <span style="color: var(--text-main);">${action.recursos || 'Recursos propios del Ayuntamiento de Orcera'}</span>
+          <p style="font-size: 0.82rem; color: var(--text-main); margin-bottom: 6px; font-weight: 600;">
+            ${oe ? `${oe.codigo}: ${oe.titulo}` : 'Objetivo Estratégico Municipal'}
+          </p>
+          <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+            Esta medida contribuye a las metas operativas del Eje ${eje.numero}, garantizando derechos, formación y ocio de calidad para la juventud de Orcera en el marco del III Plan Municipal.
+          </p>
+        </div>
+
+        <!-- Descripción Completa -->
+        <div class="action-detail-section">
+          <div class="action-section-title">
+            <span>📋</span> Descripción Completa y Alcance
           </div>
-        </div>
-      </div>
-
-      <!-- 3. CRONOGRAMA, TEMPORALIZACIÓN Y FASES (2027–2031) -->
-      <div class="action-detail-section">
-        <div class="action-section-title">
-          <span>📅</span> Cronograma y Plan de Ejecución Quinquenal
-        </div>
-        
-        <!-- Matriz de años de la acción -->
-        <div style="display: flex; gap: 6px; margin: 10px 0 14px; overflow-x: auto;">
-          ${[2027, 2028, 2029, 2030, 2031].map(yr => {
-            const isAct = roadmap.anos.includes(yr);
-            return `
-              <div style="flex: 1; min-width: 60px; text-align: center; padding: 6px 4px; border-radius: var(--radius-sm); background: ${isAct ? 'rgba(16,185,129,0.18)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isAct ? 'var(--emerald)' : 'var(--segura-border)'};">
-                <span style="font-size: 0.75rem; font-weight: 800; color: ${isAct ? '#34d399' : 'var(--text-dim)'};">${yr}</span>
-                <span style="display: block; font-size: 0.62rem; color: ${isAct ? 'var(--text-main)' : 'var(--text-dim)'};">${isAct ? '● Activa' : '○ Inactiva'}</span>
-              </div>
-            `;
-          }).join("")}
-        </div>
-
-        <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5;">
-          <strong>Hitos y Fases Programadas:</strong>
-          <ul style="margin: 6px 0 0 16px; padding: 0;">
-            ${roadmap.anos.map(yr => `
-              <li style="margin-bottom: 4px;">
-                <strong style="color: var(--amurjo-cyan);">${yr}:</strong> ${roadmap.hitos[yr] || 'Ejecución y seguimiento de actividades correspondientes al ejercicio ' + yr + '.'}
-              </li>
-            `).join("")}
-          </ul>
-        </div>
-      </div>
-
-      <!-- 4. PRESUPUESTO Y CONTABILIDAD ANUALIZADA -->
-      <div class="action-detail-section">
-        <div class="action-section-title">
-          <span>💶</span> Presupuesto, Partidas y Justificantes Públicos
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px;">
-          <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
-            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Previsión Quinquenal</span>
-            <strong style="font-size: 0.95rem; color: #34d399;">${finanzas.totalPrevision > 0 ? finanzas.totalPrevision.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'Asignación ordinaria'}</strong>
-          </div>
-          <div style="background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
-            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Gasto Fiscalizado</span>
-            <strong style="font-size: 0.95rem; color: var(--amurjo-cyan);">${finanzas.totalEjecutado > 0 ? finanzas.totalEjecutado.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'En tramitación'}</strong>
-          </div>
-          <div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
-            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Grado Ejecución</span>
-            <strong style="font-size: 0.95rem; color: var(--amber);">${finanzas.pctTotal > 0 ? finanzas.pctTotal + '%' : '100% programado'}</strong>
-          </div>
-        </div>
-
-        ${finanzas.anualidades.length > 0 ? `
-          <div style="overflow-x: auto; margin-bottom: 10px;">
-            <table class="financial-subtable" style="width: 100%; font-size: 0.72rem;">
-              <thead>
-                <tr>
-                  <th>Año</th>
-                  <th>Previsión</th>
-                  <th>Ejecutado</th>
-                  <th>Remanente</th>
-                  <th>% Ejecutado</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${finanzas.anualidades.map(an => `
-                  <tr>
-                    <td><strong>${an.ano}</strong></td>
-                    <td>${an.prevision.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                    <td>${an.ejecutado.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                    <td>${an.saldo.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                    <td><span class="action-status-badge status-en_curso">${an.pct}%</span></td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-          </div>
-        ` : ''}
-
-        ${finanzas.justificantes.length > 0 ? `
-          <div style="margin-top: 10px;">
-            <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 6px;">
-              📄 Facturas y Nóminas Oficiales Fiscalizadas (${finanzas.justificantes.length}):
-            </span>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              ${finanzas.justificantes.map(j => `
-                <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.72rem;">
-                  <div>
-                    <strong style="color: var(--amurjo-cyan);">${j.ref || j.id}</strong> · <span>${j.concepto}</span>
-                    <div style="font-size: 0.65rem; color: var(--text-muted);">${j.proveedorBeneficiario} · Fecha: ${j.fecha} · Partida: <code>${j.partidaPresupuestaria || '337.226'}</code></div>
-                  </div>
-                  <strong style="color: #34d399; font-size: 0.8rem; white-space: nowrap;">${j.importe.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong>
-                </div>
-              `).join("")}
+          <p style="font-size: 0.82rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px;">
+            ${action.descripcion || action.titulo}
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; font-size: 0.76rem;">
+            <div style="background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--segura-border);">
+              <strong style="color: var(--emerald); display: block; font-size: 0.7rem; text-transform: uppercase;">Organismo Responsable:</strong>
+              <span style="color: var(--text-main);">${action.responsable || 'Concejalía de Juventud · Ayto. de Orcera'}</span>
+            </div>
+            <div style="background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--segura-border);">
+              <strong style="color: var(--amurjo-cyan); display: block; font-size: 0.7rem; text-transform: uppercase;">Recursos y Financiación:</strong>
+              <span style="color: var(--text-main);">${action.recursos || 'Recursos propios del Ayuntamiento de Orcera'}</span>
             </div>
           </div>
-        ` : ''}
-      </div>
-
-      <!-- 5. INDICADORES OFICIALES DE LOGRO -->
-      <div class="action-detail-section">
-        <div class="action-section-title">
-          <span>📊</span> Indicadores Oficiales de Evaluación y Seguimiento (${indicadores.length})
         </div>
 
-        ${indicadores.length === 0 ? `
-          <p style="font-size: 0.78rem; color: var(--text-muted);">
-            Esta acción se evalúa mediante los indicadores generales del Eje ${eje.numero} (tasa de participación y grado de satisfacción ciudadana).
-          </p>
-        ` : `
-          <div style="display: flex; flex-direction: column; gap: 10px;">
-            ${indicadores.map(ind => {
-              const pct = ind.cumplimiento || (ind.metaQuinquenal > 0 ? Math.round((ind.actualQuinquenal / ind.metaQuinquenal) * 100) : 100);
+        <!-- Cronograma y Fases Quinquenales -->
+        <div class="action-detail-section">
+          <div class="action-section-title">
+            <span>📅</span> Cronograma Quinquenal (2027–2031)
+          </div>
+          <div style="display: flex; gap: 6px; margin: 10px 0 14px; overflow-x: auto;">
+            ${[2027, 2028, 2029, 2030, 2031].map(yr => {
+              const isAct = roadmap.anos.includes(yr);
               return `
-                <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 10px 12px;">
-                  <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px;">
-                    <strong style="font-size: 0.76rem; color: var(--text-main);">${ind.codigo || ind.id}: ${ind.nombre}</strong>
-                    <span style="font-size: 0.72rem; font-weight: 800; color: #34d399; white-space: nowrap;">${pct}%</span>
-                  </div>
-                  <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
-                    Meta Quinquenal: <strong>${ind.metaQuinquenal} ${ind.unidad}</strong> · Conseguido: <strong>${ind.actualQuinquenal || 0} ${ind.unidad}</strong> (${ind.tipo})
-                  </div>
-                  <div class="progress-bar-track" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
-                    <div style="width: ${Math.min(pct, 100)}%; height: 100%; background: linear-gradient(90deg, var(--emerald), var(--amurjo-cyan));"></div>
-                  </div>
+                <div style="flex: 1; min-width: 54px; text-align: center; padding: 6px 3px; border-radius: var(--radius-sm); background: ${isAct ? 'rgba(16,185,129,0.18)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isAct ? 'var(--emerald)' : 'var(--segura-border)'};">
+                  <span style="font-size: 0.75rem; font-weight: 800; color: ${isAct ? '#34d399' : 'var(--text-dim)'};">${yr}</span>
+                  <span style="display: block; font-size: 0.62rem; color: ${isAct ? 'var(--text-main)' : 'var(--text-dim)'};">${isAct ? '● Activa' : '○ —'}</span>
                 </div>
               `;
             }).join("")}
           </div>
-        `}
+          <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5;">
+            <strong style="color: var(--text-main);">Hitos y Fases Programadas:</strong>
+            <ul style="margin: 6px 0 0 16px; padding: 0;">
+              ${roadmap.anos.map(yr => `
+                <li style="margin-bottom: 5px;">
+                  <strong style="color: var(--amurjo-cyan);">${yr}:</strong> ${roadmap.hitos[yr] || 'Ejecución y seguimiento de actividades correspondientes al ejercicio ' + yr + '.'}
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <!-- 6. ESTADO, COMENTARIOS Y PARTICIPACIÓN JUVENIL -->
-      <div class="action-detail-section">
-        <div class="action-section-title">
-          <span>💬</span> Estado, Comentarios y Participación Ciudadana
-        </div>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
-          <strong>Supervisión Técnica:</strong> Medida incluida en el dictamen favorable del III Plan Municipal de Juventud. Supervisada por la Concejalía de Juventud y la Comisión de Seguimiento.
-        </p>
-        
-        ${valoraciones.length > 0 ? `
-          <div style="background: rgba(0,0,0,0.2); border-left: 3px solid var(--emerald); padding: 8px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 12px; font-size: 0.74rem;">
-            <strong>Comentario de la Juventud de Orcera:</strong><br>
-            <span style="color: var(--text-main); font-style: italic;">"${valoraciones[0].comentario}"</span>
-            <div style="color: var(--text-dim); margin-top: 2px;">— ${valoraciones[0].usuario} (${"★".repeat(valoraciones[0].estrellas)})</div>
+      <!-- PESTAÑA 2: PRESUPUESTO Y FONDOS -->
+      <div class="action-tab-pane" id="pane-tab-action-presupuesto" style="display: none;">
+        <div class="action-detail-section">
+          <div class="action-section-title">
+            <span>💶</span> Presupuesto y Contabilidad Fiscalizada
           </div>
-        ` : ''}
 
-        <button type="button" class="btn-primary" onclick="closeActionDetailModal(); window.switchTab && window.switchTab('tab-buzon');" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 9px;">
-          💡 Enviar Propuesta o Pregunta sobre ${action.codigo} al Buzón Joven
-        </button>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 12px;">
+            <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
+              <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Previsión</span>
+              <strong style="font-size: 0.92rem; color: #34d399;">${finanzas.totalPrevision > 0 ? finanzas.totalPrevision.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'Ordinaria'}</strong>
+            </div>
+            <div style="background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
+              <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Fiscalizado</span>
+              <strong style="font-size: 0.92rem; color: var(--amurjo-cyan);">${finanzas.totalEjecutado > 0 ? finanzas.totalEjecutado.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'En trámite'}</strong>
+            </div>
+            <div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
+              <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Ejecución</span>
+              <strong style="font-size: 0.92rem; color: var(--amber);">${finanzas.pctTotal > 0 ? finanzas.pctTotal + '%' : '100%'}</strong>
+            </div>
+          </div>
+
+          ${finanzas.anualidades.length > 0 ? `
+            <div style="overflow-x: auto; margin-bottom: 14px; -webkit-overflow-scrolling: touch;">
+              <table class="financial-subtable" style="width: 100%; font-size: 0.72rem; min-width: 320px;">
+                <thead>
+                  <tr>
+                    <th>Año</th>
+                    <th>Previsión</th>
+                    <th>Ejecutado</th>
+                    <th>Remanente</th>
+                    <th>%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${finanzas.anualidades.map(an => `
+                    <tr>
+                      <td><strong>${an.ano}</strong></td>
+                      <td>${an.prevision.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                      <td>${an.ejecutado.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                      <td>${an.saldo.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                      <td><span class="action-status-badge status-en_curso">${an.pct}%</span></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          ` : ''}
+
+          ${finanzas.justificantes.length > 0 ? `
+            <div style="margin-top: 10px;">
+              <span style="font-size: 0.74rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 8px;">
+                📄 Facturas y Nóminas Oficiales Fiscalizadas (${finanzas.justificantes.length}):
+              </span>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                ${finanzas.justificantes.map(j => `
+                  <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.72rem;">
+                    <div>
+                      <strong style="color: var(--amurjo-cyan);">${j.ref || j.id}</strong> · <span>${j.concepto}</span>
+                      <div style="font-size: 0.65rem; color: var(--text-muted);">${j.proveedorBeneficiario} · Fecha: ${j.fecha} · Partida: <code>${j.partidaPresupuestaria || '337.226'}</code></div>
+                    </div>
+                    <strong style="color: #34d399; font-size: 0.8rem; white-space: nowrap;">${j.importe.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+
+      <!-- PESTAÑA 3: METAS E INDICADORES -->
+      <div class="action-tab-pane" id="pane-tab-action-indicadores" style="display: none;">
+        <div class="action-detail-section">
+          <div class="action-section-title">
+            <span>📊</span> Indicadores de Logro (${indicadores.length})
+          </div>
+
+          ${indicadores.length === 0 ? `
+            <p style="font-size: 0.78rem; color: var(--text-muted);">
+              Esta acción se evalúa mediante los indicadores generales del Eje ${eje.numero} (tasa de participación y grado de satisfacción ciudadana).
+            </p>
+          ` : `
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              ${indicadores.map(ind => {
+                const pct = ind.cumplimiento || (ind.metaQuinquenal > 0 ? Math.round((ind.actualQuinquenal / ind.metaQuinquenal) * 100) : 100);
+                return `
+                  <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 10px 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px;">
+                      <strong style="font-size: 0.76rem; color: var(--text-main);">${ind.codigo || ind.id}: ${ind.nombre}</strong>
+                      <span style="font-size: 0.72rem; font-weight: 800; color: #34d399; white-space: nowrap;">${pct}%</span>
+                    </div>
+                    <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
+                      Meta Quinquenal: <strong>${ind.metaQuinquenal} ${ind.unidad}</strong> · Conseguido: <strong>${ind.actualQuinquenal || 0} ${ind.unidad}</strong> (${ind.tipo})
+                    </div>
+                    <div class="progress-bar-track" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
+                      <div style="width: ${Math.min(pct, 100)}%; height: 100%; background: linear-gradient(90deg, var(--emerald), var(--amurjo-cyan));"></div>
+                    </div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          `}
+        </div>
+      </div>
+
+      <!-- PESTAÑA 4: OPINIONES Y PARTICIPACIÓN -->
+      <div class="action-tab-pane" id="pane-tab-action-comentarios" style="display: none;">
+        <div class="action-detail-section">
+          <div class="action-section-title">
+            <span>💬</span> Participación y Comentarios
+          </div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
+            <strong>Supervisión Técnica:</strong> Medida incluida en el dictamen favorable del III Plan Municipal de Juventud. Supervisada por la Concejalía de Juventud y la Comisión de Seguimiento.
+          </p>
+          
+          ${valoraciones.length > 0 ? `
+            <div style="background: rgba(0,0,0,0.2); border-left: 3px solid var(--emerald); padding: 10px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 14px; font-size: 0.75rem;">
+              <strong>Comentario de la Juventud de Orcera:</strong><br>
+              <span style="color: var(--text-main); font-style: italic; display: block; margin: 4px 0;">"${valoraciones[0].comentario}"</span>
+              <div style="color: var(--text-dim); margin-top: 2px;">— ${valoraciones[0].usuario} (${"★".repeat(valoraciones[0].estrellas)})</div>
+            </div>
+          ` : ''}
+
+          <button type="button" class="btn-primary" onclick="closeActionDetailModal(); window.switchTab && window.switchTab('tab-buzon');" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 10px;">
+            💡 Enviar Propuesta o Pregunta sobre ${action.codigo} al Buzón Joven
+          </button>
+        </div>
       </div>
 
     </div>
 
-    <!-- PIE DEL MODAL CON BOTÓN DE CIERRE -->
-    <div class="action-modal-footer">
-      <span style="font-size: 0.72rem; color: var(--text-muted);">
-        III Plan Municipal de Juventud de Orcera (2027–2031)
-      </span>
-      <button type="button" class="btn-primary" onclick="closeActionDetailModal()" style="padding: 8px 20px; font-weight: 800;">
+    <!-- PIE DEL MODAL CON BOTÓN VOLVER Y CERRAR -->
+    <div class="action-modal-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 16px; background: var(--segura-surface-elevated); border-top: 1px solid var(--segura-border); flex-shrink: 0;">
+      <button type="button" class="btn-action-back" onclick="closeActionDetailModal()" style="font-size: 0.75rem; padding: 6px 14px;">
+        ← Volver al Cronograma
+      </button>
+      <button type="button" class="btn-primary" onclick="closeActionDetailModal()" style="padding: 7px 18px; font-weight: 800; font-size: 0.8rem;">
         Cerrar Ficha
       </button>
     </div>
@@ -2502,6 +2529,27 @@ function openActionDetailModal(actionCode, optEjeId) {
   modal.style.display = "flex";
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  const bodyEl = modal.querySelector(".action-modal-body");
+  if (bodyEl) bodyEl.scrollTop = 0;
+}
+
+function switchActionTab(tabId) {
+  const modal = document.getElementById("cronograma-action-modal");
+  if (!modal) return;
+  modal.querySelectorAll(".action-tab-btn").forEach(btn => {
+    if (btn.getAttribute("data-action-tab") === tabId) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+  modal.querySelectorAll(".action-tab-pane").forEach(pane => {
+    if (pane.id === "pane-" + tabId) {
+      pane.style.display = "flex";
+    } else {
+      pane.style.display = "none";
+    }
+  });
   const bodyEl = modal.querySelector(".action-modal-body");
   if (bodyEl) bodyEl.scrollTop = 0;
 }
@@ -2517,6 +2565,7 @@ function closeActionDetailModal() {
 
 window.openActionDetailModal = openActionDetailModal;
 window.closeActionDetailModal = closeActionDetailModal;
+window.switchActionTab = switchActionTab;
 
 // ==============================================================================
 // MÓDULO 3: GAMIFICACIÓN Y CANJES DE LA PISCINA DE AMURJO

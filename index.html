@@ -1423,11 +1423,10 @@
 
   </div>
 
-  <!-- MODAL DE FICHA TÉCNICA DETALLADA DE ACCIÓN / MEDIDA DEL CRONOGRAMA -->
+  <!-- MODAL / VISTA DE FICHA TÉCNICA DETALLADA DE ACCIÓN (PANTALLA COMPLETA MÓVIL) -->
   <div class="modal-overlay" id="cronograma-action-modal" role="dialog" aria-hidden="true" style="z-index: 10050;">
     <div class="action-detail-modal-box" id="action-detail-modal-box">
-      <button type="button" class="btn-close-modal" id="close-cronograma-action-modal" onclick="closeActionDetailModal()" aria-label="Cerrar ficha de la acción">&times;</button>
-      <div id="cronograma-action-modal-content">
+      <div id="cronograma-action-modal-content" style="display: flex; flex-direction: column; height: 100%; width: 100%; overflow: hidden;">
         <!-- Renderizado dinámicamente con JS -->
       </div>
     </div>
