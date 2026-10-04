@@ -16,10 +16,16 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KLIKO">
+  <meta name="theme-color" content="#0b1319">
   <meta property="og:title" content="KLIKO · App Oficial del III Plan Municipal de Juventud de Orcera">
   <meta property="og:image" content="img/kliko_logo_clean.png">
   
-  <link rel="stylesheet" href="css/styles.css?v=kliko_brand_v1">
+  <link rel="stylesheet" href="css/styles.css?v=pwa_clean_v1">
 </head>
 <body>
   <!-- CONTENEDOR GLOBAL (PANTALLA LIMPIA NATIVA) -->
@@ -78,6 +84,10 @@
 
             <!-- FILA 2: ACCESOS DIRECTOS PRINCIPALES DE NAVEGACIÓN -->
             <div class="brand-bar-nav-actions">
+              <button type="button" id="btn-install-app" class="app-top-action-btn btn-install-highlight" title="Instalar KLIKO en tu dispositivo">
+                <span class="btn-action-icon">📲</span>
+                <span class="btn-action-label" id="btn-install-label">Instalar</span>
+              </button>
               <a href="manual.html" id="btn-manual-toolbar" class="app-top-action-btn" title="Manual de Usuario Joven Paso a Paso">
                 <span class="btn-action-icon">📖</span>
                 <span class="btn-action-label">Guía</span>
@@ -727,12 +737,71 @@
           </section>
 
           <footer class="mobile-footer">
-            <p><a href="manual.html" style="color: var(--amurjo-cyan); text-decoration: none; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 6px;">📖 ¿Dudas sobre cómo funciona? Abre el Manual Joven Paso a Paso ➔</a></p>
-            <p><strong>III Plan Municipal de Juventud de Orcera (2027-2031)</strong></p>
-            <p>Concejalía de Juventud · Ayuntamiento de Orcera · Sierra de Segura (Jaén)</p>
+            <div class="footer-manual-link">
+              <a href="manual.html" class="footer-guide-cta">
+                <span>📖</span>
+                <span>¿Dudas sobre cómo funciona? Abre el Manual Joven Paso a Paso ➔</span>
+              </a>
+            </div>
+
+            <!-- COMPROMISO INSTITUCIONAL Y POLÍTICAS DE LA UNIÓN EUROPEA -->
+            <div class="eu-compliance-badge">
+              <div class="eu-flag-header">
+                <span class="eu-flag-emblem">🇪🇺</span>
+                <div class="eu-flag-text">
+                  <strong>Marco y Políticas de la Unión Europea</strong>
+                  <span>Garantías de privacidad, accesibilidad e inclusión juvenil</span>
+                </div>
+              </div>
+
+              <div class="eu-policies-links">
+                <button type="button" class="btn-eu-policy" data-eu-open="rgpd" title="Reglamento General de Protección de Datos (UE 2016/679)">
+                  🛡️ Privacidad & RGPD
+                </button>
+                <button type="button" class="btn-eu-policy" data-eu-open="eprivacy" title="Directiva ePrivacy y Gestión de Almacenamiento">
+                  🍪 Cookies & ePrivacy
+                </button>
+                <button type="button" class="btn-eu-policy" data-eu-open="accesibilidad" title="Directiva Europea de Accesibilidad Web (UE 2016/2102 · WCAG 2.1 AA)">
+                  ♿ Accesibilidad (EN 301 549)
+                </button>
+                <button type="button" class="btn-eu-policy" data-eu-open="dsa" title="Ley de Servicios Digitales (DSA · Reglamento UE 2022/2065)">
+                  📜 Aviso Legal & DSA
+                </button>
+                <button type="button" class="btn-eu-policy" data-eu-open="juventud" title="Estrategia de la Unión Europea para la Juventud 2019-2027">
+                  🇪🇺 Juventud UE 2019–2027
+                </button>
+              </div>
+
+              <p class="eu-legal-note">
+                Esta plataforma pública cumple con el <strong>RGPD (UE 2016/679)</strong>, la <strong>Directiva de Accesibilidad Web (UE 2016/2102)</strong>, la <strong>Ley de Servicios Digitales (UE 2022/2065)</strong> y la <strong>Estrategia Europea para la Juventud</strong>. Datos protegidos y alojados con seguridad en la Unión Europea.
+              </p>
+            </div>
+
+            <div class="footer-institutional-credits">
+              <p><strong>III Plan Municipal de Juventud de Orcera (2027-2031)</strong></p>
+              <p>Ayuntamiento de Orcera · Concejalía de Juventud · Asociación Juvenil de Orcera</p>
+              <p class="footer-geo-tag">🏔️ Sierra de Segura · Parque Natural · Jaén, España</p>
+            </div>
           </footer>
 
-        </div> <!-- /mobile-viewport -->
+        <!-- BANNER FLOTANTE DE INSTALACIÓN RÁPIDA (PWA NATIVA) -->
+        <div id="pwa-quick-install-banner" class="pwa-quick-install-banner" style="display:none;">
+          <div class="pwa-banner-content">
+            <img src="android-chrome-192x192.png" alt="KLIKO" class="pwa-banner-icon">
+            <div class="pwa-banner-text">
+              <strong>Instala la App Oficial KLIKO</strong>
+              <span>Pantalla completa, acceso directo y más rápida</span>
+            </div>
+          </div>
+          <div class="pwa-banner-actions">
+            <button type="button" id="btn-pwa-banner-install" class="btn-pwa-banner-action">
+              ⚡ Instalar (1 Clic)
+            </button>
+            <button type="button" id="btn-pwa-banner-dismiss" class="btn-pwa-banner-close" aria-label="Cerrar banner">
+              ✕
+            </button>
+          </div>
+        </div>
 
         <!-- BARRA DE NAVEGACIÓN INFERIOR (BOTTOM TAB BAR TIPO NATIVA) -->
         <nav class="bottom-tab-bar" aria-label="Navegación Móvil Principal">
@@ -1436,136 +1505,6 @@
         <small style="color:#64748b; font-size:0.68rem; display:block; margin-top:8px;">Código QR estándar ISO · Compatible con la cámara de cualquier teléfono móvil</small>
       </div>
 
-      <!-- GUÍA PARA INSTALAR EN PANTALLA DE INICIO (PWA) -->
-      <div class="pwa-guide-box">
-        <div class="pwa-guide-header">
-          <div class="pwa-header-icon">📲</div>
-          <div>
-            <strong class="pwa-guide-title">¿Cómo tener la App en tu móvil como una app de verdad?</strong>
-            <p class="pwa-guide-subtitle">
-              Se instala directamente desde el <strong>navegador de tu teléfono</strong> (sin necesidad de buscarla en Play Store ni App Store).
-            </p>
-          </div>
-        </div>
-
-        <!-- NOTA ACLARATORIA DE UBICACIÓN -->
-        <div class="pwa-notice-pill">
-          <span>📍</span>
-          <div>
-            <strong>¿Dónde se hace?</strong> En la <strong>barra de tu navegador móvil</strong> (en los menús de Chrome o Safari), <em>no dentro de esta página</em>. Sigue los pasos según tu teléfono:
-          </div>
-        </div>
-
-        <!-- BOTÓN DE INSTALACIÓN NATIVA AUTOMÁTICA (SI EL NAVEGADOR LO SOPORTA) -->
-        <div id="pwa-auto-install-row" style="display:none; margin-bottom:12px;">
-          <button type="button" class="btn-pwa-direct-install" id="btn-pwa-direct-install">
-            <span>⚡</span>
-            <span>Instalar App en este Dispositivo Ahora (1 Clic)</span>
-          </button>
-        </div>
-
-        <!-- SELECTOR DE PLATAFORMA (ANDROID VS IPHONE) -->
-        <div class="pwa-tabs-row" role="tablist">
-          <button type="button" class="pwa-tab-btn active" id="pwa-tab-android" role="tab" aria-selected="true">
-            <span>🤖</span>
-            <span>En Móviles Android (Chrome)</span>
-          </button>
-          <button type="button" class="pwa-tab-btn" id="pwa-tab-ios" role="tab" aria-selected="false">
-            <span>🍏</span>
-            <span>En iPhone (Safari)</span>
-          </button>
-        </div>
-
-        <!-- CONTENIDO PASO A PASO: ANDROID -->
-        <div class="pwa-platform-card" id="pwa-card-android">
-          <div class="pwa-step-item">
-            <div class="pwa-step-num">1</div>
-            <div class="pwa-step-text">
-              <strong>Abre Google Chrome en tu móvil:</strong>
-              <span>Entra a esta misma dirección web desde el navegador de tu móvil.</span>
-            </div>
-          </div>
-
-          <div class="pwa-step-item">
-            <div class="pwa-step-num">2</div>
-            <div class="pwa-step-text">
-              <strong>Toca el menú del navegador:</strong>
-              <span>Mira la <strong>esquina superior derecha</strong> de tu pantalla (arriba del todo, en la barra gris del navegador Chrome) y pulsa en los <strong>tres puntos verticales</strong>:</span>
-              <div class="pwa-visual-badge">
-                <span class="pwa-browser-badge">Barra superior derecha</span>
-                <span class="pwa-key-symbol">⋮</span>
-                <span class="pwa-badge-hint">Menú de Chrome</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pwa-step-item">
-            <div class="pwa-step-num">3</div>
-            <div class="pwa-step-text">
-              <strong>Elige Instalar:</strong>
-              <span>En el menú desplegable que aparece, pulsa sobre:</span>
-              <div class="pwa-action-badge">
-                <span>📲</span>
-                <strong>«Instalar aplicación»</strong>
-                <small>(o «Añadir a pantalla de inicio»)</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="pwa-step-result">
-            <span>✨</span>
-            <span>¡Listo! Se creará el acceso directo con el icono oficial del III Plan en tu móvil.</span>
-          </div>
-        </div>
-
-        <!-- CONTENIDO PASO A PASO: IPHONE (SAFARI) -->
-        <div class="pwa-platform-card" id="pwa-card-ios" style="display:none;">
-          <div class="pwa-step-item">
-            <div class="pwa-step-num">1</div>
-            <div class="pwa-step-text">
-              <strong>Abre Safari en tu iPhone:</strong>
-              <span>Entra a esta web usando el navegador oficial <strong>Safari</strong> de Apple.</span>
-            </div>
-          </div>
-
-          <div class="pwa-step-item">
-            <div class="pwa-step-num">2</div>
-            <div class="pwa-step-text">
-              <strong>Toca el botón Compartir:</strong>
-              <span>Mira la <strong>barra inferior</strong> de la pantalla de tu iPhone (abajo del todo de la ventana de Safari) y toca el botón del <strong>cuadrado con flecha hacia arriba</strong>:</span>
-              <div class="pwa-visual-badge">
-                <span class="pwa-browser-badge">Barra inferior de Safari</span>
-                <span class="pwa-key-symbol">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
-                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                    <polyline points="16 6 12 2 8 6"/>
-                    <line x1="12" y1="2" x2="12" y2="15"/>
-                  </svg>
-                </span>
-                <span class="pwa-badge-hint">Compartir</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pwa-step-item">
-            <div class="pwa-step-num">3</div>
-            <div class="pwa-step-text">
-              <strong>Selecciona Añadir a pantalla de inicio:</strong>
-              <span>En la lista de opciones que se abre desde abajo, desliza y toca en:</span>
-              <div class="pwa-action-badge">
-                <span>➕</span>
-                <strong>«Añadir a pantalla de inicio»</strong>
-              </div>
-            </div>
-          </div>
-
-          <div class="pwa-step-result">
-            <span>✨</span>
-            <span>¡Listo! La App se abrirá a pantalla completa y sin marcos de navegador.</span>
-          </div>
-        </div>
-
-      </div>
     </div>
   </div>
 
@@ -1661,6 +1600,205 @@
         </div>
       </div>
     </div>
+  <!-- MODAL DE POLÍTICAS Y MARCO REGULATORIO DE LA UNIÓN EUROPEA -->
+  <div class="modal-overlay" id="eu-policies-modal" role="dialog" aria-hidden="true" aria-labelledby="eu-modal-title">
+    <div class="eu-policies-modal-box">
+      <button class="btn-close-modal" id="close-eu-policies-modal" aria-label="Cerrar modal de políticas">&times;</button>
+      
+      <div class="eu-modal-header">
+        <div class="eu-modal-title-row">
+          <span class="eu-flag-large">🇪🇺</span>
+          <div>
+            <h3 id="eu-modal-title">Políticas y Garantías de la Unión Europea</h3>
+            <p>III Plan Municipal de Juventud de Orcera 2027–2031 · Cumplimiento Normativo UE</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESTAÑAS NAVEGABLES ENTRE POLÍTICAS -->
+      <nav class="eu-modal-tabs" role="tablist">
+        <button class="eu-tab-btn active" data-eu-tab="rgpd" role="tab" aria-selected="true">
+          <span>🛡️</span> RGPD & Privacidad
+        </button>
+        <button class="eu-tab-btn" data-eu-tab="eprivacy" role="tab" aria-selected="false">
+          <span>🍪</span> Cookies & ePrivacy
+        </button>
+        <button class="eu-tab-btn" data-eu-tab="accesibilidad" role="tab" aria-selected="false">
+          <span>♿</span> Accesibilidad
+        </button>
+        <button class="eu-tab-btn" data-eu-tab="dsa" role="tab" aria-selected="false">
+          <span>📜</span> DSA & Aviso Legal
+        </button>
+        <button class="eu-tab-btn" data-eu-tab="juventud" role="tab" aria-selected="false">
+          <span>🇪🇺</span> Juventud UE
+        </button>
+      </nav>
+
+      <!-- CONTENIDO DE LAS POLÍTICAS -->
+      <div class="eu-modal-body">
+        
+        <!-- 1. RGPD / GDPR -->
+        <div class="eu-policy-pane active" id="pane-eu-rgpd">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Reglamento (UE) 2016/679 (RGPD) & Ley Orgánica 3/2018 (LOPDGDD)</span>
+          </div>
+          <h4>Protección de Datos Personales y Privacidad</h4>
+          <p>El Ayuntamiento de Orcera garantiza el pleno respeto a la privacidad de las personas jóvenes usuarias y el estricto cumplimiento del Reglamento General de Protección de Datos de la Unión Europea.</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Responsable del Tratamiento:</strong>
+              <span>Ayuntamiento de Orcera (Concejalía de Juventud) · CIF: P-2306500-G · Plaza del Ayuntamiento, 1, 23370 Orcera (Jaén).</span>
+            </div>
+            <div class="spec-item">
+              <strong>Finalidad del Tratamiento:</strong>
+              <span>Gestión de la participación ciudadana en el III Plan Municipal de Juventud, tramitación de propuestas, votaciones populares y asignación de Puntos Cívicos/recompensas.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Base Jurídica (Legitimación):</strong>
+              <span>Misión en interés público / ejercicio de poderes públicos conferidos al Ayuntamiento (Art. 6.1.e del RGPD) y consentimiento explícito e informado (Art. 6.1.a del RGPD).</span>
+            </div>
+            <div class="spec-item">
+              <strong>Conservación de los Datos:</strong>
+              <span>Durante la vigencia del Plan Quinquenal (2027–2031) y los plazos legalmente exigibles para la rendición de cuentas públicas.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Protección Específica de Menores:</strong>
+              <span>Conforme al Art. 8 del RGPD y Art. 7 de la LOPDGDD, para menores de 14 años se requiere la autorización de progenitores o tutores legales para el tratamiento de datos.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Ejercicio de Derechos (ARCO-POL):</strong>
+              <span>Puedes ejercer gratuitamente tus derechos de Acceso, Rectificación, Supresión ("derecho al olvido"), Limitación, Portabilidad y Oposición escribiendo a <code>ayuntamiento@orcera.es</code> o reclamando ante la Agencia Española de Protección de Datos (AEPD / <code>www.aepd.es</code>).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. ePRIVACY & COOKIES -->
+        <div class="eu-policy-pane" id="pane-eu-eprivacy">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Directiva 2002/58/CE (ePrivacy) & Directiva 2009/136/CE</span>
+          </div>
+          <h4>Política de Cookies y Almacenamiento Local</h4>
+          <p>Esta aplicación municipal prioriza tu privacidad y aplica el principio de <em>Privacidad desde el Diseño</em> (Privacy by Design).</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Cero Cookies de Rastreo Publicitario:</strong>
+              <span>KLIKO NO utiliza cookies analíticas comerciales, píxeles de seguimiento ni herramientas de terceros para crear perfiles publicitarios. Cero cesión o venta de datos.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Almacenamiento Técnico Estrictamente Necesario:</strong>
+              <span>La app utiliza el almacenamiento local de tu navegador (<code>LocalStorage</code>) exclusivamente para funciones técnicas solicitadas por el usuario: recordar tu preferencia de Tema (Modo Noche/Día), mantener la sesión activa con Supabase y permitir el funcionamiento fuera de línea (offline) en la Sierra.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Doctrina del Comité Europeo (CEPD):</strong>
+              <span>Al tratarse de almacenamiento estrictamente técnico e imprescindible para la ejecución del servicio interactivo solicitado, no requiere banner intrusivo de consentimiento previo, garantizando una navegación limpia y rápida.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. ACCESIBILIDAD WEB -->
+        <div class="eu-policy-pane" id="pane-eu-accesibilidad">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Directiva (UE) 2016/2102 & Real Decreto 1112/2018 · WCAG 2.1 Nivel AA</span>
+          </div>
+          <h4>Declaración de Accesibilidad Universal</h4>
+          <p>El Ayuntamiento de Orcera se ha comprometido a hacer accesible su plataforma para todas las personas jóvenes, incluidas aquellas con diversidad funcional o discapacidad sensorial, motriz o cognitiva.</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Estándar Europeo EN 301 549:</strong>
+              <span>KLIKO se ha diseñado siguiendo los requisitos de accesibilidad para productos y servicios TIC establecidos en la norma europea <code>EN 301 549 v3.2.1</code> y las Pautas WCAG 2.1 (Nivel AA).</span>
+            </div>
+            <div class="spec-item">
+              <strong>Criterios Implementados:</strong>
+              <span>Alto contraste cromático adaptable (Modo Claro/Oscuro), tipografías escalables sin solapamientos, navegación completa por teclado, compatibilidad con lectores de pantalla (etiquetas ARIA, texto alternativo en imágenes y estados de foco visibles).</span>
+            </div>
+            <div class="spec-item">
+              <strong>Canal de Quejas y Sugerencias de Accesibilidad:</strong>
+              <span>Si detectas cualquier dificultad de acceso o requieres información en un formato alternativo, puedes comunicarlo directamente a <code>ayuntamiento@orcera.es</code>.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. DSA & AVISO LEGAL -->
+        <div class="eu-policy-pane" id="pane-eu-dsa">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Reglamento (UE) 2022/2065 (Ley de Servicios Digitales - DSA)</span>
+          </div>
+          <h4>Aviso Legal, Condiciones de Uso y Moderación Digital</h4>
+          <p>Condiciones generales que regulan el uso cívico y democrático de la plataforma KLIKO.</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Compromiso Cívico en el Buzón Joven:</strong>
+              <span>Las personas usuarias se comprometen a utilizar el Buzón Joven de forma constructiva, veraz y respetuosa. Quedan expresamente prohibidos los insultos, discursos de odio, amenazas, acoso o contenidos discriminatorios por razón de género, origen, orientación sexual o religión.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Moderación Transparente y Motivada (DSA):</strong>
+              <span>Conforme al Reglamento DSA de la UE, cualquier moderación o no admisión de una propuesta será transparente y comunicada al interesado/a con explicación de motivos objetivos.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Punto Único de Contacto para la DSA:</strong>
+              <span>Para autoridades judiciales o de supervisión de la UE y personas usuarias: <code>juventud@orcera.es</code> (Asunto: DSA Orcera).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. ESTRATEGIA EUROPEA DE JUVENTUD -->
+        <div class="eu-policy-pane" id="pane-eu-juventud">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Resolución del Consejo de la UE (2018/C 456/01) · Periodo 2019–2027</span>
+          </div>
+          <h4>Marco de la Estrategia de la Unión Europea para la Juventud</h4>
+          <p>KLIKO y el III Plan Municipal de Juventud de Orcera están alineados con los objetivos europeos para capacitar y conectar a la juventud rural.</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Los 3 Pilares Europeos:</strong>
+              <span><strong>Engage (Conectar):</strong> Fomentar la participación democrática sin barreras. <strong>Connect (Unir):</strong> Reforzar el sentido de comunidad y los lazos intergeneracionales. <strong>Empower (Capacitar):</strong> Proporcionar herramientas para el empleo, arraigo y futuro rural.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Metas de la Juventud Europea (European Youth Goals):</strong>
+              <span>En especial la <em>Meta #6: Impulsar a la juventud rural</em> (rompiendo la brecha digital y creando oportunidades en la Sierra de Segura) y la <em>Meta #10: Una Europa Verde y Sostenible</em> (vinculada al Pacto Verde Europeo y la protección del Parque Natural).</span>
+            </div>
+            <div class="spec-item">
+              <strong>Financiación y Cohesión Territorial:</strong>
+              <span>Iniciativa municipal promovida en consonancia con las directrices de cohesión social, fomento del relevo generacional y lucha contra la despoblación en el medio rural de la Unión Europea.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="eu-modal-footer">
+        <button type="button" class="btn-primary" id="btn-close-eu-modal-action" style="padding: 10px 24px; font-weight: 800;">
+          Cerrar y Aceptar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL ASISTIDO DE INSTALACIÓN RÁPIDA (IPHONE / ESCRITORIO) -->
+  <div class="modal-overlay" id="pwa-install-modal" role="dialog" aria-hidden="true">
+    <div class="user-modal-box" style="max-width: 380px; text-align: center;">
+      <button class="btn-close-modal" id="close-pwa-install-modal" aria-label="Cerrar modal">&times;</button>
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">📲</div>
+      <h3 style="margin: 0 0 6px; font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-main);" id="pwa-modal-title">
+        Instalar KLIKO
+      </h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 16px; line-height: 1.4;" id="pwa-modal-desc">
+        Añade la app a tu pantalla de inicio para acceder en 1 segundo y a pantalla completa.
+      </p>
+      
+      <div id="pwa-modal-instructions" style="background: rgba(0,0,0,0.3); border: 1px solid var(--segura-border); border-radius: var(--radius-md); padding: 14px; text-align: left; font-size: 0.8rem; line-height: 1.5; color: var(--text-main); margin-bottom: 16px;">
+      </div>
+
+      <button type="button" class="btn-primary" id="btn-pwa-modal-ok" style="width: 100%; justify-content: center; padding: 10px;">
+        Entendido
+      </button>
+    </div>
   </div>
 
   <!-- TOAST DE NOTIFICACIÓN DE PUNTOS HÁPTICO -->
@@ -1678,6 +1816,13 @@
 
   <script src="js/qrcode.min.js"></script>
   <script src="js/data-ejes.js?v=finanzas_anualizadas_v1"></script>
-  <script src="js/app.js?v=supabase_v1"></script>
+  <script src="js/app.js?v=pwa_clean_v1"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch((e) => console.log('SW registration:', e));
+      });
+    }
+  </script>
 </body>
 </html>

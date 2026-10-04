@@ -1,10 +1,29 @@
 
-// Escuchar evento de instalación nativa en dispositivos compatibles
+// ==============================================================================
+// GESTOR GLOBAL DE INSTALACIÓN PWA (1-CLIC NATIVO)
+// ==============================================================================
+window._orceraDeferredPrompt = null;
+
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   window._orceraDeferredPrompt = e;
-  const row = document.getElementById("pwa-auto-install-row");
-  if (row) row.style.display = "block";
+
+  const banner = document.getElementById("pwa-quick-install-banner");
+  if (banner) banner.style.display = "flex";
+
+  const btnInstall = document.getElementById("btn-install-app");
+  if (btnInstall) btnInstall.classList.add("btn-install-highlight");
+});
+
+window.addEventListener("appinstalled", () => {
+  window._orceraDeferredPrompt = null;
+  const banner = document.getElementById("pwa-quick-install-banner");
+  if (banner) banner.style.display = "none";
+  const btnInstall = document.getElementById("btn-install-app");
+  if (btnInstall) btnInstall.style.display = "none";
+  if (typeof showToast === "function") {
+    showToast("¡KLIKO Instalada!", "La aplicación ya está en tu pantalla de inicio.");
+  }
 });
 /**
  * III PLAN MUNICIPAL DE JUVENTUD DE ORCERA (2027-2031)
@@ -144,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initGamification();
   initBuzon();
   updateGlobalBentoKPIs();
+  initEuPoliciesModal();
+  initPWAInstallSystem();
 
   // Soporte para deep-linking / captura de vistas móviles
   const params = new URLSearchParams(window.location.search);
@@ -4437,58 +4458,6 @@ function setupPromotionEvents() {
     });
   }
 
-  // PWA Tabs y Evento de Instalación
-  const pwaTabAndroid = document.getElementById("pwa-tab-android");
-  const pwaTabIos = document.getElementById("pwa-tab-ios");
-  const pwaCardAndroid = document.getElementById("pwa-card-android");
-  const pwaCardIos = document.getElementById("pwa-card-ios");
-
-  if (pwaTabAndroid && pwaTabIos) {
-    pwaTabAndroid.addEventListener("click", () => {
-      pwaTabAndroid.classList.add("active");
-      pwaTabIos.classList.remove("active");
-      pwaTabAndroid.setAttribute("aria-selected", "true");
-      pwaTabIos.setAttribute("aria-selected", "false");
-      if (pwaCardAndroid) pwaCardAndroid.style.display = "flex";
-      if (pwaCardIos) pwaCardIos.style.display = "none";
-    });
-
-    pwaTabIos.addEventListener("click", () => {
-      pwaTabIos.classList.add("active");
-      pwaTabAndroid.classList.remove("active");
-      pwaTabIos.setAttribute("aria-selected", "true");
-      pwaTabAndroid.setAttribute("aria-selected", "false");
-      if (pwaCardIos) pwaCardIos.style.display = "flex";
-      if (pwaCardAndroid) pwaCardAndroid.style.display = "none";
-    });
-
-    // Autodetectar dispositivo del usuario al abrir
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (isIos) {
-      pwaTabIos.click();
-    }
-  }
-
-  // Soporte de instalación nativa 1-clic si el navegador lo permite
-  const btnDirectInstall = document.getElementById("btn-pwa-direct-install");
-  if (btnDirectInstall) {
-    btnDirectInstall.addEventListener("click", () => {
-      if (window._orceraDeferredPrompt) {
-        window._orceraDeferredPrompt.prompt();
-        window._orceraDeferredPrompt.userChoice.then((choice) => {
-          if (choice.outcome === "accepted") {
-            showToast("¡App Instalada!", "El III Plan ya está en tu pantalla de inicio.");
-          }
-          window._orceraDeferredPrompt = null;
-          const row = document.getElementById("pwa-auto-install-row");
-          if (row) row.style.display = "none";
-        });
-      } else {
-        showToast("Instalación Asistida", "Sigue los sencillos pasos indicados abajo según tu tipo de móvil.");
-      }
-    });
-  }
-
     // Cartel oficial imprimible
   const closePosterBtn = document.getElementById("close-promo-poster-modal");
   const posterModal = document.getElementById("promo-poster-modal");
@@ -4503,9 +4472,116 @@ function setupPromotionEvents() {
   }
 }
 
+// ==============================================================================
+// SISTEMA OFICIAL DE INSTALACIÓN RÁPIDA PWA (1-CLIC NATIVO / ASISTIDO)
+// ==============================================================================
+function initPWAInstallSystem() {
+  const btnTopInstall = document.getElementById("btn-install-app");
+  const banner = document.getElementById("pwa-quick-install-banner");
+  const btnBannerInstall = document.getElementById("btn-pwa-banner-install");
+  const btnBannerDismiss = document.getElementById("btn-pwa-banner-dismiss");
+  const modal = document.getElementById("pwa-install-modal");
+  const closeModal = document.getElementById("close-pwa-install-modal");
+  const btnModalOk = document.getElementById("btn-pwa-modal-ok");
+  const instructionsBox = document.getElementById("pwa-modal-instructions");
+
+  // Si la app ya se ejecuta como app instalada (standalone)
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  if (isStandalone) {
+    if (btnTopInstall) btnTopInstall.style.display = "none";
+    if (banner) banner.style.display = "none";
+    return;
+  }
+
+  // Cerrar banner flotante
+  if (btnBannerDismiss && banner) {
+    btnBannerDismiss.addEventListener("click", () => {
+      banner.style.display = "none";
+    });
+  }
+
+  // Control del modal asistido
+  const hideModal = () => {
+    if (modal) modal.classList.remove("active");
+  };
+  if (closeModal) closeModal.addEventListener("click", hideModal);
+  if (btnModalOk) btnModalOk.addEventListener("click", hideModal);
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) hideModal();
+    });
+  }
+
+  // Lógica unificada de instalación simplificada (la más directa posible)
+  const executeDirectInstall = () => {
+    // 1. Si tenemos el prompt nativo capturado (Android Chrome, Edge, Chrome Desktop)
+    if (window._orceraDeferredPrompt) {
+      window._orceraDeferredPrompt.prompt();
+      window._orceraDeferredPrompt.userChoice.then((choice) => {
+        if (choice.outcome === "accepted") {
+          if (banner) banner.style.display = "none";
+          if (btnTopInstall) btnTopInstall.style.display = "none";
+          showToast("¡App Instalada!", "KLIKO ya forma parte de tu pantalla de inicio.");
+        }
+        window._orceraDeferredPrompt = null;
+      });
+      return;
+    }
+
+    // 2. Si es dispositivo iOS (iPhone / iPad de Apple)
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIos) {
+      if (instructionsBox) {
+        instructionsBox.innerHTML = `
+          <div style="margin-bottom: 12px; display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:1.1rem; line-height:1;">1️⃣</span>
+            <div>Toca el botón <strong>Compartir</strong> en la barra inferior de Safari <span style="font-size:1.1rem; vertical-align:middle;">⎋</span> (icono del cuadrado con la flecha hacia arriba).</div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:1.1rem; line-height:1;">2️⃣</span>
+            <div>Desplaza hacia abajo y toca en <strong>«Añadir a pantalla de inicio»</strong> ➕.</div>
+          </div>
+        `;
+      }
+      if (modal) modal.classList.add("active");
+      return;
+    }
+
+    // 3. Si está abierto como file://
+    if (window.location.protocol === 'file:') {
+      if (instructionsBox) {
+        instructionsBox.innerHTML = `
+          <div style="color: #fbbf24; margin-bottom: 10px;">
+            ⚠️ Estás abriendo el archivo localmente como <code>file:///</code>.
+          </div>
+          <div style="font-size: 0.78rem; line-height: 1.4;">
+            Los navegadores exigen abrir la web desde un servidor local (<code>http://localhost:8000</code>) o con <code>https://</code> para poder instalarse con 1 clic.
+          </div>
+        `;
+      }
+      if (modal) modal.classList.add("active");
+      return;
+    }
+
+    // 4. Si es Ordenador (Chrome / Edge en PC o Mac) sin prompt disparado aún
+    if (instructionsBox) {
+      instructionsBox.innerHTML = `
+        <div style="margin-bottom: 10px;">
+          <strong>En tu ordenador (Chrome / Edge):</strong><br>
+          Haz clic en el icono <strong>📥 «Instalar KLIKO»</strong> situado a la derecha de la barra de direcciones (arriba), o abre el menú (tres puntos ⋮) y selecciona <em>«Instalar KLIKO»</em>.
+        </div>
+      `;
+    }
+    if (modal) modal.classList.add("active");
+  };
+
+  if (btnTopInstall) btnTopInstall.addEventListener("click", executeDirectInstall);
+  if (btnBannerInstall) btnBannerInstall.addEventListener("click", executeDirectInstall);
+}
+
 function getAppPublicUrl() {
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://192.168.1.20:8000';
+  if (window.location.protocol === 'file:') {
+    return 'http://localhost:8000';
   }
   return window.location.origin + window.location.pathname;
 }
@@ -4710,3 +4786,72 @@ function renderPanePromocion(container) {
     });
   }
 }
+
+/**
+ * Inicialización y Gestión del Modal de Políticas de la Unión Europea
+ * Cumplimiento: RGPD (UE 2016/679), ePrivacy, Directiva Accesibilidad (UE 2016/2102), DSA (UE 2022/2065)
+ */
+function initEuPoliciesModal() {
+  const modal = document.getElementById("eu-policies-modal");
+  const closeBtn = document.getElementById("close-eu-policies-modal");
+  const closeActionBtn = document.getElementById("btn-close-eu-modal-action");
+  const triggerBtns = document.querySelectorAll(".btn-eu-policy");
+  const tabBtns = document.querySelectorAll(".eu-tab-btn");
+  const panes = document.querySelectorAll(".eu-policy-pane");
+
+  if (!modal) return;
+
+  function switchPolicyTab(tabKey) {
+    tabBtns.forEach(btn => {
+      const isMatch = btn.getAttribute("data-eu-tab") === tabKey;
+      btn.classList.toggle("active", isMatch);
+      btn.setAttribute("aria-selected", isMatch ? "true" : "false");
+    });
+    panes.forEach(pane => {
+      pane.classList.toggle("active", pane.id === `pane-eu-${tabKey}`);
+    });
+  }
+
+  function openEuModal(tabKey = "rgpd") {
+    switchPolicyTab(tabKey);
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeEuModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  triggerBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const policyKey = btn.getAttribute("data-eu-open") || "rgpd";
+      openEuModal(policyKey);
+    });
+  });
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tabKey = btn.getAttribute("data-eu-tab");
+      switchPolicyTab(tabKey);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener("click", closeEuModal);
+  if (closeActionBtn) closeActionBtn.addEventListener("click", closeEuModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeEuModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeEuModal();
+    }
+  });
+
+  window.openEuModal = openEuModal;
+}
+
