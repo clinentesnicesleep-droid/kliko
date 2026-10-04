@@ -5530,3 +5530,416 @@ body {
   color: var(--amurjo-cyan);
   border: 1px solid rgba(6, 182, 212, 0.3);
 }
+
+/* ==========================================================================
+   POLÍTICAS LEGALES, RGPD, MODAL Y CONSENTIMIENTO EN FORMULARIOS
+   ========================================================================== */
+
+.mobile-footer {
+  padding: 24px 16px 90px;
+  text-align: center;
+  border-top: 1px solid var(--segura-border);
+  margin-top: 32px;
+}
+
+.footer-manual-link {
+  margin-bottom: 16px;
+}
+
+.footer-guide-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--emerald);
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-guide-cta:hover {
+  background: rgba(16, 185, 129, 0.22);
+  transform: translateY(-1px);
+}
+
+/* Badge y enlaces legales en el footer */
+.eu-compliance-badge {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 16px 14px;
+  margin: 16px auto;
+  max-width: 560px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .eu-compliance-badge {
+  background: rgba(241, 245, 249, 0.9);
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.eu-flag-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.eu-flag-emblem {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.eu-flag-text {
+  text-align: left;
+}
+
+.eu-flag-text strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  font-family: var(--font-heading);
+}
+
+.eu-flag-text span {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.eu-policies-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0 10px;
+}
+
+.btn-eu-policy {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  font-family: inherit;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .btn-eu-policy {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #334155;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.btn-eu-policy:hover,
+.btn-eu-policy:focus-visible {
+  background: rgba(34, 197, 94, 0.16);
+  border-color: var(--primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+
+[data-theme="light"] .btn-eu-policy:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.eu-legal-note {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  line-height: 1.45;
+  margin: 8px 0 0;
+}
+
+.footer-institutional-credits {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 14px;
+}
+
+.footer-institutional-credits strong {
+  color: var(--text-main);
+}
+
+.footer-geo-tag {
+  color: var(--emerald);
+  font-size: 0.72rem;
+  margin-top: 4px;
+}
+
+/* Modal de Políticas Legales */
+.eu-policies-modal-box {
+  background: var(--segura-surface);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-lg);
+  max-width: 660px;
+  width: 100%;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  animation: zoomModal 0.25s var(--ease-elastic);
+  overflow: hidden;
+}
+
+.eu-modal-header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--segura-border);
+  background: var(--segura-surface-elevated);
+}
+
+.eu-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eu-flag-large {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.eu-modal-title-row h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-family: var(--font-heading);
+  color: var(--text-main);
+}
+
+.eu-modal-title-row p {
+  margin: 3px 0 0;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.eu-modal-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid var(--segura-border);
+  scrollbar-width: thin;
+}
+
+[data-theme="light"] .eu-modal-tabs {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.eu-tab-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--segura-border);
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  padding: 6px 13px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+[data-theme="light"] .eu-tab-btn {
+  background: #ffffff;
+  color: #475569;
+}
+
+.eu-tab-btn:hover {
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.eu-tab-btn.active {
+  background: var(--primary);
+  color: #022c22;
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+.eu-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.eu-policy-pane {
+  display: none;
+}
+
+.eu-policy-pane.active {
+  display: block;
+}
+
+.policy-header-badge {
+  margin-bottom: 12px;
+}
+
+.policy-badge-pill {
+  display: inline-block;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: var(--emerald);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.eu-policy-pane h4 {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin: 0 0 8px;
+  font-family: var(--font-heading);
+}
+
+.eu-policy-pane p {
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.legal-spec-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.spec-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+[data-theme="light"] .spec-item {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.spec-item strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--amurjo-cyan);
+  margin-bottom: 4px;
+}
+
+.spec-item span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.spec-item code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  color: var(--emerald);
+}
+
+.eu-modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--segura-border);
+  display: flex;
+  justify-content: flex-end;
+  background: var(--segura-surface-elevated);
+}
+
+/* ==========================================================================
+   CONSENTIMIENTO Y PROTECCIÓN DE DATOS EN FORMULARIOS
+   ========================================================================== */
+
+.form-legal-consent {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin: 14px 0;
+  text-align: left;
+}
+
+[data-theme="light"] .form-legal-consent {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.form-legal-consent .form-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.form-legal-consent input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.form-legal-consent .consent-label-text {
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.link-legal-policy {
+  background: none;
+  border: none;
+  color: var(--emerald);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 700;
+  display: inline;
+}
+
+.link-legal-policy:hover {
+  color: var(--primary);
+}
+
+.form-legal-summary {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--segura-border);
+}
+
+.form-legal-summary strong {
+  color: var(--text-muted);
+}
+

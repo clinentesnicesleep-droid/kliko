@@ -732,6 +732,20 @@
                   <label for="prop-desc">¿En qué consiste y a quién beneficia?</label>
                   <textarea id="prop-desc" rows="3" placeholder="Explica tu idea fácil para que otros jóvenes puedan votarla..." required></textarea>
                 </div>
+
+                <!-- CONSENTIMIENTO Y PROTECCIÓN DE DATOS -->
+                <div class="form-legal-consent">
+                  <label class="form-checkbox-row">
+                    <input type="checkbox" id="prop-consent-rgpd" required>
+                    <div class="consent-label-text">
+                      He leído y acepto la <button type="button" class="link-legal-policy" data-eu-open="privacidad">Política de Privacidad</button> y la <button type="button" class="link-legal-policy" data-eu-open="proteccion-datos">Protección de Datos</button>. Consiento el tratamiento de mi propuesta en el marco de la participación juvenil de Orcera.
+                    </div>
+                  </label>
+                  <div class="form-legal-summary">
+                    <strong>Responsable:</strong> Ayuntamiento de Orcera · <strong>Finalidad:</strong> Moderación y votación pública de propuestas vecinales · <strong>Derechos:</strong> Acceso, rectificación y supresión en <code>ayuntamiento@orcera.es</code>.
+                  </div>
+                </div>
+
                 <button type="submit" class="btn-submit-proposal">
                   <span>🚀 Publicar Propuesta</span>
                   <small>(+50 Puntos Orcera)</small>
@@ -754,36 +768,36 @@
               </a>
             </div>
 
-            <!-- COMPROMISO INSTITUCIONAL Y POLÍTICAS DE LA UNIÓN EUROPEA -->
+            <!-- MARCO LEGAL Y POLÍTICAS PÚBLICAS -->
             <div class="eu-compliance-badge">
               <div class="eu-flag-header">
-                <span class="eu-flag-emblem">🇪🇺</span>
+                <span class="eu-flag-emblem">⚖️</span>
                 <div class="eu-flag-text">
-                  <strong>Marco y Políticas de la Unión Europea</strong>
-                  <span>Garantías de privacidad, accesibilidad e inclusión juvenil</span>
+                  <strong>Marco Legal & Transparencia Institucional</strong>
+                  <span>Garantías de privacidad y derechos de la juventud de Orcera</span>
                 </div>
               </div>
 
               <div class="eu-policies-links">
-                <button type="button" class="btn-eu-policy" data-eu-open="rgpd" title="Reglamento General de Protección de Datos (UE 2016/679)">
-                  🛡️ Privacidad & RGPD
+                <button type="button" class="btn-eu-policy" data-eu-open="privacidad" title="Política de Privacidad">
+                  🔒 Privacidad
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="eprivacy" title="Directiva ePrivacy y Gestión de Almacenamiento">
-                  🍪 Cookies & ePrivacy
+                <button type="button" class="btn-eu-policy" data-eu-open="legal" title="Aviso Legal y Condiciones de Uso">
+                  ⚖️ Aviso Legal
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="accesibilidad" title="Directiva Europea de Accesibilidad Web (UE 2016/2102 · WCAG 2.1 AA)">
-                  ♿ Accesibilidad (EN 301 549)
+                <button type="button" class="btn-eu-policy" data-eu-open="proteccion-datos" title="Protección de Datos Personales (RGPD / LOPDGDD)">
+                  🛡️ Protección de Datos
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="dsa" title="Ley de Servicios Digitales (DSA · Reglamento UE 2022/2065)">
-                  📜 Aviso Legal & DSA
+                <button type="button" class="btn-eu-policy" data-eu-open="cookies" title="Política de Cookies y Almacenamiento Técnico">
+                  🍪 Cookies
                 </button>
-                <button type="button" class="btn-eu-policy" data-eu-open="juventud" title="Estrategia de la Unión Europea para la Juventud 2019-2027">
-                  🇪🇺 Juventud UE 2019–2027
+                <button type="button" class="btn-eu-policy" data-eu-open="accesibilidad" title="Declaración de Accesibilidad Universal (EN 301 549)">
+                  ♿ Accesibilidad
                 </button>
               </div>
 
               <p class="eu-legal-note">
-                Esta plataforma pública cumple con el <strong>RGPD (UE 2016/679)</strong>, la <strong>Directiva de Accesibilidad Web (UE 2016/2102)</strong>, la <strong>Ley de Servicios Digitales (UE 2022/2065)</strong> y la <strong>Estrategia Europea para la Juventud</strong>. Datos protegidos y alojados con seguridad en la Unión Europea.
+                Plataforma pública municipal adaptada al RGPD y la normativa de protección de datos (LOPDGDD). Compromiso de transparencia y seguridad para la juventud serrana.
               </p>
             </div>
 
@@ -1025,6 +1039,19 @@
               </div>
             </label>
 
+            <!-- CONSENTIMIENTO Y PROTECCIÓN DE DATOS (RGPD) -->
+            <div class="form-legal-consent">
+              <label class="form-checkbox-row">
+                <input type="checkbox" id="reg-consent-rgpd" required>
+                <div class="consent-label-text">
+                  Doy mi <strong>consentimiento expreso</strong> para el tratamiento de mis datos conforme a la <button type="button" class="link-legal-policy" data-eu-open="proteccion-datos">Protección de Datos (RGPD)</button> y la <button type="button" class="link-legal-policy" data-eu-open="privacidad">Política de Privacidad</button> para mi cuenta joven en KLIKO.
+                </div>
+              </label>
+              <div class="form-legal-summary">
+                <strong>Responsable:</strong> Ayuntamiento de Orcera · <strong>Finalidad:</strong> Censo de participación juvenil, saldo cívico y canje de premios · <strong>Legitimación:</strong> Consentimiento libre e informado.
+              </div>
+            </div>
+
             <button type="submit" class="btn-primary" style="width: 100%; justify-content:center; padding: 12px;">
               🎉 Crear mi Cuenta (+50 Pts)
             </button>
@@ -1141,6 +1168,19 @@
               </span>
             </div>
           </label>
+
+          <!-- CONSENTIMIENTO Y PROTECCIÓN DE DATOS (RGPD) -->
+          <div class="form-legal-consent">
+            <label class="form-checkbox-row">
+              <input type="checkbox" id="ajo-rgpd-consent" required>
+              <div class="consent-label-text">
+                Consiento el tratamiento de mis datos de conformidad con la <button type="button" class="link-legal-policy" data-eu-open="proteccion-datos">Protección de Datos</button> y la <button type="button" class="link-legal-policy" data-eu-open="privacidad">Política de Privacidad</button> para la formalización de mi carnet asociativo.
+              </div>
+            </label>
+            <div class="form-legal-summary">
+              <strong>Responsables:</strong> Asociación Juvenil de Orcera y Ayto. de Orcera · <strong>Finalidad:</strong> Emisión de carnet digital y participación en actividades juveniles.
+            </div>
+          </div>
 
           <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:12px; margin-top:8px;">
             🌟 Enviar Solicitud y Emitir Carnet (+50 Pts)
@@ -1610,171 +1650,183 @@
         </div>
       </div>
     </div>
-  <!-- MODAL DE POLÍTICAS Y MARCO REGULATORIO DE LA UNIÓN EUROPEA -->
+  <!-- MODAL DE POLÍTICAS Y MARCO REGULATORIO -->
   <div class="modal-overlay" id="eu-policies-modal" role="dialog" aria-hidden="true" aria-labelledby="eu-modal-title">
     <div class="eu-policies-modal-box">
       <button class="btn-close-modal" id="close-eu-policies-modal" aria-label="Cerrar modal de políticas">&times;</button>
       
       <div class="eu-modal-header">
         <div class="eu-modal-title-row">
-          <span class="eu-flag-large">🇪🇺</span>
+          <span class="eu-flag-large">⚖️</span>
           <div>
-            <h3 id="eu-modal-title">Políticas y Garantías de la Unión Europea</h3>
-            <p>III Plan Municipal de Juventud de Orcera 2027–2031 · Cumplimiento Normativo UE</p>
+            <h3 id="eu-modal-title">Marco Legal y Políticas Públicas</h3>
+            <p>Ayuntamiento de Orcera · III Plan Municipal de Juventud (2027–2031)</p>
           </div>
         </div>
       </div>
 
       <!-- PESTAÑAS NAVEGABLES ENTRE POLÍTICAS -->
       <nav class="eu-modal-tabs" role="tablist">
-        <button class="eu-tab-btn active" data-eu-tab="rgpd" role="tab" aria-selected="true">
-          <span>🛡️</span> RGPD & Privacidad
+        <button class="eu-tab-btn active" data-eu-tab="privacidad" role="tab" aria-selected="true">
+          <span>🔒</span> Privacidad
         </button>
-        <button class="eu-tab-btn" data-eu-tab="eprivacy" role="tab" aria-selected="false">
-          <span>🍪</span> Cookies & ePrivacy
+        <button class="eu-tab-btn" data-eu-tab="legal" role="tab" aria-selected="false">
+          <span>⚖️</span> Aviso Legal
+        </button>
+        <button class="eu-tab-btn" data-eu-tab="proteccion-datos" role="tab" aria-selected="false">
+          <span>🛡️</span> Protección de Datos
+        </button>
+        <button class="eu-tab-btn" data-eu-tab="cookies" role="tab" aria-selected="false">
+          <span>🍪</span> Cookies
         </button>
         <button class="eu-tab-btn" data-eu-tab="accesibilidad" role="tab" aria-selected="false">
           <span>♿</span> Accesibilidad
-        </button>
-        <button class="eu-tab-btn" data-eu-tab="dsa" role="tab" aria-selected="false">
-          <span>📜</span> DSA & Aviso Legal
-        </button>
-        <button class="eu-tab-btn" data-eu-tab="juventud" role="tab" aria-selected="false">
-          <span>🇪🇺</span> Juventud UE
         </button>
       </nav>
 
       <!-- CONTENIDO DE LAS POLÍTICAS -->
       <div class="eu-modal-body">
         
-        <!-- 1. RGPD / GDPR -->
-        <div class="eu-policy-pane active" id="pane-eu-rgpd">
+        <!-- 1. POLÍTICA DE PRIVACIDAD -->
+        <div class="eu-policy-pane active" id="pane-eu-privacidad">
           <div class="policy-header-badge">
-            <span class="policy-badge-pill">Reglamento (UE) 2016/679 (RGPD) & Ley Orgánica 3/2018 (LOPDGDD)</span>
+            <span class="policy-badge-pill">Privacidad & Tratamiento Confidencial</span>
           </div>
-          <h4>Protección de Datos Personales y Privacidad</h4>
-          <p>El Ayuntamiento de Orcera garantiza el pleno respeto a la privacidad de las personas jóvenes usuarias y el estricto cumplimiento del Reglamento General de Protección de Datos de la Unión Europea.</p>
+          <h4>Política de Privacidad</h4>
+          <p>El Ayuntamiento de Orcera garantiza la máxima transparencia y respeto a la privacidad de las personas jóvenes en todos los servicios de KLIKO.</p>
           
           <div class="legal-spec-grid">
             <div class="spec-item">
               <strong>Responsable del Tratamiento:</strong>
-              <span>Ayuntamiento de Orcera (Concejalía de Juventud) · CIF: P-2306500-G · Plaza del Ayuntamiento, 1, 23370 Orcera (Jaén).</span>
+              <span>Ayuntamiento de Orcera (Concejalía de Juventud) · CIF: P-2306500-G · Plaza del Ayuntamiento, 1, 23370 Orcera (Jaén) · Correo: <code>ayuntamiento@orcera.es</code>.</span>
             </div>
             <div class="spec-item">
-              <strong>Finalidad del Tratamiento:</strong>
-              <span>Gestión de la participación ciudadana en el III Plan Municipal de Juventud, tramitación de propuestas, votaciones populares y asignación de Puntos Cívicos/recompensas.</span>
+              <strong>Finalidades del Tratamiento:</strong>
+              <span>Gestión de la cuenta joven vecinal, registro y moderación de propuestas en el Buzón Joven, contabilización de votos comunitarios y asignación de Puntos Orcera para canje de recompensas públicas (acceso a Amurjo, actividades culturales y deportivas).</span>
             </div>
             <div class="spec-item">
-              <strong>Base Jurídica (Legitimación):</strong>
-              <span>Misión en interés público / ejercicio de poderes públicos conferidos al Ayuntamiento (Art. 6.1.e del RGPD) y consentimiento explícito e informado (Art. 6.1.a del RGPD).</span>
+              <strong>Confidencialidad y No Comercialización:</strong>
+              <span>KLIKO es un servicio público sin fines lucrativos. En ningún caso se venden, ceden ni transfieren datos a empresas privadas o agencias publicitarias de terceros.</span>
             </div>
             <div class="spec-item">
-              <strong>Conservación de los Datos:</strong>
-              <span>Durante la vigencia del Plan Quinquenal (2027–2031) y los plazos legalmente exigibles para la rendición de cuentas públicas.</span>
-            </div>
-            <div class="spec-item">
-              <strong>Protección Específica de Menores:</strong>
-              <span>Conforme al Art. 8 del RGPD y Art. 7 de la LOPDGDD, para menores de 14 años se requiere la autorización de progenitores o tutores legales para el tratamiento de datos.</span>
+              <strong>Plazo de Conservación:</strong>
+              <span>Los datos se conservarán durante la vigencia del III Plan Municipal de Juventud (2027–2031) o hasta que la persona usuaria solicite la cancelación o supresión de su cuenta.</span>
             </div>
             <div class="spec-item">
               <strong>Ejercicio de Derechos (ARCO-POL):</strong>
-              <span>Puedes ejercer gratuitamente tus derechos de Acceso, Rectificación, Supresión ("derecho al olvido"), Limitación, Portabilidad y Oposición escribiendo a <code>ayuntamiento@orcera.es</code> o reclamando ante la Agencia Española de Protección de Datos (AEPD / <code>www.aepd.es</code>).</span>
+              <span>Tienes derecho de Acceso, Rectificación, Supresión ("derecho al olvido"), Limitación del tratamiento, Portabilidad y Oposición. Para ejercerlos, contacta con <code>ayuntamiento@orcera.es</code> o acude al Registro General municipal. Asimismo, puedes presentar reclamación ante la Agencia Española de Protección de Datos (AEPD · <code>www.aepd.es</code>).</span>
             </div>
           </div>
         </div>
 
-        <!-- 2. ePRIVACY & COOKIES -->
-        <div class="eu-policy-pane" id="pane-eu-eprivacy">
+        <!-- 2. AVISO LEGAL -->
+        <div class="eu-policy-pane" id="pane-eu-legal">
           <div class="policy-header-badge">
-            <span class="policy-badge-pill">Directiva 2002/58/CE (ePrivacy) & Directiva 2009/136/CE</span>
+            <span class="policy-badge-pill">Ley 34/2002 (LSSI-CE) & Reglamento UE 2022/2065 (DSA)</span>
           </div>
-          <h4>Política de Cookies y Almacenamiento Local</h4>
-          <p>Esta aplicación municipal prioriza tu privacidad y aplica el principio de <em>Privacidad desde el Diseño</em> (Privacy by Design).</p>
+          <h4>Aviso Legal y Condiciones de Uso</h4>
+          <p>Términos reguladores del uso de la plataforma digital oficial del III Plan Municipal de Juventud de Orcera.</p>
           
           <div class="legal-spec-grid">
             <div class="spec-item">
-              <strong>Cero Cookies de Rastreo Publicitario:</strong>
-              <span>KLIKO NO utiliza cookies analíticas comerciales, píxeles de seguimiento ni herramientas de terceros para crear perfiles publicitarios. Cero cesión o venta de datos.</span>
+              <strong>Titularidad del Portal:</strong>
+              <span>Ayuntamiento de Orcera (Jaén), corporación de derecho público de la administración local, con sede en Plaza del Ayuntamiento, 1, 23370 Orcera.</span>
             </div>
             <div class="spec-item">
-              <strong>Almacenamiento Técnico Estrictamente Necesario:</strong>
-              <span>La app utiliza el almacenamiento local de tu navegador (<code>LocalStorage</code>) exclusivamente para funciones técnicas solicitadas por el usuario: recordar tu preferencia de Tema (Modo Noche/Día), mantener la sesión activa con Supabase y permitir el funcionamiento fuera de línea (offline) en la Sierra.</span>
+              <strong>Objeto de la Plataforma:</strong>
+              <span>Canal telemático de participación ciudadana, gobernanza abierta y dinamización comunitaria para las personas jóvenes empadronadas o vinculadas a Orcera y la Sierra de Segura.</span>
             </div>
             <div class="spec-item">
-              <strong>Doctrina del Comité Europeo (CEPD):</strong>
-              <span>Al tratarse de almacenamiento estrictamente técnico e imprescindible para la ejecución del servicio interactivo solicitado, no requiere banner intrusivo de consentimiento previo, garantizando una navegación limpia y rápida.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3. ACCESIBILIDAD WEB -->
-        <div class="eu-policy-pane" id="pane-eu-accesibilidad">
-          <div class="policy-header-badge">
-            <span class="policy-badge-pill">Directiva (UE) 2016/2102 & Real Decreto 1112/2018 · WCAG 2.1 Nivel AA</span>
-          </div>
-          <h4>Declaración de Accesibilidad Universal</h4>
-          <p>El Ayuntamiento de Orcera se ha comprometido a hacer accesible su plataforma para todas las personas jóvenes, incluidas aquellas con diversidad funcional o discapacidad sensorial, motriz o cognitiva.</p>
-          
-          <div class="legal-spec-grid">
-            <div class="spec-item">
-              <strong>Estándar Europeo EN 301 549:</strong>
-              <span>KLIKO se ha diseñado siguiendo los requisitos de accesibilidad para productos y servicios TIC establecidos en la norma europea <code>EN 301 549 v3.2.1</code> y las Pautas WCAG 2.1 (Nivel AA).</span>
-            </div>
-            <div class="spec-item">
-              <strong>Criterios Implementados:</strong>
-              <span>Alto contraste cromático adaptable (Modo Claro/Oscuro), tipografías escalables sin solapamientos, navegación completa por teclado, compatibilidad con lectores de pantalla (etiquetas ARIA, texto alternativo en imágenes y estados de foco visibles).</span>
-            </div>
-            <div class="spec-item">
-              <strong>Canal de Quejas y Sugerencias de Accesibilidad:</strong>
-              <span>Si detectas cualquier dificultad de acceso o requieres información en un formato alternativo, puedes comunicarlo directamente a <code>ayuntamiento@orcera.es</code>.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. DSA & AVISO LEGAL -->
-        <div class="eu-policy-pane" id="pane-eu-dsa">
-          <div class="policy-header-badge">
-            <span class="policy-badge-pill">Reglamento (UE) 2022/2065 (Ley de Servicios Digitales - DSA)</span>
-          </div>
-          <h4>Aviso Legal, Condiciones de Uso y Moderación Digital</h4>
-          <p>Condiciones generales que regulan el uso cívico y democrático de la plataforma KLIKO.</p>
-          
-          <div class="legal-spec-grid">
-            <div class="spec-item">
-              <strong>Compromiso Cívico en el Buzón Joven:</strong>
-              <span>Las personas usuarias se comprometen a utilizar el Buzón Joven de forma constructiva, veraz y respetuosa. Quedan expresamente prohibidos los insultos, discursos de odio, amenazas, acoso o contenidos discriminatorios por razón de género, origen, orientación sexual o religión.</span>
+              <strong>Normas de Convivencia y Uso Responsable:</strong>
+              <span>Las propuestas e intervenciones en el Buzón Joven deben ser veraces y respetuosas. Se prohíbe terminantemente la publicación de contenidos difamatorios, lesivos del honor, discriminatorios por razón de sexo, raza, religión u orientación sexual, o constitutivos de delito.</span>
             </div>
             <div class="spec-item">
               <strong>Moderación Transparente y Motivada (DSA):</strong>
-              <span>Conforme al Reglamento DSA de la UE, cualquier moderación o no admisión de una propuesta será transparente y comunicada al interesado/a con explicación de motivos objetivos.</span>
+              <span>Conforme a la Ley de Servicios Digitales (DSA UE 2022/2065), cualquier propuesta que sea moderada o retirada por contravenir las normas cívicas será motivada fehacientemente y comunicada a la persona usuaria con opción de subsanación.</span>
             </div>
             <div class="spec-item">
-              <strong>Punto Único de Contacto para la DSA:</strong>
-              <span>Para autoridades judiciales o de supervisión de la UE y personas usuarias: <code>juventud@orcera.es</code> (Asunto: DSA Orcera).</span>
+              <strong>Propiedad Intelectual y Reutilización Pública:</strong>
+              <span>Los diseños, marcas y contenidos institucionales son titularidad del Ayuntamiento de Orcera y la Asociación Juvenil. Las iniciativas y propuestas vecinales se aportan para el debate público municipal.</span>
             </div>
           </div>
         </div>
 
-        <!-- 5. ESTRATEGIA EUROPEA DE JUVENTUD -->
-        <div class="eu-policy-pane" id="pane-eu-juventud">
+        <!-- 3. PROTECCIÓN DE DATOS (RGPD & LOPDGDD) -->
+        <div class="eu-policy-pane" id="pane-eu-proteccion-datos">
           <div class="policy-header-badge">
-            <span class="policy-badge-pill">Resolución del Consejo de la UE (2018/C 456/01) · Periodo 2019–2027</span>
+            <span class="policy-badge-pill">Reglamento (UE) 2016/679 (RGPD) & Ley Orgánica 3/2018 (LOPDGDD)</span>
           </div>
-          <h4>Marco de la Estrategia de la Unión Europea para la Juventud</h4>
-          <p>KLIKO y el III Plan Municipal de Juventud de Orcera están alineados con los objetivos europeos para capacitar y conectar a la juventud rural.</p>
+          <h4>Protección de Datos Personales</h4>
+          <p>Información detallada sobre el cumplimiento normativo en materia de protección de datos (Art. 11 LOPDGDD y Arts. 13/14 RGPD).</p>
           
           <div class="legal-spec-grid">
             <div class="spec-item">
-              <strong>Los 3 Pilares Europeos:</strong>
-              <span><strong>Engage (Conectar):</strong> Fomentar la participación democrática sin barreras. <strong>Connect (Unir):</strong> Reforzar el sentido de comunidad y los lazos intergeneracionales. <strong>Empower (Capacitar):</strong> Proporcionar herramientas para el empleo, arraigo y futuro rural.</span>
+              <strong>Información por Capas:</strong>
+              <span>En cada formulario interactivo (alta de usuario, Buzón Joven, adhesión asociativa) se incluye una primera capa informativa con consentimiento expreso, complementada por esta información de segunda capa íntegra y permanente.</span>
             </div>
             <div class="spec-item">
-              <strong>Metas de la Juventud Europea (European Youth Goals):</strong>
-              <span>En especial la <em>Meta #6: Impulsar a la juventud rural</em> (rompiendo la brecha digital y creando oportunidades en la Sierra de Segura) y la <em>Meta #10: Una Europa Verde y Sostenible</em> (vinculada al Pacto Verde Europeo y la protección del Parque Natural).</span>
+              <strong>Base Jurídica (Legitimación):</strong>
+              <span>El tratamiento se fundamenta en el cumplimiento de una misión de interés público y ejercicio de competencias públicas locales de fomento juvenil (Art. 6.1.e RGPD) y en el consentimiento libre, específico, informado e inequívoco de la persona interesada (Art. 6.1.a RGPD).</span>
             </div>
             <div class="spec-item">
-              <strong>Financiación y Cohesión Territorial:</strong>
-              <span>Iniciativa municipal promovida en consonancia con las directrices de cohesión social, fomento del relevo generacional y lucha contra la despoblación en el medio rural de la Unión Europea.</span>
+              <strong>Tratamiento Específico de Datos de Menores:</strong>
+              <span>De conformidad con el Art. 8 del RGPD y el Art. 7 de la LOPDGDD, las personas a partir de 14 años de edad pueden prestar su consentimiento de forma válida y autónoma. Para menores de 14 años, se requiere la autorización o supervisión de sus progenitores o tutores legales.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Delegado de Protección de Datos (DPD):</strong>
+              <span>Cualquier consulta sobre la seguridad o el tratamiento de tus datos personales puede remitirse a la atención del Delegado de Protección de Datos en <code>ayuntamiento@orcera.es</code>.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Medidas Técnicas y Almacenamiento Seguro:</strong>
+              <span>Todos los intercambios de datos viajan cifrados mediante protocolo HTTPS/TLS. La base de datos opera bajo directivas de seguridad europeas y con copias de respaldo continuas.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. POLÍTICA DE COOKIES -->
+        <div class="eu-policy-pane" id="pane-eu-cookies">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Directiva 2002/58/CE (ePrivacy) & Directrices de la AEPD</span>
+          </div>
+          <h4>Política de Cookies y Almacenamiento Técnico</h4>
+          <p>Esta plataforma municipal aplica de forma rigurosa el principio de Privacidad desde el Diseño (Privacy by Design).</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Cero Cookies Publicitarias de Rastreo:</strong>
+              <span>KLIKO NO utiliza cookies analíticas de terceros, cookies de perfilado comercial ni herramientas de rastreo entre webs. Tu navegación es completamente privada.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Almacenamiento Local Estrictamente Necesario:</strong>
+              <span>La aplicación hace uso de la memoria local del navegador (<code>LocalStorage</code>) exclusivamente para aspectos técnicos esenciales: recordar si tienes activado el Modo Noche o Día, mantener tu sesión abierta en el teléfono y habilitar la navegación offline cuando estés en la Sierra sin cobertura.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Exención de Banners Intrusivos:</strong>
+              <span>Al ser almacenamiento meramente técnico e imprescindible para prestar el servicio solicitado, la normativa de la AEPD y el Comité Europeo de Protección de Datos exime de mostrar banners bloqueantes de cookies, ofreciendo una experiencia rápida y limpia.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. DECLARACIÓN DE ACCESIBILIDAD -->
+        <div class="eu-policy-pane" id="pane-eu-accesibilidad">
+          <div class="policy-header-badge">
+            <span class="policy-badge-pill">Real Decreto 1112/2018 & Directiva (UE) 2016/2102 · WCAG 2.1 AA</span>
+          </div>
+          <h4>Declaración de Accesibilidad Universal</h4>
+          <p>El Ayuntamiento de Orcera tiene la firme vocación de hacer accesible esta plataforma pública a toda la juventud, sin exclusiones.</p>
+          
+          <div class="legal-spec-grid">
+            <div class="spec-item">
+              <strong>Norma Europea EN 301 549:</strong>
+              <span>KLIKO cumple las pautas de accesibilidad para contenidos web WCAG 2.1 en nivel de conformidad AA, tal y como exige el Real Decreto 1112/2018 para entidades del sector público.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Facilidades de Interacción:</strong>
+              <span>Alto contraste seleccionable para exteriores soleados y entornos oscuros, navegación completa mediante teclado, etiquetas ARIA para lectores de pantalla de personas con discapacidad visual y tipografías perfectamente escalables.</span>
+            </div>
+            <div class="spec-item">
+              <strong>Canal de Quejas y Sugerencias de Accesibilidad:</strong>
+              <span>Si encuentras alguna dificultad de acceso o necesitas un formato alternativo de cualquier contenido, puedes comunicarlo al correo <code>ayuntamiento@orcera.es</code>.</span>
             </div>
           </div>
         </div>

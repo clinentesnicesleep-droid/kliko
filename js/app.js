@@ -2297,6 +2297,12 @@ function initBuzon() {
         return;
       }
 
+      const consent = document.getElementById("prop-consent-rgpd");
+      if (consent && !consent.checked) {
+        showToast("Consentimiento Requerido", "Debes aceptar la política de privacidad y protección de datos para publicar una propuesta.");
+        return;
+      }
+
       const newProp = {
         id: Date.now(),
         autor: `${AppState.currentUser.alias || AppState.currentUser.nombre} (${AppState.currentUser.edad ? AppState.currentUser.edad + " años" : "Joven de Orcera"})`,
@@ -2970,6 +2976,12 @@ function handleRegisterNewUser() {
     return;
   }
 
+  const consent = document.getElementById("reg-consent-rgpd");
+  if (consent && !consent.checked) {
+    showToast("Consentimiento Requerido", "Debes otorgar tu consentimiento sobre protección de datos y privacidad.");
+    return;
+  }
+
   const parts = fullName.split(" ").filter(Boolean);
   const alias = aliasInput || parts[0];
   let iniciales = parts[0][0].toUpperCase();
@@ -3181,6 +3193,12 @@ function handleSolicitudAsociacion() {
 
   if (!fullName || !dni || !phone) {
     alert("Por favor, completa los campos requeridos para formalizar tu solicitud.");
+    return;
+  }
+
+  const consent = document.getElementById("ajo-rgpd-consent");
+  if (consent && !consent.checked) {
+    showToast("Consentimiento Requerido", "Debes consentir el tratamiento de datos y protección de datos para cursar la solicitud.");
     return;
   }
 
@@ -4848,31 +4866,37 @@ function renderPanePromocion(container) {
 }
 
 /**
- * Inicialización y Gestión del Modal de Políticas de la Unión Europea
- * Cumplimiento: RGPD (UE 2016/679), ePrivacy, Directiva Accesibilidad (UE 2016/2102), DSA (UE 2022/2065)
+ * Inicialización y Gestión del Modal de Marco Legal y Políticas
+ * Privacidad, Aviso Legal, Protección de Datos (RGPD/LOPDGDD), Cookies y Accesibilidad Universal
  */
 function initEuPoliciesModal() {
   const modal = document.getElementById("eu-policies-modal");
   const closeBtn = document.getElementById("close-eu-policies-modal");
   const closeActionBtn = document.getElementById("btn-close-eu-modal-action");
-  const triggerBtns = document.querySelectorAll(".btn-eu-policy");
   const tabBtns = document.querySelectorAll(".eu-tab-btn");
   const panes = document.querySelectorAll(".eu-policy-pane");
 
   if (!modal) return;
 
   function switchPolicyTab(tabKey) {
+    let key = tabKey;
+    if (key === "rgpd") key = "proteccion-datos";
+    if (key === "eprivacy") key = "cookies";
+    if (key === "dsa") key = "legal";
+    const validTabs = ["privacidad", "legal", "proteccion-datos", "cookies", "accesibilidad"];
+    if (!validTabs.includes(key)) key = "privacidad";
+
     tabBtns.forEach(btn => {
-      const isMatch = btn.getAttribute("data-eu-tab") === tabKey;
+      const isMatch = btn.getAttribute("data-eu-tab") === key;
       btn.classList.toggle("active", isMatch);
       btn.setAttribute("aria-selected", isMatch ? "true" : "false");
     });
     panes.forEach(pane => {
-      pane.classList.toggle("active", pane.id === `pane-eu-${tabKey}`);
+      pane.classList.toggle("active", pane.id === `pane-eu-${key}`);
     });
   }
 
-  function openEuModal(tabKey = "rgpd") {
+  function openEuModal(tabKey = "privacidad") {
     switchPolicyTab(tabKey);
     modal.classList.add("active");
     modal.setAttribute("aria-hidden", "false");
@@ -4885,11 +4909,14 @@ function initEuPoliciesModal() {
     document.body.style.overflow = "";
   }
 
-  triggerBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const policyKey = btn.getAttribute("data-eu-open") || "rgpd";
+  // Delegación de clic para abrir el modal desde cualquier botón o enlace con data-eu-open
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest("[data-eu-open]");
+    if (trigger) {
+      e.preventDefault();
+      const policyKey = trigger.getAttribute("data-eu-open") || "privacidad";
       openEuModal(policyKey);
-    });
+    }
   });
 
   tabBtns.forEach(btn => {
