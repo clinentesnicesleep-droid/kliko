@@ -2574,13 +2574,19 @@ function openActionDetailModal(actionCode, optEjeId) {
           </div>
         </div>
 
-        <!-- Enlace formal al Buzón Joven -->
-        <div style="margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--segura-border); text-align: center;">
-          <p style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
-            ¿Deseas presentar una propuesta formal por registro telemático municipal?
+        <!-- DIFERENCIA CLARA: DEBATE RÁPIDO VS PROPUESTA AL PLENO -->
+        <div style="margin-top: 12px; padding: 12px 14px; background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: var(--radius-md);">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+            <span style="font-size: 0.95rem;">🗳️</span>
+            <strong style="font-size: 0.78rem; color: var(--amurjo-cyan); text-transform: uppercase; letter-spacing: 0.03em;">
+              Llevar una propuesta sobre esta acción al Pleno Municipal
+            </strong>
+          </div>
+          <p style="font-size: 0.73rem; color: var(--text-muted); line-height: 1.45; margin: 0 0 10px;">
+            Los comentarios de arriba son un debate público directo entre vecinos. Si lo que deseas es <strong>solicitar un cambio vinculante, proponer una ampliación o crear una nueva actividad para ${action.codigo}</strong>, puedes presentar una <em>Propuesta Joven Oficial</em>. Al reunir <strong>25 apoyos</strong> de otros jóvenes en el Buzón, pasará a debate en el Pleno del Ayuntamiento.
           </p>
-          <button type="button" class="btn-action-back" onclick="closeActionDetailModal(); window.switchTab && window.switchTab('tab-buzon');" style="font-size: 0.72rem; padding: 6px 14px;">
-            📬 Ir al Buzón Joven Municipal
+          <button type="button" class="btn-primary" onclick="linkActionToBuzonProposal('${action.codigo}', '${encodeURIComponent(action.titulo)}', ${eje.numero})" style="width: 100%; justify-content: center; font-size: 0.76rem; padding: 9px 12px; font-weight: 800;">
+            📝 Redactar Propuesta Oficial sobre ${action.codigo} (+50 Pts)
           </button>
         </div>
 
@@ -2899,6 +2905,49 @@ function closeActionDetailModal() {
   document.body.style.overflow = "";
 }
 
+function linkActionToBuzonProposal(actionCode, encodedTitle, ejeId) {
+  const actionTitle = decodeURIComponent(encodedTitle || "");
+  closeActionDetailModal();
+  
+  if (window.switchTab) {
+    window.switchTab("tab-buzon");
+  }
+
+  setTimeout(() => {
+    const titleInput = document.getElementById("prop-title");
+    const ejeSelect = document.getElementById("prop-eje");
+    const placeInput = document.getElementById("prop-place");
+    const descInput = document.getElementById("prop-desc");
+    const formEl = document.getElementById("new-proposal-form");
+
+    if (ejeSelect && ejeId) {
+      ejeSelect.value = String(ejeId);
+    }
+    if (titleInput) {
+      titleInput.value = `Mejora para ${actionCode}: `;
+    }
+    if (placeInput) {
+      placeInput.value = `Orcera (Acción ${actionCode})`;
+    }
+    if (descInput) {
+      descInput.value = `Propuesta vinculada a la acción ${actionCode} ("${actionTitle}"):\n[Escribe aquí tu propuesta o solicitud formal...]`;
+      descInput.focus();
+      descInput.setSelectionRange(descInput.value.length, descInput.value.length);
+    }
+
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    if (typeof showToast === "function") {
+      showToast(
+        `Vinculado a ${actionCode}`,
+        "El formulario del Buzón se ha preconfigurado con esta acción. Si consigues 25 votos de otros jóvenes, pasará al Pleno del Ayuntamiento."
+      );
+    }
+  }, 250);
+}
+
 window.openActionDetailModal = openActionDetailModal;
 window.closeActionDetailModal = closeActionDetailModal;
 window.switchActionTab = switchActionTab;
@@ -2909,6 +2958,7 @@ window.setActionCommentRating = setActionCommentRating;
 window.setActionCommentTag = setActionCommentTag;
 window.submitActionComment = submitActionComment;
 window.toggleActionCommentLike = toggleActionCommentLike;
+window.linkActionToBuzonProposal = linkActionToBuzonProposal;
 
 // ==============================================================================
 // MÓDULO 3: GAMIFICACIÓN Y CANJES DE LA PISCINA DE AMURJO
