@@ -252,27 +252,36 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Adaptación responsive para móviles reales */
-@media (max-width: 600px) {
+/* Adaptación responsive para móviles reales y modo Standalone (PWA nativa) */
+@media (max-width: 600px), (display-mode: standalone) {
   .phone-frame-wrapper {
     padding: 0 !important;
+    margin: 0 !important;
   }
   .smartphone-chassis {
     max-width: 100% !important;
+    width: 100% !important;
     height: 100vh !important;
     height: 100dvh !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     border: none !important;
   }
-  .device-notch {
-    display: none !important;
-  }
+  /* Ocultar elementos simuladores en teléfonos reales */
+  .device-notch,
+  .status-bar,
+  .device-home-indicator,
   .desktop-only {
     display: none !important;
   }
   .cloud-status-text {
     display: none;
+  }
+  .kliko-mobile-brand-bar {
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+  .mobile-viewport {
+    padding-bottom: max(75px, calc(60px + env(safe-area-inset-bottom)));
   }
 }
 
