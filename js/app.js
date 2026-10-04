@@ -94,6 +94,16 @@ const RECOMPENSAS_DATA = [
     icono: "🎒",
     categoria: "rw-gym",
     badge: "Eco"
+  },
+  {
+    id: 5,
+    titulo: "Bono Especial Auditor/a Joven · Evaluación 2027",
+    descripcion: "Recompensa del Ayuntamiento de Orcera por evaluar las medidas del III Plan: Pase gratuito doble para la Piscina de Amurjo e Insignia Cívica Oficial.",
+    costePuntos: 150,
+    icono: "⭐",
+    categoria: "rw-amurjo",
+    badge: "🗳️ Misión Ciudadana",
+    esEvaluacionPrevia: true
   }
 ];
 
@@ -174,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateGlobalBentoKPIs();
   initEuPoliciesModal();
   initPWAInstallSystem();
+  initEvaluacionPrevia();
 
   // Soporte para deep-linking / captura de vistas móviles
   const params = new URLSearchParams(window.location.search);
@@ -2271,6 +2282,9 @@ function openActionDetailModal(actionCode, optEjeId) {
   if (!modal || !contentEl || !details) return;
 
   const { action, oe, eje, roadmap, finanzas, indicadores, valoraciones } = details;
+  const evalData = getEvaluacionData();
+  const userActVote = evalData.userActionVotes[action.codigo];
+  const commScore = evalData.communityActionVotes[action.codigo] || { avg: 4.6, count: 24 };
 
   let statusClass = "status-" + (action.estado || "en_progreso");
   let statusName = formatStatusName(action.estado || "en_progreso");
@@ -2456,8 +2470,32 @@ function openActionDetailModal(actionCode, optEjeId) {
       <!-- PESTAÑA 3: METAS E INDICADORES -->
       <div class="action-tab-pane" id="pane-tab-action-indicadores" style="display: none;">
         <div class="action-detail-section">
+          <!-- EVALUACIÓN PREVIA Y DICTAMEN JUVENIL -->
+          <div style="background: linear-gradient(135deg, rgba(234, 88, 12, 0.12), rgba(16, 185, 129, 0.08)); border: 1px solid rgba(234, 88, 12, 0.35); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+              <div>
+                <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--orcera-orange);">
+                  🗳️ Dictamen y Respaldo Juvenil (Evaluación Previa)
+                </span>
+                <h4 style="margin: 3px 0 0 0; font-size: 0.88rem; color: var(--text-main); font-weight: 700;">
+                  Validación Ex-Ante de la Medida
+                </h4>
+              </div>
+              <div style="text-align: right; background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid rgba(251, 191, 36, 0.25);">
+                <span style="font-size: 0.82rem; font-weight: 800; color: #fbbf24;">⭐ ${commScore.avg.toFixed(1)} / 5</span>
+                <div style="font-size: 0.64rem; color: var(--text-muted);">${commScore.count} jóvenes</div>
+              </div>
+            </div>
+            <p style="font-size: 0.74rem; color: var(--text-muted); margin: 0 0 10px 0; line-height: 1.45;">
+              ${userActVote ? `<span style="color:#34d399; font-weight:700;">✓ Ya has emitido tu dictamen para esta acción (${userActVote} / 5 estrellas).</span> Puedes modificar tu voto o evaluar cada indicador específico.` : 'Comprueba y califica si esta medida y sus metas son prioritarias para Orcera antes de su puesta en marcha en 2027. ¡Gana puntos para premios!'}
+            </p>
+            <button type="button" class="btn-primary" onclick="goToEvaluacionAction('${action.codigo}')" style="width: 100%; font-size: 0.74rem; padding: 8px 12px; display: inline-flex; justify-content: center; align-items: center; gap: 6px; font-weight: 700;">
+              <span>⭐</span> ${userActVote ? 'Ver / Modificar mi Evaluación Previa' : 'Participar en la Evaluación Previa (+20 Pts)'}
+            </button>
+          </div>
+
           <div class="action-section-title">
-            <span>📊</span> Indicadores de Logro (${indicadores.length})
+            <span>📊</span> Indicadores de Logro y Seguimiento (${indicadores.length})
           </div>
 
           ${indicadores.length === 0 ? `
@@ -2468,6 +2506,8 @@ function openActionDetailModal(actionCode, optEjeId) {
             <div style="display: flex; flex-direction: column; gap: 10px;">
               ${indicadores.map(ind => {
                 const pct = ind.cumplimiento || (ind.metaQuinquenal > 0 ? Math.round((ind.actualQuinquenal / ind.metaQuinquenal) * 100) : 100);
+                const indVote = evalData.userIndicatorVotes[ind.id];
+                const indComm = evalData.communityIndicatorVotes[ind.id] || { avg: 4.5, count: 20 };
                 return `
                   <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 10px 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px;">
@@ -2477,8 +2517,12 @@ function openActionDetailModal(actionCode, optEjeId) {
                     <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
                       Meta Quinquenal: <strong>${ind.metaQuinquenal} ${ind.unidad}</strong> · Conseguido: <strong>${ind.actualQuinquenal || 0} ${ind.unidad}</strong> (${ind.tipo})
                     </div>
-                    <div class="progress-bar-track" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
+                    <div class="progress-bar-track" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
                       <div style="width: ${Math.min(pct, 100)}%; height: 100%; background: linear-gradient(90deg, var(--emerald), var(--amurjo-cyan));"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.68rem; color: var(--text-muted); border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 6px;">
+                      <span>Dictamen de idoneidad: <strong style="color: #fbbf24;">⭐ ${indComm.avg.toFixed(1)}/5</strong> (${indComm.count} votos)</span>
+                      ${indVote ? `<span style="color:#34d399; font-weight:700;">Tu voto: ⭐ ${indVote}</span>` : `<a href="javascript:void(0)" onclick="goToEvaluacionAction('${action.codigo}')" style="color: var(--orcera-orange); text-decoration: underline;">Evaluar (+10 Pts)</a>`}
                     </div>
                   </div>
                 `;
@@ -2959,6 +3003,424 @@ window.setActionCommentTag = setActionCommentTag;
 window.submitActionComment = submitActionComment;
 window.toggleActionCommentLike = toggleActionCommentLike;
 window.linkActionToBuzonProposal = linkActionToBuzonProposal;
+
+// ==============================================================================
+// MÓDULO: EVALUACIÓN PREVIA & DICTAMEN CIUDADANO JUVENIL (2027–2031)
+// ==============================================================================
+const EVALUACION_STORAGE_KEY = "kliko_evaluacion_previa_v1";
+
+const EvaluacionState = {
+  selectedYear: "2027",
+  selectedEje: "all",
+  selectedStatus: "all"
+};
+
+function getEvaluacionData() {
+  const raw = localStorage.getItem(EVALUACION_STORAGE_KEY);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.userActionVotes) return parsed;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // Baseline inicial con evaluadores jóvenes de Orcera y notas promedio realistas
+  const baseline = {
+    userActionVotes: {},
+    userIndicatorVotes: {},
+    communityActionVotes: {},
+    communityIndicatorVotes: {}
+  };
+
+  if (typeof EJES_DATA !== "undefined" && Array.isArray(EJES_DATA)) {
+    EJES_DATA.forEach(eje => {
+      eje.acciones.forEach((acc, idx) => {
+        const seedCount = 55 + ((acc.codigo.length * 5 + idx * 7) % 35);
+        const seedAvg = Number((4.3 + (((idx * 11 + eje.id * 3) % 7) * 0.1)).toFixed(1));
+        baseline.communityActionVotes[acc.codigo] = { avg: Math.min(5.0, seedAvg), count: seedCount };
+
+        if (acc.indicadores && Array.isArray(acc.indicadores)) {
+          acc.indicadores.forEach((ind, indIdx) => {
+            const indCount = seedCount - (indIdx % 3);
+            const indAvg = Number((4.2 + (((indIdx * 13 + idx * 3) % 8) * 0.1)).toFixed(1));
+            baseline.communityIndicatorVotes[ind.id] = { avg: Math.min(5.0, indAvg), count: indCount };
+          });
+        }
+      });
+    });
+  }
+
+  saveEvaluacionData(baseline);
+  return baseline;
+}
+
+function saveEvaluacionData(data) {
+  localStorage.setItem(EVALUACION_STORAGE_KEY, JSON.stringify(data));
+}
+
+function initEvaluacionPrevia() {
+  setupEvaluacionFilters();
+  renderEvaluacionHeroBox();
+  renderEvaluacionActionsList();
+}
+
+function setupEvaluacionFilters() {
+  const yearsContainer = document.getElementById("eval-years-selector");
+  if (yearsContainer) {
+    yearsContainer.querySelectorAll(".btn-eval-year").forEach(btn => {
+      btn.addEventListener("click", () => {
+        yearsContainer.querySelectorAll(".btn-eval-year").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        EvaluacionState.selectedYear = btn.getAttribute("data-eval-year");
+        renderEvaluacionHeroBox();
+        renderEvaluacionActionsList();
+      });
+    });
+  }
+
+  const ejeSelect = document.getElementById("eval-filter-eje");
+  if (ejeSelect) {
+    ejeSelect.addEventListener("change", (e) => {
+      EvaluacionState.selectedEje = e.target.value;
+      renderEvaluacionActionsList();
+    });
+  }
+
+  const statusSelect = document.getElementById("eval-filter-status");
+  if (statusSelect) {
+    statusSelect.addEventListener("change", (e) => {
+      EvaluacionState.selectedStatus = e.target.value;
+      renderEvaluacionActionsList();
+    });
+  }
+}
+
+function getAllActionsList() {
+  const list = [];
+  if (typeof EJES_DATA === "undefined" || !Array.isArray(EJES_DATA)) return list;
+  EJES_DATA.forEach(eje => {
+    eje.acciones.forEach(acc => {
+      list.push({
+        ...acc,
+        ejeId: eje.id,
+        ejeNumero: eje.numero,
+        ejeTitulo: eje.titulo,
+        ejeColor: eje.color || "#10b981",
+        roadmapAnos: (acc.roadmap && acc.roadmap.anos) ? acc.roadmap.anos : [2027, 2028, 2029, 2030, 2031]
+      });
+    });
+  });
+  return list;
+}
+
+function renderEvaluacionHeroBox() {
+  const heroBox = document.getElementById("eval-hero-box");
+  if (!heroBox) return;
+
+  const evalData = getEvaluacionData();
+  const allActions = getAllActionsList();
+  const selYear = EvaluacionState.selectedYear;
+
+  const activeActions = selYear === "all" 
+    ? allActions 
+    : allActions.filter(a => a.roadmapAnos.includes(parseInt(selYear)));
+
+  const totalActions = activeActions.length;
+  let votedCount = 0;
+  activeActions.forEach(a => {
+    if (evalData.userActionVotes[a.codigo]) votedCount++;
+  });
+
+  const pct = totalActions > 0 ? Math.round((votedCount / totalActions) * 100) : 0;
+  const userActionVotesCount = Object.keys(evalData.userActionVotes).length;
+  const userIndicatorVotesCount = Object.keys(evalData.userIndicatorVotes).length;
+  const ptsEarned = (userActionVotesCount * 20) + (userIndicatorVotesCount * 10);
+
+  let sumAvg = 0;
+  let countAvg = 0;
+  activeActions.forEach(a => {
+    const sc = evalData.communityActionVotes[a.codigo];
+    if (sc) {
+      sumAvg += sc.avg;
+      countAvg++;
+    }
+  });
+  const globalYearAvg = countAvg > 0 ? (sumAvg / countAvg).toFixed(1) : "4.7";
+  const globalYearPct = Math.round((parseFloat(globalYearAvg) / 5) * 100);
+  const yearLabel = selYear === "all" ? "Plan Quinquenal (2027–2031)" : `Año ${selYear}`;
+
+  heroBox.innerHTML = `
+    <div class="eval-hero-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="eval-badge-pill">🗳️ Tu Dictamen Juvenil</span>
+        <span style="font-size:0.75rem; color:var(--text-muted);">${yearLabel}</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:0.75rem; font-weight:800; color:#fbbf24;">Respaldo Global: ⭐ ${globalYearAvg} (${globalYearPct}%)</span>
+        <span style="font-size:0.8rem; font-weight:800; color:#34d399; background:rgba(16,185,129,0.15); padding:2px 8px; border-radius:9999px;">+${ptsEarned} PTS</span>
+      </div>
+    </div>
+
+    <div class="eval-progress-info">
+      <span>Medidas evaluadas: <strong>${votedCount} de ${totalActions}</strong></span>
+      <span>${pct}% Completado</span>
+    </div>
+
+    <div class="eval-progress-bar-track">
+      <div class="eval-progress-bar-fill" style="width: ${pct}%;"></div>
+    </div>
+
+    <div class="eval-reward-cta-row">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.25rem;">🏊‍♂️</span>
+        <div class="eval-reward-text">
+          <strong>Recompensa Cívica:</strong> Cada acción da <strong>+20 Pts</strong> y cada indicador <strong>+10 Pts</strong>. Con 150 Pts desbloqueas el <em>Bono Auditor/a Joven en Amurjo</em>.
+        </div>
+      </div>
+      <button type="button" class="btn-action-back" onclick="window.switchTab && window.switchTab('tab-gamificacion')" style="font-size:0.68rem; padding:5px 12px; white-space:nowrap; font-weight:800;">
+        🎁 Canjes
+      </button>
+    </div>
+  `;
+}
+
+function renderEvaluacionActionsList() {
+  const container = document.getElementById("eval-actions-list");
+  if (!container) return;
+
+  const evalData = getEvaluacionData();
+  const allActions = getAllActionsList();
+  const { selectedYear, selectedEje, selectedStatus } = EvaluacionState;
+
+  let filtered = allActions.filter(a => {
+    if (selectedYear !== "all") {
+      if (!a.roadmapAnos.includes(parseInt(selectedYear))) return false;
+    }
+    if (selectedEje !== "all") {
+      if (a.ejeId !== parseInt(selectedEje)) return false;
+    }
+    const hasVoted = !!evalData.userActionVotes[a.codigo];
+    if (selectedStatus === "pending" && hasVoted) return false;
+    if (selectedStatus === "voted" && !hasVoted) return false;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; padding:32px 16px; background:var(--segura-surface); border:1px dashed var(--segura-border); border-radius:var(--radius-md);">
+        <span style="font-size:2rem; display:block; margin-bottom:8px;">🎉</span>
+        <h4 style="margin:0 0 6px; font-size:0.95rem; color:var(--text-main);">No hay acciones pendientes con estos filtros</h4>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin:0 0 12px;">¡Has completado la evaluación de este grupo o no hay medidas activas para ese año!</p>
+        <button type="button" class="btn-primary" onclick="resetEvaluacionFilters()" style="font-size:0.75rem; padding:6px 14px;">
+          Ver todas las medidas de 2027
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(a => {
+    const userScore = evalData.userActionVotes[a.codigo] || 0;
+    const commScore = evalData.communityActionVotes[a.codigo] || { avg: 4.6, count: 60 };
+    const hasVoted = userScore > 0;
+    const indicators = a.indicadores || [];
+
+    const starHints = {
+      1: "⭐ 1: Prescindible / Desacuerdo",
+      2: "⭐ 2: Prioridad Baja",
+      3: "⭐ 3: Aceptable / Neutral",
+      4: "⭐ 4: Importante / Respaldo",
+      5: "⭐ 5: ¡Prioridad Máxima / Respaldo Total!"
+    };
+
+    return `
+      <div class="eval-action-card ${hasVoted ? 'evaluated' : ''}" id="eval-card-${a.codigo}">
+        <div class="eval-card-header">
+          <div class="eval-card-tags">
+            <span class="eval-tag-code">${a.codigo}</span>
+            <span class="eval-tag-eje" style="color: ${a.ejeColor}; font-weight:700;">🏛️ Eje ${a.ejeNumero}</span>
+            <span class="badge-duracion dur-5_anos" style="font-size:0.64rem; padding:2px 7px;">⏱️ ${a.roadmap ? a.roadmap.vigencia : '2027–2031'}</span>
+          </div>
+          <span class="eval-status-badge ${hasVoted ? 'voted' : 'pending'}">
+            ${hasVoted ? '✅ Evaluada (+20 Pts)' : '⏳ Pendiente de tu voto'}
+          </span>
+        </div>
+
+        <h3 class="eval-card-title">${a.titulo}</h3>
+
+        <div style="font-size:0.73rem; color:var(--text-muted); display:flex; gap:12px; flex-wrap:wrap;">
+          <span><strong>Organismo:</strong> ${a.responsable || 'Ayto. de Orcera'}</span>
+          <span><strong>Recursos:</strong> ${a.recursos || 'Fondo municipal'}</span>
+        </div>
+
+        <!-- 1. Votación de la Acción -->
+        <div class="eval-vote-box">
+          <div class="eval-vote-box-header">
+            <strong>¿Respaldas esta medida para la juventud de Orcera?</strong>
+            <span style="color:#fbbf24; font-weight:800;">⭐ ${commScore.avg} / 5 (${commScore.count} votos)</span>
+          </div>
+          
+          <div class="eval-stars-picker">
+            ${[1, 2, 3, 4, 5].map(star => `
+              <button type="button" class="btn-eval-star ${userScore >= star ? 'active' : ''}" 
+                onclick="voteActionEvaluacion('${a.codigo}', ${star})" 
+                title="${starHints[star]}">
+                ★
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="eval-vote-hint" id="eval-hint-${a.codigo}">
+            ${userScore > 0 ? starHints[userScore] : 'Toca una estrella para dar tu respaldo ciudadano (+20 Pts)'}
+          </div>
+        </div>
+
+        <!-- 2. Evaluación de sus Indicadores de Logro -->
+        ${indicators.length > 0 ? `
+          <div class="eval-indicators-wrapper">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+              <span style="font-size:0.73rem; font-weight:700; color:var(--emerald);">
+                📊 Valora sus Indicadores Oficiales (${indicators.length}):
+              </span>
+              <span style="font-size:0.65rem; color:var(--text-dim);">¿Miden bien el éxito? (+10 Pts c/u)</span>
+            </div>
+
+            ${indicators.map(ind => {
+              const userIndScore = evalData.userIndicatorVotes[ind.id] || 0;
+              const commIndScore = evalData.communityIndicatorVotes[ind.id] || { avg: 4.5, count: 50 };
+              return `
+                <div class="eval-indicator-card">
+                  <div class="eval-indicator-top">
+                    <div>
+                      <strong style="color:var(--amurjo-cyan); font-family:monospace; font-size:0.68rem;">${ind.codigo || ind.id}</strong>
+                      <span class="eval-indicator-name"> · ${ind.nombre}</span>
+                      <div style="font-size:0.63rem; color:var(--text-dim); margin-top:2px;">
+                        Meta: <strong>${ind.metaQuinquenal} ${ind.unidad}</strong> (${ind.tipo})
+                      </div>
+                    </div>
+                    <span style="font-size:0.68rem; font-weight:800; color:#fbbf24; white-space:nowrap;">
+                      ⭐ ${commIndScore.avg}
+                    </span>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
+                    <span style="font-size:0.65rem; color:var(--text-muted);">
+                      ${userIndScore > 0 ? `Tu valoración: <strong>${userIndScore} ★</strong>` : `¿Es adecuado este indicador?`}
+                    </span>
+                    <div class="eval-indicator-stars">
+                      ${[1, 2, 3, 4, 5].map(st => `
+                        <button type="button" class="btn-ind-star ${userIndScore >= st ? 'active' : ''}" 
+                          onclick="voteIndicatorEvaluacion('${a.codigo}', '${ind.id}', ${st})" 
+                          title="${st} estrellas">
+                          ★
+                        </button>
+                      `).join("")}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        ` : ''}
+
+        <!-- Botón Ver Ficha Completa -->
+        <div style="display:flex; justify-content:flex-end; border-top:1px solid var(--segura-border); padding-top:8px;">
+          <button type="button" class="btn-action-back" onclick="openActionDetailModal('${a.codigo}', ${a.ejeId})" style="font-size:0.7rem; padding:4px 12px;">
+            🔍 Ver Ficha Técnica y Fondos
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function voteActionEvaluacion(actionCode, score) {
+  const evalData = getEvaluacionData();
+  const isFirstVote = !evalData.userActionVotes[actionCode];
+  evalData.userActionVotes[actionCode] = score;
+
+  const curr = evalData.communityActionVotes[actionCode] || { avg: 4.5, count: 55 };
+  if (isFirstVote) {
+    const newCount = curr.count + 1;
+    const newAvg = Number(((curr.avg * curr.count + score) / newCount).toFixed(1));
+    evalData.communityActionVotes[actionCode] = { avg: Math.min(5.0, newAvg), count: newCount };
+  }
+
+  saveEvaluacionData(evalData);
+  renderEvaluacionHeroBox();
+  renderEvaluacionActionsList();
+
+  if (typeof rewardPoints === "function") {
+    rewardPoints(20, `Voto registrado en Evaluación Previa (${actionCode}: ${score} ⭐)`);
+  } else if (typeof showToast === "function") {
+    showToast("¡Voto Registrado!", `Has valorado la acción ${actionCode} con ${score} estrellas (+20 Pts).`);
+  }
+}
+
+function voteIndicatorEvaluacion(actionCode, indicatorId, score) {
+  const evalData = getEvaluacionData();
+  const isFirstVote = !evalData.userIndicatorVotes[indicatorId];
+  evalData.userIndicatorVotes[indicatorId] = score;
+
+  const curr = evalData.communityIndicatorVotes[indicatorId] || { avg: 4.5, count: 48 };
+  if (isFirstVote) {
+    const newCount = curr.count + 1;
+    const newAvg = Number(((curr.avg * curr.count + score) / newCount).toFixed(1));
+    evalData.communityIndicatorVotes[indicatorId] = { avg: Math.min(5.0, newAvg), count: newCount };
+  }
+
+  saveEvaluacionData(evalData);
+  renderEvaluacionHeroBox();
+  renderEvaluacionActionsList();
+
+  if (typeof rewardPoints === "function") {
+    rewardPoints(10, `Indicador evaluado con ${score} ⭐ (+10 Pts)`);
+  } else if (typeof showToast === "function") {
+    showToast("Indicador Valorado", `Tu dictamen sobre el indicador ha sido guardado (+10 Pts).`);
+  }
+}
+
+function resetEvaluacionFilters() {
+  EvaluacionState.selectedYear = "2027";
+  EvaluacionState.selectedEje = "all";
+  EvaluacionState.selectedStatus = "all";
+
+  const yearsContainer = document.getElementById("eval-years-selector");
+  if (yearsContainer) {
+    yearsContainer.querySelectorAll(".btn-eval-year").forEach(b => {
+      b.classList.toggle("active", b.getAttribute("data-eval-year") === "2027");
+    });
+  }
+  const ejeSelect = document.getElementById("eval-filter-eje");
+  if (ejeSelect) ejeSelect.value = "all";
+  const statusSelect = document.getElementById("eval-filter-status");
+  if (statusSelect) statusSelect.value = "all";
+
+  renderEvaluacionHeroBox();
+  renderEvaluacionActionsList();
+}
+
+function goToEvaluacionAction(actionCode) {
+  if (window.switchTab) {
+    window.switchTab("tab-evaluacion");
+  }
+  setTimeout(() => {
+    const card = document.getElementById("eval-card-" + actionCode);
+    if (card) {
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.style.boxShadow = "0 0 20px var(--emerald)";
+      setTimeout(() => card.style.boxShadow = "", 1500);
+    }
+  }, 250);
+}
+
+window.initEvaluacionPrevia = initEvaluacionPrevia;
+window.voteActionEvaluacion = voteActionEvaluacion;
+window.voteIndicatorEvaluacion = voteIndicatorEvaluacion;
+window.resetEvaluacionFilters = resetEvaluacionFilters;
+window.goToEvaluacionAction = goToEvaluacionAction;
 
 // ==============================================================================
 // MÓDULO 3: GAMIFICACIÓN Y CANJES DE LA PISCINA DE AMURJO
@@ -4303,6 +4765,9 @@ function renderAdminPane(paneId) {
     case "pane-promocion":
       renderPanePromocion(container);
       break;
+    case "pane-evaluacion-previa":
+      renderPaneEvaluacionPrevia(container);
+      break;
   }
 }
 
@@ -5220,8 +5685,118 @@ function renderPaneConfiguracion(container, isAdmin) {
   }
 }
 
+// ------------------------------------------------------------------------------
+// PANE 8: DICTAMEN DE EVALUACIÓN PREVIA JUVENIL (TÉCNICO + ADMIN)
+// ------------------------------------------------------------------------------
+function renderPaneEvaluacionPrevia(container) {
+  const evalData = getEvaluacionData();
+  const allActions = getAllActionsList();
+  const year2027Actions = allActions.filter(a => a.roadmapAnos.includes(2027));
 
-// ==============================================================================
+  let totalScore = 0;
+  let totalVotes = 0;
+  let topRanked = [];
+
+  year2027Actions.forEach(a => {
+    const sc = evalData.communityActionVotes[a.codigo] || { avg: 4.6, count: 60 };
+    totalScore += sc.avg;
+    totalVotes += sc.count;
+    topRanked.push({
+      codigo: a.codigo,
+      titulo: a.titulo,
+      ejeId: a.ejeId,
+      ejeNumero: a.ejeNumero,
+      avg: sc.avg,
+      votes: sc.count,
+      indicators: a.indicadores || []
+    });
+  });
+
+  const globalAvg = year2027Actions.length > 0 ? (totalScore / year2027Actions.length).toFixed(2) : "4.74";
+  const globalPct = Math.round((parseFloat(globalAvg) / 5) * 100);
+
+  topRanked.sort((a, b) => b.avg - a.avg);
+  const bestActions = topRanked.slice(0, 5);
+  const lowestActions = topRanked.slice(-3).reverse();
+
+  container.innerHTML = `
+    <div class="admin-pane-card">
+      <div class="admin-pane-header">
+        <div>
+          <span class="badge-tag-civic">Módulo 8 · Validación Democrática Ex-Ante</span>
+          <h3 style="margin:2px 0 0; font-size:1.15rem; color:var(--text-main);">⭐ Dictamen de Evaluación Previa Juvenil (2027–2031)</h3>
+          <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 0;">
+            Dictamen ciudadano de la juventud de Orcera antes de la ejecución presupuestaria. Mide si las medidas e indicadores cuentan con respaldo social mayoritario.
+          </p>
+        </div>
+        <button type="button" class="btn-primary" onclick="window.print()" style="padding:7px 14px; font-size:0.75rem; font-weight:800;">
+          📄 Imprimir Dictamen para el Pleno
+        </button>
+      </div>
+
+      <!-- Resumen Métricas Clave -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:16px;">
+        <div style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); padding:14px; border-radius:var(--radius-md); text-align:center;">
+          <span style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; display:block;">Índice Respaldo 2027</span>
+          <strong style="font-size:1.6rem; color:#34d399; font-family:var(--font-heading);">⭐ ${globalAvg} / 5</strong>
+          <span style="display:block; font-size:0.68rem; color:#34d399; font-weight:700;">${globalPct}% de Aprobación Ciudadana</span>
+        </div>
+
+        <div style="background:rgba(6,182,212,0.12); border:1px solid rgba(6,182,212,0.35); padding:14px; border-radius:var(--radius-md); text-align:center;">
+          <span style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; display:block;">Jóvenes Evaluadores</span>
+          <strong style="font-size:1.6rem; color:var(--amurjo-cyan); font-family:var(--font-heading);">88</strong>
+          <span style="display:block; font-size:0.68rem; color:var(--text-dim);">Censo activo de votantes</span>
+        </div>
+
+        <div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.35); padding:14px; border-radius:var(--radius-md); text-align:center;">
+          <span style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; display:block;">Votos Registrados</span>
+          <strong style="font-size:1.6rem; color:var(--amber); font-family:var(--font-heading);">${totalVotes}</strong>
+          <span style="display:block; font-size:0.68rem; color:var(--text-dim);">En medidas e indicadores</span>
+        </div>
+      </div>
+
+      <!-- Top 5 Medidas con Mayor Respaldo -->
+      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:14px; margin-bottom:16px;">
+        <h4 style="margin:0 0 10px; font-size:0.85rem; color:#34d399; display:flex; align-items:center; gap:6px;">
+          <span>🟢</span> Top 5 Medidas con Mayor Respaldo Ciudadano (Prioridad Absoluta 2027)
+        </h4>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          ${bestActions.map((a, i) => `
+            <div style="background:rgba(0,0,0,0.25); border:1px solid var(--segura-border); border-radius:var(--radius-sm); padding:8px 12px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+              <div>
+                <strong style="color:var(--emerald); font-size:0.78rem;">#${i+1} · ${a.codigo}</strong>
+                <span style="font-size:0.75rem; color:var(--text-main); margin-left:6px;">${a.titulo}</span>
+                <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Eje ${a.ejeNumero} · ${a.votes} votos registrados</span>
+              </div>
+              <strong style="font-size:0.95rem; color:#fbbf24; white-space:nowrap;">⭐ ${a.avg} / 5</strong>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <!-- Medidas que Requieren Atención o Revisión -->
+      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:14px;">
+        <h4 style="margin:0 0 10px; font-size:0.85rem; color:var(--amber); display:flex; align-items:center; gap:6px;">
+          <span>⚠️</span> Medidas con Respaldo Más Ajustado (Atención Técnica)
+        </h4>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          ${lowestActions.map(a => `
+            <div style="background:rgba(0,0,0,0.25); border:1px solid var(--segura-border); border-radius:var(--radius-sm); padding:8px 12px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+              <div>
+                <strong style="color:var(--amber); font-size:0.78rem;">${a.codigo}</strong>
+                <span style="font-size:0.75rem; color:var(--text-main); margin-left:6px;">${a.titulo}</span>
+                <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Eje ${a.ejeNumero} · Valorada con ${a.avg} sobre 5</span>
+              </div>
+              <span style="font-size:0.7rem; color:var(--text-dim); background:rgba(255,255,255,0.05); padding:3px 8px; border-radius:4px;">
+                Revisar en Comisión
+              </span>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
 // SISTEMA DE PROMOCIÓN, DIFUSIÓN VIRAL Y CARTEL OFICIAL IMPRIMIBLE
 // ==============================================================================
 function setupPromotionEvents() {

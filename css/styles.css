@@ -5953,6 +5953,310 @@ body {
 }
 
 /* ==========================================================================
+   MÓDULO DE EVALUACIÓN PREVIA & DICTAMEN CIUDADANO (2027–2031)
+   ========================================================================== */
+.eval-hero-box {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(6, 182, 212, 0.14));
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.eval-hero-box::before {
+  content: "🗳️";
+  position: absolute;
+  right: -10px;
+  bottom: -15px;
+  font-size: 5rem;
+  opacity: 0.08;
+  pointer-events: none;
+}
+.eval-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.eval-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid var(--emerald);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.eval-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.76rem;
+  color: var(--text-main);
+  font-weight: 700;
+}
+.eval-progress-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.eval-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emerald), var(--amurjo-cyan));
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+.eval-reward-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  border: 1px solid var(--segura-border);
+}
+.eval-reward-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.eval-reward-text strong {
+  color: #fbbf24;
+}
+
+/* Controles de filtro y años */
+.eval-controls-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.eval-years-selector {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.btn-eval-year {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--segura-border);
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.btn-eval-year:hover {
+  border-color: var(--emerald);
+  color: var(--text-main);
+}
+.btn-eval-year.active {
+  background: var(--emerald);
+  color: #062b1f;
+  border-color: var(--emerald);
+  font-weight: 800;
+  box-shadow: 0 0 10px var(--emerald-glow);
+}
+.eval-filters-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.eval-select-filter {
+  background: var(--segura-surface);
+  border: 1px solid var(--segura-border);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-family: inherit;
+  outline: none;
+}
+.eval-select-filter:focus {
+  border-color: var(--emerald);
+}
+
+/* Tarjeta individual de acción para evaluar */
+.eval-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.eval-action-card {
+  background: var(--segura-surface);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+.eval-action-card.evaluated {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: linear-gradient(180deg, var(--segura-surface), rgba(16, 185, 129, 0.04));
+}
+.eval-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.eval-card-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.eval-tag-code {
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--emerald);
+  background: rgba(16, 185, 129, 0.15);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.eval-tag-eje {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+.eval-status-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+.eval-status-badge.voted {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid var(--emerald);
+}
+.eval-status-badge.pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.eval-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Bloque interactivo de votación de la acción */
+.eval-vote-box {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.eval-vote-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+.eval-stars-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-eval-star {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.25rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+.btn-eval-star:hover, .btn-eval-star.active {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #fbbf24;
+  color: #fbbf24;
+  transform: scale(1.1);
+}
+.eval-vote-hint {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--emerald);
+  min-height: 1.1em;
+}
+
+/* Bloque de indicadores a evaluar */
+.eval-indicators-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.eval-indicator-card {
+  background: rgba(0, 0, 0, 0.18);
+  border-left: 3px solid var(--amurjo-cyan);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.eval-indicator-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+.eval-indicator-name {
+  font-size: 0.73rem;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+.eval-indicator-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-ind-star {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 1.05rem;
+  cursor: pointer;
+  padding: 1px 3px;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+.btn-ind-star:hover, .btn-ind-star.active {
+  color: #fbbf24;
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
    POLÍTICAS LEGALES, RGPD, MODAL Y CONSENTIMIENTO EN FORMULARIOS
    ========================================================================== */
 

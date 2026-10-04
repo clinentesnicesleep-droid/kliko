@@ -224,6 +224,9 @@
             <button class="tab-btn" data-tab="tab-ejes" role="tab" aria-selected="false">
               <span class="tab-icon">🎯</span> 7 Ejes
             </button>
+            <button class="tab-btn" data-tab="tab-evaluacion" role="tab" aria-selected="false">
+              <span class="tab-icon">🗳️</span> Evaluar '27
+            </button>
             <button class="tab-btn" data-tab="tab-gamificacion" role="tab" aria-selected="false">
               <span class="tab-icon">🎁</span> Premios
             </button>
@@ -788,6 +791,62 @@
             </div>
           </section>
 
+          <!-- ======================================================== -->
+          <!-- PESTAÑA 5: EVALUACIÓN PREVIA & DICTAMEN CIUDADANO (2027)  -->
+          <!-- ======================================================== -->
+          <section id="tab-evaluacion" class="tab-panel" role="tabpanel">
+            <div class="section-intro">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:4px;">
+                <h2 class="section-title">Evaluación Previa 2027</h2>
+                <span class="action-status-open-badge" style="font-size:0.7rem; padding:4px 10px;">
+                  <span style="font-size:0.6rem;">🟢</span> Dictamen Abierto
+                </span>
+              </div>
+              <p class="section-desc">Valora de 1 a 5 cada acción propuesta y sus indicadores de logro para validar si cuentan con el respaldo de la juventud de Orcera antes de su ejecución.</p>
+            </div>
+
+            <!-- TARJETA HERO: PROGRESO PERSONAL Y RECOMPENSA -->
+            <div class="eval-hero-box" id="eval-hero-box">
+              <!-- Renderizado dinámicamente con JS -->
+            </div>
+
+            <!-- SELECTOR DE AÑO Y FILTROS POR EJE -->
+            <div class="eval-controls-bar">
+              <div class="eval-years-selector" id="eval-years-selector">
+                <button type="button" class="btn-eval-year active" data-eval-year="2027">2027 (Prioritario)</button>
+                <button type="button" class="btn-eval-year" data-eval-year="2028">2028</button>
+                <button type="button" class="btn-eval-year" data-eval-year="2029">2029</button>
+                <button type="button" class="btn-eval-year" data-eval-year="2030">2030</button>
+                <button type="button" class="btn-eval-year" data-eval-year="2031">2031</button>
+                <button type="button" class="btn-eval-year" data-eval-year="all">Todos</button>
+              </div>
+
+              <div class="eval-filters-row">
+                <select id="eval-filter-eje" class="eval-select-filter">
+                  <option value="all">🏛️ Todos los Ejes (1–7)</option>
+                  <option value="1">Eje 1: Entorno Sostenible & Digital</option>
+                  <option value="2">Eje 2: Ocio, Cultura y Deporte</option>
+                  <option value="3">Eje 3: Empleo y Emprendimiento</option>
+                  <option value="4">Eje 4: Participación Juvenil</option>
+                  <option value="5">Eje 5: Salud y Bienestar</option>
+                  <option value="6">Eje 6: Igualdad y Diversidad</option>
+                  <option value="7">Eje 7: Gobernanza y Evaluación</option>
+                </select>
+
+                <select id="eval-filter-status" class="eval-select-filter">
+                  <option value="all">📋 Todas las acciones</option>
+                  <option value="pending">⏳ Pendientes de mi voto</option>
+                  <option value="voted">✅ Evaluadas por mí</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- LISTADO DINÁMICO DE ACCIONES E INDICADORES PARA EVALUAR -->
+            <div id="eval-actions-list" class="eval-actions-list">
+              <!-- Renderizado dinámicamente con JS -->
+            </div>
+          </section>
+
           <footer class="mobile-footer">
             <div class="footer-manual-link">
               <a href="manual.html" class="footer-guide-cta">
@@ -864,6 +923,10 @@
           <button class="nav-item" data-target="tab-ejes">
             <span class="nav-icon">🎯</span>
             <span class="nav-text">7 Ejes</span>
+          </button>
+          <button class="nav-item" data-target="tab-evaluacion">
+            <span class="nav-icon">🗳️</span>
+            <span class="nav-text">Evaluar '27</span>
           </button>
           <button class="nav-item" data-target="tab-gamificacion">
             <span class="nav-icon">🎁</span>
@@ -1410,6 +1473,13 @@
             <div class="admin-nav-text">
               <strong>7. Promoción y Cartelería</strong>
               <small>Carteles con QR y difusión</small>
+            </div>
+          </button>
+          <button type="button" class="admin-nav-item" data-admin-pane="pane-evaluacion-previa">
+            <span>⭐</span>
+            <div class="admin-nav-text">
+              <strong>8. Dictamen Evaluación Previa</strong>
+              <small>Respaldo ciudadano medidas 2027–2031</small>
             </div>
           </button>
         </nav>
