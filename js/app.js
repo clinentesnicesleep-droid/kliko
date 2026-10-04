@@ -1343,9 +1343,9 @@ function renderEjeDetail(ejeId) {
                 const rm = a.roadmap || { anos: [2027, 2028, 2029, 2030, 2031] };
                 const dur = rm.anos ? rm.anos.length : 5;
                 return `
-                  <div class="eje-gantt-matrix-row">
+                  <div class="eje-gantt-matrix-row" data-action-code="${a.codigo}" data-eje-id="${eje.id}" role="button" tabindex="0" title="Haz clic para ver la ficha completa de ${a.codigo}">
                     <div class="gantt-cell-action" title="${a.titulo}">
-                      <strong>${a.codigo}</strong>
+                      <strong>${a.codigo} <span class="gantt-click-hint">🔍</span></strong>
                       <span>${a.titulo.substring(0, 32)}...</span>
                     </div>
                     ${[2027, 2028, 2029, 2030, 2031].map(y => {
@@ -2081,6 +2081,23 @@ function renderEjeDetail(ejeId) {
     });
   });
 
+  // Asignar listeners a las filas del cronograma general para abrir ficha completa
+  container.querySelectorAll(".eje-gantt-matrix-row[data-action-code]").forEach(row => {
+    row.addEventListener("click", () => {
+      const code = row.getAttribute("data-action-code");
+      const eId = parseInt(row.getAttribute("data-eje-id")) || eje.id;
+      openActionDetailModal(code, eId);
+    });
+    row.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const code = row.getAttribute("data-action-code");
+        const eId = parseInt(row.getAttribute("data-eje-id")) || eje.id;
+        openActionDetailModal(code, eId);
+      }
+    });
+  });
+
   // Listeners para abrir el Volante de Justificante Contable (Factura o Nómina)
   container.querySelectorAll(".open-justificante-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -2155,6 +2172,351 @@ function formatStatusName(status) {
     default: return status;
   }
 }
+
+// ==============================================================================
+// FICHA TÉCNICA DETALLADA DE LA ACCIÓN (CRONOGRAMA GENERAL)
+// ==============================================================================
+function getActionFullDetails(actionCode, optEjeId) {
+  let foundAcc = null;
+  let foundOe = null;
+  let foundEje = null;
+
+  for (const eje of EJES_DATA) {
+    if (optEjeId && eje.id !== optEjeId && eje.numero !== optEjeId) continue;
+    for (const oe of (eje.objetivosEspecificos || [])) {
+      for (const acc of (oe.acciones || [])) {
+        if (acc.codigo === actionCode) {
+          foundAcc = acc;
+          foundOe = oe;
+          foundEje = eje;
+          break;
+        }
+      }
+      if (foundAcc) break;
+    }
+    if (foundAcc) break;
+  }
+
+  if (!foundAcc) {
+    for (const eje of EJES_DATA) {
+      if (optEjeId && eje.id !== optEjeId) continue;
+      const acc = (eje.acciones || []).find(a => a.codigo === actionCode);
+      if (acc) {
+        foundAcc = acc;
+        foundEje = eje;
+        foundOe = (eje.objetivosEspecificos || []).find(oe => 
+          (oe.acciones || []).some(a => a.codigo === actionCode)
+        );
+        break;
+      }
+    }
+  }
+
+  if (!foundAcc) return null;
+
+  const roadmap = getActionRoadmap(foundAcc, foundEje);
+
+  // Buscar datos presupuestarios y facturas en finanzas anualizadas (2027-2031)
+  const financialRecords = [];
+  const years = [2027, 2028, 2029, 2030, 2031];
+  let totalPrevision = 0;
+  let totalEjecutado = 0;
+  const justificantes = [];
+
+  years.forEach(yr => {
+    const yrFin = foundEje.finanzas && foundEje.finanzas[yr];
+    if (yrFin && yrFin.accionesDesarrolladas) {
+      const match = yrFin.accionesDesarrolladas.find(ad => ad.codigo === actionCode);
+      if (match) {
+        totalPrevision += (match.previsionIngresos || 0);
+        totalEjecutado += (match.gastoEjecutado || 0);
+        financialRecords.push({
+          ano: yr,
+          prevision: match.previsionIngresos || 0,
+          ejecutado: match.gastoEjecutado || 0,
+          saldo: match.saldo || 0,
+          pct: match.porcentajeEjecucion || 0
+        });
+        if (match.justificantes && match.justificantes.length) {
+          justificantes.push(...match.justificantes);
+        }
+      }
+    }
+  });
+
+  const indicadores = foundAcc.indicadores || [];
+
+  return {
+    action: foundAcc,
+    oe: foundOe,
+    eje: foundEje,
+    roadmap: roadmap,
+    finanzas: {
+      anualidades: financialRecords,
+      totalPrevision: totalPrevision,
+      totalEjecutado: totalEjecutado,
+      saldoTotal: totalPrevision - totalEjecutado,
+      pctTotal: totalPrevision > 0 ? ((totalEjecutado / totalPrevision) * 100).toFixed(1) : 0,
+      justificantes: justificantes
+    },
+    indicadores: indicadores,
+    valoraciones: foundEje.valoraciones || []
+  };
+}
+
+function openActionDetailModal(actionCode, optEjeId) {
+  const details = getActionFullDetails(actionCode, optEjeId);
+  const modal = document.getElementById("cronograma-action-modal");
+  const contentEl = document.getElementById("cronograma-action-modal-content");
+  if (!modal || !contentEl || !details) return;
+
+  const { action, oe, eje, roadmap, finanzas, indicadores, valoraciones } = details;
+
+  let statusClass = "status-" + (action.estado || "en_progreso");
+  let statusName = formatStatusName(action.estado || "en_progreso");
+
+  contentEl.innerHTML = `
+    <!-- CABECERA DE LA FICHA DE ACCIÓN -->
+    <div class="action-modal-header">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span class="action-code-tag" style="font-size: 0.85rem; padding: 4px 10px;">${action.codigo}</span>
+          <span class="action-status-badge ${statusClass}">${statusName}</span>
+          <span class="badge-duracion dur-${roadmap.duracionTipo}">⏱️ ${roadmap.vigencia}</span>
+        </div>
+      </div>
+      <h3 style="margin: 6px 0 8px; font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-main); line-height: 1.35;">
+        ${action.titulo}
+      </h3>
+      <div style="display: flex; align-items: center; gap: 10px; font-size: 0.74rem; color: var(--text-muted); flex-wrap: wrap;">
+        <span>🏛️ Eje ${eje.numero}: ${eje.titulo}</span>
+        <span>•</span>
+        <span style="color: var(--amurjo-cyan); font-weight: 700;">🎯 ${oe ? oe.codigo : 'Objetivo'}: ${oe ? oe.titulo.substring(0, 48) + '...' : ''}</span>
+      </div>
+    </div>
+
+    <!-- CUERPO DETALLADO DE LA FICHA -->
+    <div class="action-modal-body">
+
+      <!-- 1. OBJETIVO ESPECÍFICO Y FINALIDAD -->
+      <div class="action-detail-section">
+        <div class="action-section-title">
+          <span>🎯</span> Objetivo Específico Vinculado
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-main); margin-bottom: 6px; font-weight: 600;">
+          ${oe ? `${oe.codigo}: ${oe.titulo}` : 'Objetivo Estratégico Municipal'}
+        </p>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
+          Esta medida contribuye a las metas operativas del Eje ${eje.numero}, garantizando derechos, formación y ocio de calidad para la juventud de Orcera en el marco del III Plan Municipal.
+        </p>
+      </div>
+
+      <!-- 2. DESCRIPCIÓN COMPLETA DE LA MEDIDA -->
+      <div class="action-detail-section">
+        <div class="action-section-title">
+          <span>📋</span> Descripción Completa y Alcance Oficial
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px;">
+          ${action.descripcion || action.titulo}
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.76rem;">
+          <div style="background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--segura-border);">
+            <strong style="color: var(--emerald); display: block; font-size: 0.7rem; text-transform: uppercase;">Organismo Responsable:</strong>
+            <span style="color: var(--text-main);">${action.responsable || 'Concejalía de Juventud · Ayto. de Orcera'}</span>
+          </div>
+          <div style="background: rgba(0,0,0,0.25); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--segura-border);">
+            <strong style="color: var(--amurjo-cyan); display: block; font-size: 0.7rem; text-transform: uppercase;">Recursos y Financiación:</strong>
+            <span style="color: var(--text-main);">${action.recursos || 'Recursos propios del Ayuntamiento de Orcera'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. CRONOGRAMA, TEMPORALIZACIÓN Y FASES (2027–2031) -->
+      <div class="action-detail-section">
+        <div class="action-section-title">
+          <span>📅</span> Cronograma y Plan de Ejecución Quinquenal
+        </div>
+        
+        <!-- Matriz de años de la acción -->
+        <div style="display: flex; gap: 6px; margin: 10px 0 14px; overflow-x: auto;">
+          ${[2027, 2028, 2029, 2030, 2031].map(yr => {
+            const isAct = roadmap.anos.includes(yr);
+            return `
+              <div style="flex: 1; min-width: 60px; text-align: center; padding: 6px 4px; border-radius: var(--radius-sm); background: ${isAct ? 'rgba(16,185,129,0.18)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isAct ? 'var(--emerald)' : 'var(--segura-border)'};">
+                <span style="font-size: 0.75rem; font-weight: 800; color: ${isAct ? '#34d399' : 'var(--text-dim)'};">${yr}</span>
+                <span style="display: block; font-size: 0.62rem; color: ${isAct ? 'var(--text-main)' : 'var(--text-dim)'};">${isAct ? '● Activa' : '○ Inactiva'}</span>
+              </div>
+            `;
+          }).join("")}
+        </div>
+
+        <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5;">
+          <strong>Hitos y Fases Programadas:</strong>
+          <ul style="margin: 6px 0 0 16px; padding: 0;">
+            ${roadmap.anos.map(yr => `
+              <li style="margin-bottom: 4px;">
+                <strong style="color: var(--amurjo-cyan);">${yr}:</strong> ${roadmap.hitos[yr] || 'Ejecución y seguimiento de actividades correspondientes al ejercicio ' + yr + '.'}
+              </li>
+            `).join("")}
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4. PRESUPUESTO Y CONTABILIDAD ANUALIZADA -->
+      <div class="action-detail-section">
+        <div class="action-section-title">
+          <span>💶</span> Presupuesto, Partidas y Justificantes Públicos
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px;">
+          <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Previsión Quinquenal</span>
+            <strong style="font-size: 0.95rem; color: #34d399;">${finanzas.totalPrevision > 0 ? finanzas.totalPrevision.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'Asignación ordinaria'}</strong>
+          </div>
+          <div style="background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Gasto Fiscalizado</span>
+            <strong style="font-size: 0.95rem; color: var(--amurjo-cyan);">${finanzas.totalEjecutado > 0 ? finanzas.totalEjecutado.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'En tramitación'}</strong>
+          </div>
+          <div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
+            <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Grado Ejecución</span>
+            <strong style="font-size: 0.95rem; color: var(--amber);">${finanzas.pctTotal > 0 ? finanzas.pctTotal + '%' : '100% programado'}</strong>
+          </div>
+        </div>
+
+        ${finanzas.anualidades.length > 0 ? `
+          <div style="overflow-x: auto; margin-bottom: 10px;">
+            <table class="financial-subtable" style="width: 100%; font-size: 0.72rem;">
+              <thead>
+                <tr>
+                  <th>Año</th>
+                  <th>Previsión</th>
+                  <th>Ejecutado</th>
+                  <th>Remanente</th>
+                  <th>% Ejecutado</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${finanzas.anualidades.map(an => `
+                  <tr>
+                    <td><strong>${an.ano}</strong></td>
+                    <td>${an.prevision.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                    <td>${an.ejecutado.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                    <td>${an.saldo.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                    <td><span class="action-status-badge status-en_curso">${an.pct}%</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        ` : ''}
+
+        ${finanzas.justificantes.length > 0 ? `
+          <div style="margin-top: 10px;">
+            <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 6px;">
+              📄 Facturas y Nóminas Oficiales Fiscalizadas (${finanzas.justificantes.length}):
+            </span>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              ${finanzas.justificantes.map(j => `
+                <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.72rem;">
+                  <div>
+                    <strong style="color: var(--amurjo-cyan);">${j.ref || j.id}</strong> · <span>${j.concepto}</span>
+                    <div style="font-size: 0.65rem; color: var(--text-muted);">${j.proveedorBeneficiario} · Fecha: ${j.fecha} · Partida: <code>${j.partidaPresupuestaria || '337.226'}</code></div>
+                  </div>
+                  <strong style="color: #34d399; font-size: 0.8rem; white-space: nowrap;">${j.importe.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+
+      <!-- 5. INDICADORES OFICIALES DE LOGRO -->
+      <div class="action-detail-section">
+        <div class="action-section-title">
+          <span>📊</span> Indicadores Oficiales de Evaluación y Seguimiento (${indicadores.length})
+        </div>
+
+        ${indicadores.length === 0 ? `
+          <p style="font-size: 0.78rem; color: var(--text-muted);">
+            Esta acción se evalúa mediante los indicadores generales del Eje ${eje.numero} (tasa de participación y grado de satisfacción ciudadana).
+          </p>
+        ` : `
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            ${indicadores.map(ind => {
+              const pct = ind.cumplimiento || (ind.metaQuinquenal > 0 ? Math.round((ind.actualQuinquenal / ind.metaQuinquenal) * 100) : 100);
+              return `
+                <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 10px 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px;">
+                    <strong style="font-size: 0.76rem; color: var(--text-main);">${ind.codigo || ind.id}: ${ind.nombre}</strong>
+                    <span style="font-size: 0.72rem; font-weight: 800; color: #34d399; white-space: nowrap;">${pct}%</span>
+                  </div>
+                  <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
+                    Meta Quinquenal: <strong>${ind.metaQuinquenal} ${ind.unidad}</strong> · Conseguido: <strong>${ind.actualQuinquenal || 0} ${ind.unidad}</strong> (${ind.tipo})
+                  </div>
+                  <div class="progress-bar-track" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
+                    <div style="width: ${Math.min(pct, 100)}%; height: 100%; background: linear-gradient(90deg, var(--emerald), var(--amurjo-cyan));"></div>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `}
+      </div>
+
+      <!-- 6. ESTADO, COMENTARIOS Y PARTICIPACIÓN JUVENIL -->
+      <div class="action-detail-section">
+        <div class="action-section-title">
+          <span>💬</span> Estado, Comentarios y Participación Ciudadana
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
+          <strong>Supervisión Técnica:</strong> Medida incluida en el dictamen favorable del III Plan Municipal de Juventud. Supervisada por la Concejalía de Juventud y la Comisión de Seguimiento.
+        </p>
+        
+        ${valoraciones.length > 0 ? `
+          <div style="background: rgba(0,0,0,0.2); border-left: 3px solid var(--emerald); padding: 8px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 12px; font-size: 0.74rem;">
+            <strong>Comentario de la Juventud de Orcera:</strong><br>
+            <span style="color: var(--text-main); font-style: italic;">"${valoraciones[0].comentario}"</span>
+            <div style="color: var(--text-dim); margin-top: 2px;">— ${valoraciones[0].usuario} (${"★".repeat(valoraciones[0].estrellas)})</div>
+          </div>
+        ` : ''}
+
+        <button type="button" class="btn-primary" onclick="closeActionDetailModal(); window.switchTab && window.switchTab('tab-buzon');" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 9px;">
+          💡 Enviar Propuesta o Pregunta sobre ${action.codigo} al Buzón Joven
+        </button>
+      </div>
+
+    </div>
+
+    <!-- PIE DEL MODAL CON BOTÓN DE CIERRE -->
+    <div class="action-modal-footer">
+      <span style="font-size: 0.72rem; color: var(--text-muted);">
+        III Plan Municipal de Juventud de Orcera (2027–2031)
+      </span>
+      <button type="button" class="btn-primary" onclick="closeActionDetailModal()" style="padding: 8px 20px; font-weight: 800;">
+        Cerrar Ficha
+      </button>
+    </div>
+  `;
+
+  modal.classList.add("active");
+  modal.style.display = "flex";
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  const bodyEl = modal.querySelector(".action-modal-body");
+  if (bodyEl) bodyEl.scrollTop = 0;
+}
+
+function closeActionDetailModal() {
+  const m = document.getElementById("cronograma-action-modal");
+  if (!m) return;
+  m.classList.remove("active");
+  m.style.display = "none";
+  m.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+window.openActionDetailModal = openActionDetailModal;
+window.closeActionDetailModal = closeActionDetailModal;
 
 // ==============================================================================
 // MÓDULO 3: GAMIFICACIÓN Y CANJES DE LA PISCINA DE AMURJO
@@ -5162,5 +5524,33 @@ if (document.readyState === "loading") {
 } else {
   initEuPoliciesModal();
 }
+
+// Delegación global para filas interactivas del cronograma
+document.addEventListener("click", (e) => {
+  const row = e.target.closest(".eje-gantt-matrix-row[data-action-code]");
+  if (row) {
+    const code = row.getAttribute("data-action-code");
+    const eId = row.getAttribute("data-eje-id");
+    openActionDetailModal(code, eId);
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cam = document.getElementById("cronograma-action-modal");
+  if (cam) {
+    cam.addEventListener("click", (e) => {
+      if (e.target === cam) closeActionDetailModal();
+    });
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const cam = document.getElementById("cronograma-action-modal");
+    if (cam && cam.classList.contains("active")) {
+      closeActionDetailModal();
+    }
+  }
+});
 
 

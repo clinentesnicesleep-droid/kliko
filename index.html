@@ -35,7 +35,7 @@
     });
   </script>
   
-  <link rel="stylesheet" href="css/styles.css?v=pwa_legal_v10">
+  <link rel="stylesheet" href="css/styles.css?v=tabs_grid_v11">
   <style>
     /* Estilo contextual prioritario de botones de políticas de la Sierra (nunca blanco) */
     .btn-eu-policy {
@@ -219,16 +219,16 @@
           <!-- PESTAÑAS DE NAVEGACIÓN PRINCIPAL INTERNA -->
           <nav class="view-tabs" role="tablist">
             <button class="tab-btn active" data-tab="tab-plan" role="tab" aria-selected="true">
-              <span class="tab-icon">📖</span> El Plan (Inicio)
+              <span class="tab-icon">📖</span> El Plan
             </button>
             <button class="tab-btn" data-tab="tab-ejes" role="tab" aria-selected="false">
-              <span class="tab-icon">🎯</span> 7 Ejes en Acción
+              <span class="tab-icon">🎯</span> 7 Ejes
             </button>
             <button class="tab-btn" data-tab="tab-gamificacion" role="tab" aria-selected="false">
-              <span class="tab-icon">🎁</span> Premios Amurjo
+              <span class="tab-icon">🎁</span> Premios
             </button>
             <button class="tab-btn" data-tab="tab-buzon" role="tab" aria-selected="false">
-              <span class="tab-icon">💡</span> Buzón Joven
+              <span class="tab-icon">💡</span> Buzón
             </button>
           </nav>
 
@@ -1423,6 +1423,16 @@
 
   </div>
 
+  <!-- MODAL DE FICHA TÉCNICA DETALLADA DE ACCIÓN / MEDIDA DEL CRONOGRAMA -->
+  <div class="modal-overlay" id="cronograma-action-modal" role="dialog" aria-hidden="true" style="z-index: 10050;">
+    <div class="action-detail-modal-box" id="action-detail-modal-box">
+      <button type="button" class="btn-close-modal" id="close-cronograma-action-modal" onclick="closeActionDetailModal()" aria-label="Cerrar ficha de la acción">&times;</button>
+      <div id="cronograma-action-modal-content">
+        <!-- Renderizado dinámicamente con JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL DE EDICIÓN Y CREACIÓN DE ACCIÓN / VARIANTE ACEPTADA -->
   <div class="modal-overlay" id="admin-action-modal" role="dialog" aria-hidden="true" style="z-index: 1100;">
     <div class="asociacion-modal-box" style="max-width: 580px;">
@@ -1914,7 +1924,7 @@
 
   <script src="js/qrcode.min.js"></script>
   <script src="js/data-ejes.js?v=finanzas_anualizadas_v5"></script>
-  <script src="js/app.js?v=pwa_legal_v10"></script>
+  <script src="js/app.js?v=tabs_grid_v11"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {

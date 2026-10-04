@@ -1009,37 +1009,38 @@ body {
 
 /* Pestañas de Navegación */
 .view-tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   background: var(--segura-surface-elevated);
-  padding: 6px;
+  padding: 4px;
   border-radius: var(--radius-full);
   margin-bottom: 18px;
   border: 1px solid var(--segura-border);
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
-.view-tabs::-webkit-scrollbar { display: none; }
 
 .tab-btn {
-  flex: 1 0 auto;
   background: none;
   border: none;
   color: var(--text-muted);
   font-family: var(--font-heading);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  padding: 8px 14px;
+  padding: 8px 2px;
   border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
   white-space: nowrap;
   transition: all 0.25s var(--ease-smooth);
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 .tab-btn:hover {
   color: var(--text-main);
@@ -5463,10 +5464,28 @@ body {
   padding: 8px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   align-items: center;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, outline 0.15s ease;
+  cursor: pointer;
 }
 .eje-gantt-matrix-row:hover {
-  background: rgba(6, 182, 212, 0.06);
+  background: rgba(16, 185, 129, 0.12);
+  outline: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-sm);
+}
+.eje-gantt-matrix-row:hover .gantt-cell-action strong {
+  color: #34d399;
+}
+.gantt-click-hint {
+  font-size: 0.65rem;
+  color: var(--emerald);
+  margin-left: 3px;
+  opacity: 0.7;
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.eje-gantt-matrix-row:hover .gantt-click-hint {
+  opacity: 1;
+  transform: scale(1.15);
 }
 .eje-gantt-matrix-row:last-child {
   border-bottom: none;
@@ -5529,6 +5548,87 @@ body {
   background: rgba(6, 182, 212, 0.18);
   color: var(--amurjo-cyan);
   border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+/* ==========================================================================
+   MODAL DE FICHA TÉCNICA DETALLADA DE LA ACCIÓN DEL CRONOGRAMA
+   ========================================================================== */
+#cronograma-action-modal {
+  z-index: 10050 !important;
+}
+#cronograma-action-modal.active {
+  display: flex !important;
+}
+
+.action-detail-modal-box {
+  background: var(--segura-surface);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+  animation: zoomModal 0.25s var(--ease-elastic);
+  overflow: hidden;
+}
+
+.action-modal-header {
+  padding: 18px 22px 14px;
+  background: var(--segura-surface-elevated);
+  border-bottom: 1px solid var(--segura-border);
+}
+
+.action-modal-body {
+  padding: 18px 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pine-green) transparent;
+}
+.action-modal-body::-webkit-scrollbar {
+  width: 5px;
+}
+.action-modal-body::-webkit-scrollbar-thumb {
+  background: var(--pine-green);
+  border-radius: 4px;
+}
+
+.action-detail-section {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+[data-theme="light"] .action-detail-section {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.action-section-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--emerald);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-modal-footer {
+  padding: 12px 22px;
+  border-top: 1px solid var(--segura-border);
+  background: var(--segura-surface-elevated);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
 /* ==========================================================================
