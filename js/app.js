@@ -4866,26 +4866,206 @@ function renderPanePromocion(container) {
 }
 
 /**
- * Inicialización y Gestión del Modal de Marco Legal y Políticas
- * Privacidad, Aviso Legal, Protección de Datos (RGPD/LOPDGDD), Cookies y Accesibilidad Universal
+ * Inicialización y Gestión del Sistema de Políticas Legales
+ * Privacidad, Aviso Legal, Protección de Datos (RGPD/LOPDGDD), Cookies y Accesibilidad
  */
+const POLICIES_DATA = {
+  "privacidad": {
+    icon: "🔒",
+    badge: "Privacidad & Tratamiento Confidencial",
+    title: "Política de Privacidad",
+    desc: "El Ayuntamiento de Orcera garantiza la máxima transparencia y respeto a la privacidad de las personas jóvenes en todos los servicios de KLIKO.",
+    items: [
+      {
+        title: "Responsable del Tratamiento:",
+        text: "Ayuntamiento de Orcera (Concejalía de Juventud) · CIF: P-2306500-G · Plaza del Ayuntamiento, 1, 23370 Orcera (Jaén) · Correo: <code>ayuntamiento@orcera.es</code>."
+      },
+      {
+        title: "Finalidades del Tratamiento:",
+        text: "Gestión de la cuenta joven vecinal, registro y moderación de propuestas en el Buzón Joven, contabilización de votos comunitarios y asignación de Puntos Orcera para canje de recompensas públicas (acceso a Amurjo, actividades culturales y deportivas)."
+      },
+      {
+        title: "Confidencialidad y No Comercialización:",
+        text: "KLIKO es un servicio público sin fines lucrativos. En ningún caso se venden, ceden ni transfieren datos a empresas privadas o agencias publicitarias de terceros."
+      },
+      {
+        title: "Plazo de Conservación:",
+        text: "Los datos se conservarán durante la vigencia del III Plan Municipal de Juventud (2027–2031) o hasta que la persona usuaria solicite la cancelación o supresión de su cuenta."
+      },
+      {
+        title: "Ejercicio de Derechos (ARCO-POL):",
+        text: "Tienes derecho de Acceso, Rectificación, Supresión ('derecho al olvido'), Limitación del tratamiento, Portabilidad y Oposición escribiendo a <code>ayuntamiento@orcera.es</code> o reclamando ante la Agencia Española de Protección de Datos (AEPD · <code>www.aepd.es</code>)."
+      }
+    ]
+  },
+  "legal": {
+    icon: "⚖️",
+    badge: "Ley 34/2002 (LSSI-CE) & Reglamento UE 2022/2065 (DSA)",
+    title: "Aviso Legal y Condiciones de Uso",
+    desc: "Términos reguladores del uso de la plataforma digital oficial del III Plan Municipal de Juventud de Orcera.",
+    items: [
+      {
+        title: "Titularidad del Portal:",
+        text: "Ayuntamiento de Orcera (Jaén), corporación de derecho público de la administración local, con sede en Plaza del Ayuntamiento, 1, 23370 Orcera."
+      },
+      {
+        title: "Objeto de la Plataforma:",
+        text: "Canal telemático de participación ciudadana, gobernanza abierta y dinamización comunitaria para las personas jóvenes empadronadas o vinculadas a Orcera y la Sierra de Segura."
+      },
+      {
+        title: "Normas de Convivencia y Uso Responsable:",
+        text: "Las propuestas e intervenciones en el Buzón Joven deben ser veraces y respetuosas. Se prohíbe terminantemente la publicación de contenidos difamatorios, lesivos del honor, discriminatorios por razón de sexo, raza, religión u orientación sexual, o constitutivos de delito."
+      },
+      {
+        title: "Moderación Transparente y Motivada (DSA):",
+        text: "Conforme a la Ley de Servicios Digitales (DSA UE 2022/2065), cualquier propuesta que sea moderada o retirada por contravenir las normas cívicas será motivada fehacientemente y comunicada a la persona usuaria con opción de subsanación."
+      },
+      {
+        title: "Propiedad Intelectual y Reutilización Pública:",
+        text: "Los diseños, marcas y contenidos institucionales son titularidad del Ayuntamiento de Orcera y la Asociación Juvenil. Las iniciativas y propuestas vecinales se aportan para el debate público municipal."
+      }
+    ]
+  },
+  "proteccion-datos": {
+    icon: "🛡️",
+    badge: "Reglamento (UE) 2016/679 (RGPD) & Ley Orgánica 3/2018 (LOPDGDD)",
+    title: "Protección de Datos Personales (RGPD)",
+    desc: "Información detallada sobre el cumplimiento normativo en materia de protección de datos (Art. 11 LOPDGDD y Arts. 13/14 RGPD).",
+    items: [
+      {
+        title: "Información por Capas:",
+        text: "En cada formulario interactivo (alta de usuario, Buzón Joven, adhesión asociativa) se incluye una primera capa informativa con consentimiento expreso, complementada por esta información de segunda capa íntegra y permanente."
+      },
+      {
+        title: "Base Jurídica (Legitimación):",
+        text: "El tratamiento se fundamenta en el cumplimiento de una misión de interés público y ejercicio de competencias públicas locales de fomento juvenil (Art. 6.1.e RGPD) y en el consentimiento libre, específico, informado e inequívoco de la persona interesada (Art. 6.1.a RGPD)."
+      },
+      {
+        title: "Tratamiento Específico de Datos de Menores:",
+        text: "De conformidad con el Art. 8 del RGPD y el Art. 7 de la LOPDGDD, las personas a partir de 14 años de edad pueden prestar su consentimiento de forma válida y autónoma. Para menores de 14 años, se requiere la autorización o supervisión de sus progenitores o tutores legales."
+      },
+      {
+        title: "Delegado de Protección de Datos (DPD):",
+        text: "Cualquier consulta sobre la seguridad o el tratamiento de tus datos personales puede remitirse a la atención del Delegado de Protección de Datos en <code>ayuntamiento@orcera.es</code>."
+      },
+      {
+        title: "Medidas Técnicas y Almacenamiento Seguro:",
+        text: "Todos los intercambios de datos viajan cifrados mediante protocolo HTTPS/TLS. La base de datos opera bajo directivas de seguridad europeas y con copias de respaldo continuas."
+      }
+    ]
+  },
+  "cookies": {
+    icon: "🍪",
+    badge: "Directiva 2002/58/CE (ePrivacy) & Directrices de la AEPD",
+    title: "Política de Cookies y Almacenamiento Técnico",
+    desc: "Esta plataforma municipal aplica de forma rigurosa el principio de Privacidad desde el Diseño (Privacy by Design).",
+    items: [
+      {
+        title: "Cero Cookies Publicitarias de Rastreo:",
+        text: "KLIKO NO utiliza cookies analíticas de terceros, cookies de perfilado comercial ni herramientas de rastreo entre webs. Tu navegación es completamente privada."
+      },
+      {
+        title: "Almacenamiento Local Estrictamente Necesario:",
+        text: "La aplicación hace uso de la memoria local del navegador (<code>LocalStorage</code>) exclusivamente para aspectos técnicos esenciales: recordar si tienes activado el Modo Noche o Día, mantener tu sesión abierta en el teléfono y habilitar la navegación offline cuando estés en la Sierra sin cobertura."
+      },
+      {
+        title: "Exención de Banners Intrusivos:",
+        text: "Al ser almacenamiento meramente técnico e imprescindible para prestar el servicio solicitado, la normativa de la AEPD y el Comité Europeo de Protección de Datos exime de mostrar banners bloqueantes de cookies, ofreciendo una experiencia rápida y limpia."
+      }
+    ]
+  },
+  "accesibilidad": {
+    icon: "♿",
+    badge: "Real Decreto 1112/2018 & Directiva (UE) 2016/2102 · WCAG 2.1 AA",
+    title: "Declaración de Accesibilidad Universal",
+    desc: "El Ayuntamiento de Orcera tiene la firme vocación de hacer accesible esta plataforma pública a toda la juventud, sin exclusiones.",
+    items: [
+      {
+        title: "Norma Europea EN 301 549:",
+        text: "KLIKO cumple las pautas de accesibilidad para contenidos web WCAG 2.1 en nivel de conformidad AA, tal y como exige el Real Decreto 1112/2018 para entidades del sector público."
+      },
+      {
+        title: "Facilidades de Interacción:",
+        text: "Alto contraste seleccionable para exteriores soleados y entornos oscuros, navegación completa mediante teclado, etiquetas ARIA para lectores de pantalla de personas con discapacidad visual y tipografías perfectamente escalables."
+      },
+      {
+        title: "Canal de Quejas y Sugerencias de Accesibilidad:",
+        text: "Si encuentras alguna dificultad de acceso o necesitas un formato alternativo de cualquier contenido, puedes comunicarlo al correo <code>ayuntamiento@orcera.es</code>."
+      }
+    ]
+  }
+};
+
+let currentActivePolicyKey = null;
+
+function normalizePolicyKey(tabKey) {
+  let key = tabKey || "privacidad";
+  if (key === "rgpd") key = "proteccion-datos";
+  if (key === "eprivacy") key = "cookies";
+  if (key === "dsa") key = "legal";
+  const valid = ["privacidad", "legal", "proteccion-datos", "cookies", "accesibilidad"];
+  return valid.includes(key) ? key : "privacidad";
+}
+
+function renderInlinePolicy(policyKey) {
+  const key = normalizePolicyKey(policyKey);
+  const data = POLICIES_DATA[key];
+  const expandBox = document.getElementById("eu-policy-expandable-box");
+  const badgeEl = document.getElementById("eu-expand-badge");
+  const contentEl = document.getElementById("eu-expand-content");
+  const buttons = document.querySelectorAll(".btn-eu-policy");
+
+  if (!expandBox || !data) return;
+
+  // Si se vuelve a pulsar la misma política abierta, se pliega
+  if (currentActivePolicyKey === key && expandBox.style.display !== "none") {
+    expandBox.style.display = "none";
+    buttons.forEach(b => b.classList.remove("active"));
+    currentActivePolicyKey = null;
+    return;
+  }
+
+  currentActivePolicyKey = key;
+
+  // Actualizar clases activas en los botones de políticas
+  buttons.forEach(b => {
+    const isThis = b.getAttribute("data-eu-open") === key;
+    b.classList.toggle("active", isThis);
+  });
+
+  // Renderizar contenido
+  if (badgeEl) badgeEl.textContent = `${data.icon} ${data.badge}`;
+  if (contentEl) {
+    contentEl.innerHTML = `
+      <h4>${data.icon} ${data.title}</h4>
+      <p>${data.desc}</p>
+      <div class="legal-spec-grid">
+        ${data.items.map(it => `
+          <div class="spec-item">
+            <strong>${it.title}</strong>
+            <span>${it.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  expandBox.style.display = "block";
+  expandBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
 function initEuPoliciesModal() {
   const modal = document.getElementById("eu-policies-modal");
   const closeBtn = document.getElementById("close-eu-policies-modal");
   const closeActionBtn = document.getElementById("btn-close-eu-modal-action");
   const tabBtns = document.querySelectorAll(".eu-tab-btn");
   const panes = document.querySelectorAll(".eu-policy-pane");
-
-  if (!modal) return;
+  const expandBox = document.getElementById("eu-policy-expandable-box");
+  const btnCloseExpand = document.getElementById("btn-close-expand-policy");
+  const btnExpandOpenModal = document.getElementById("btn-expand-open-modal");
 
   function switchPolicyTab(tabKey) {
-    let key = tabKey;
-    if (key === "rgpd") key = "proteccion-datos";
-    if (key === "eprivacy") key = "cookies";
-    if (key === "dsa") key = "legal";
-    const validTabs = ["privacidad", "legal", "proteccion-datos", "cookies", "accesibilidad"];
-    if (!validTabs.includes(key)) key = "privacidad";
-
+    const key = normalizePolicyKey(tabKey);
     tabBtns.forEach(btn => {
       const isMatch = btn.getAttribute("data-eu-tab") === key;
       btn.classList.toggle("active", isMatch);
@@ -4897,27 +5077,53 @@ function initEuPoliciesModal() {
   }
 
   function openEuModal(tabKey = "privacidad") {
-    switchPolicyTab(tabKey);
+    if (!modal) return;
+    const key = normalizePolicyKey(tabKey);
+    switchPolicyTab(key);
     modal.classList.add("active");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
   }
 
   function closeEuModal() {
+    if (!modal) return;
     modal.classList.remove("active");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
 
-  // Delegación de clic para abrir el modal desde cualquier botón o enlace con data-eu-open
+  // Delegación de clic global para elementos con [data-eu-open]
   document.addEventListener("click", (e) => {
     const trigger = e.target.closest("[data-eu-open]");
     if (trigger) {
       e.preventDefault();
       const policyKey = trigger.getAttribute("data-eu-open") || "privacidad";
-      openEuModal(policyKey);
+      
+      // Si el botón es del footer, abre y muestra la política en su propio botón (in-situ)
+      if (trigger.classList.contains("btn-eu-policy")) {
+        renderInlinePolicy(policyKey);
+      } else {
+        // Si es un enlace dentro de un formulario (o en otra parte), abre el modal completo
+        openEuModal(policyKey);
+      }
     }
   });
+
+  // Botón para cerrar el panel desplegable del footer
+  if (btnCloseExpand && expandBox) {
+    btnCloseExpand.addEventListener("click", () => {
+      expandBox.style.display = "none";
+      document.querySelectorAll(".btn-eu-policy").forEach(b => b.classList.remove("active"));
+      currentActivePolicyKey = null;
+    });
+  }
+
+  // Botón para abrir en modal completo desde el desplegable del footer
+  if (btnExpandOpenModal) {
+    btnExpandOpenModal.addEventListener("click", () => {
+      openEuModal(currentActivePolicyKey || "privacidad");
+    });
+  }
 
   tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -4929,16 +5135,27 @@ function initEuPoliciesModal() {
   if (closeBtn) closeBtn.addEventListener("click", closeEuModal);
   if (closeActionBtn) closeActionBtn.addEventListener("click", closeEuModal);
 
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeEuModal();
-  });
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeEuModal();
+    });
+  }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("active")) {
+    if (e.key === "Escape" && modal && modal.classList.contains("active")) {
       closeEuModal();
     }
   });
 
   window.openEuModal = openEuModal;
+  window.renderInlinePolicy = renderInlinePolicy;
 }
+
+// Invocación segura de inicialización
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initEuPoliciesModal);
+} else {
+  initEuPoliciesModal();
+}
+
 

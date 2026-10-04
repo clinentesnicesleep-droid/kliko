@@ -35,7 +35,50 @@
     });
   </script>
   
-  <link rel="stylesheet" href="css/styles.css?v=pwa_clean_v7">
+  <link rel="stylesheet" href="css/styles.css?v=pwa_legal_v8">
+  <style>
+    /* Estilo contextual prioritario de botones de políticas de la Sierra (nunca blanco) */
+    .btn-eu-policy {
+      background: rgba(16, 185, 129, 0.14) !important;
+      border: 1px solid rgba(16, 185, 129, 0.4) !important;
+      color: #34d399 !important;
+      border-radius: 9999px !important;
+      padding: 8px 16px !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 7px !important;
+      cursor: pointer !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      outline: none !important;
+      font-family: inherit !important;
+      white-space: nowrap !important;
+    }
+    .btn-eu-policy:hover {
+      background: rgba(16, 185, 129, 0.26) !important;
+      border-color: #10b981 !important;
+      color: #ffffff !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35) !important;
+    }
+    .btn-eu-policy.active {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: #022c22 !important;
+      border-color: #34d399 !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.5) !important;
+    }
+    [data-theme="light"] .btn-eu-policy {
+      background: rgba(16, 185, 129, 0.12) !important;
+      border-color: rgba(16, 185, 129, 0.4) !important;
+      color: #065f46 !important;
+    }
+    [data-theme="light"] .btn-eu-policy.active {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: #ffffff !important;
+    }
+  </style>
 </head>
 <body>
   <!-- CONTENEDOR GLOBAL (PANTALLA LIMPIA NATIVA) -->
@@ -794,6 +837,20 @@
                 <button type="button" class="btn-eu-policy" data-eu-open="accesibilidad" title="Declaración de Accesibilidad Universal (EN 301 549)">
                   ♿ Accesibilidad
                 </button>
+              </div>
+
+              <!-- PANEL DESPLEGABLE INMEDIATO DE CADA POLÍTICA -->
+              <div id="eu-policy-expandable-box" class="eu-policy-expandable-box" style="display: none;">
+                <div class="eu-policy-expand-header">
+                  <span id="eu-expand-badge" class="policy-badge-pill">🔒 Política</span>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <button type="button" id="btn-expand-open-modal" class="btn-policy-subaction" title="Abrir en pantalla completa">
+                      ⛶ Pantalla completa
+                    </button>
+                    <button type="button" id="btn-close-expand-policy" class="btn-policy-close" aria-label="Cerrar política">✕</button>
+                  </div>
+                </div>
+                <div id="eu-expand-content" class="eu-expand-content"></div>
               </div>
 
               <p class="eu-legal-note">
@@ -1878,7 +1935,7 @@
 
   <script src="js/qrcode.min.js"></script>
   <script src="js/data-ejes.js?v=finanzas_anualizadas_v5"></script>
-  <script src="js/app.js?v=pwa_clean_v5"></script>
+  <script src="js/app.js?v=pwa_legal_v8"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
