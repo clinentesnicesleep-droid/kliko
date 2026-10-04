@@ -1,10 +1,10 @@
 {
-  "id": "./index.html",
+  "id": "/",
   "name": "KLIKO · III Plan Municipal de Juventud de Orcera",
   "short_name": "KLIKO",
   "description": "App Oficial de Participación, Gamificación y Presupuestos del III Plan Municipal de Juventud de Orcera (2027-2031).",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0b1319",

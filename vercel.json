@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "kliko",
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
     {
