@@ -35,7 +35,7 @@
     });
   </script>
   
-  <link rel="stylesheet" href="css/styles.css?v=pwa_clean_v4">
+  <link rel="stylesheet" href="css/styles.css?v=pwa_clean_v5">
 </head>
 <body>
   <!-- CONTENEDOR GLOBAL (PANTALLA LIMPIA NATIVA) -->
@@ -1825,12 +1825,17 @@
   <script src="js/supabase-client.js"></script>
 
   <script src="js/qrcode.min.js"></script>
-  <script src="js/data-ejes.js?v=finanzas_anualizadas_v4"></script>
-  <script src="js/app.js?v=pwa_clean_v4"></script>
+  <script src="js/data-ejes.js?v=finanzas_anualizadas_v5"></script>
+  <script src="js/app.js?v=pwa_clean_v5"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch((e) => console.log('SW registration:', e));
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          reg.update();
+        }).catch((e) => console.log('SW registration:', e));
+      });
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
       });
     }
   </script>

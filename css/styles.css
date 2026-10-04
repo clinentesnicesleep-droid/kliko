@@ -252,25 +252,8 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Adaptación responsive para móviles reales y modo Standalone (PWA nativa) */
-@media (max-width: 600px), (display-mode: standalone) {
-  .phone-frame-wrapper {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .smartphone-chassis {
-    max-width: 100% !important;
-    width: 100% !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-  /* Ocultar elementos simuladores en teléfonos reales */
-  .device-notch,
-  .status-bar,
-  .device-home-indicator,
+/* Adaptación responsive para pantallas táctiles y modo Standalone (PWA nativa) */
+@media (max-width: 900px), (display-mode: standalone) {
   .desktop-only {
     display: none !important;
   }
@@ -411,45 +394,81 @@ body {
   50% { opacity: 0.45; transform: scale(0.85); }
 }
 
-/* Teléfono Móvil Simulador */
+/* ============================================================================== */
+/* ESTRUCTURA NATIVA MOBILE-FIRST (100% PANTALLA COMPLETA EN MÓVILES Y PWA)       */
+/* ============================================================================== */
 .phone-frame-wrapper {
-  padding: 24px 16px 40px;
+  padding: 0 !important;
+  margin: 0 !important;
   width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   transition: all 0.3s var(--ease-smooth);
 }
 
-/* Modo teléfono estándar */
+/* Modo nativo a pantalla completa por defecto para todos los dispositivos */
 .smartphone-chassis {
-  width: 100%;
-  max-width: 430px;
-  height: 880px;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100dvh;
   background: var(--segura-surface);
-  border-radius: 46px;
-  box-shadow: 0 0 0 10px #1e293b,
-              0 24px 60px rgba(0, 0, 0, 0.7),
-              0 0 40px var(--pine-glow);
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.12);
   transition: all 0.3s var(--ease-elastic);
 }
 
-/* Modo pantalla libre / responsive */
-.phone-frame-wrapper.free-mode .smartphone-chassis {
-  max-width: 900px;
-  height: auto;
-  min-height: 85vh;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--segura-border);
+/* En teléfonos y PWA ocultar por defecto todos los adornos de simulación */
+.device-notch,
+.status-bar,
+.device-home-indicator {
+  display: none !important;
 }
-.phone-frame-wrapper.free-mode .device-notch,
-.phone-frame-wrapper.free-mode .device-home-indicator {
-  display: none;
+
+/* SIMULADOR DE TELÉFONO: EXCLUSIVO para navegadores de escritorio en pantallas anchas con ratón */
+@media (min-width: 900px) and (hover: hover) and (display-mode: browser) {
+  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) {
+    padding: 24px 16px 40px !important;
+    align-items: center;
+  }
+  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .smartphone-chassis {
+    max-width: 430px !important;
+    height: 880px !important;
+    min-height: auto !important;
+    border-radius: 46px !important;
+    box-shadow: 0 0 0 10px #1e293b,
+                0 24px 60px rgba(0, 0, 0, 0.7),
+                0 0 40px var(--pine-glow) !important;
+    border: 2px solid rgba(255, 255, 255, 0.12) !important;
+  }
+  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .device-notch {
+    display: flex !important;
+  }
+  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .status-bar {
+    display: flex !important;
+  }
+  .phone-frame-wrapper:not(.free-mode):not(.native-mobile) .device-home-indicator {
+    display: block !important;
+  }
+
+  /* Modo pantalla libre / responsive en monitor de escritorio */
+  .phone-frame-wrapper.free-mode .smartphone-chassis {
+    max-width: 900px !important;
+    height: auto !important;
+    min-height: 85vh !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-md) !important;
+    border: 1px solid var(--segura-border) !important;
+  }
 }
 
 /* Notch & Status Bar */
