@@ -2,17 +2,26 @@
 // ==============================================================================
 // GESTOR GLOBAL DE INSTALACIÓN PWA (1-CLIC NATIVO)
 // ==============================================================================
-window._orceraDeferredPrompt = null;
+window._orceraDeferredPrompt = window._orceraDeferredPrompt || null;
 
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  window._orceraDeferredPrompt = e;
-
+const syncInstallUI = () => {
   const banner = document.getElementById("pwa-quick-install-banner");
   if (banner) banner.style.display = "flex";
 
   const btnInstall = document.getElementById("btn-install-app");
   if (btnInstall) btnInstall.classList.add("btn-install-highlight");
+};
+
+if (window._orceraDeferredPrompt) {
+  syncInstallUI();
+}
+
+window.addEventListener("orcera-pwa-ready", syncInstallUI);
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  window._orceraDeferredPrompt = e;
+  syncInstallUI();
 });
 
 window.addEventListener("appinstalled", () => {
@@ -4513,32 +4522,58 @@ function initPWAInstallSystem() {
   }
 
   // Lógica unificada de instalación simplificada (la más directa posible)
-  const executeDirectInstall = () => {
+  const executeDirectInstall = async () => {
     // 1. Si tenemos el prompt nativo capturado (Android Chrome, Edge, Chrome Desktop)
     if (window._orceraDeferredPrompt) {
-      window._orceraDeferredPrompt.prompt();
-      window._orceraDeferredPrompt.userChoice.then((choice) => {
-        if (choice.outcome === "accepted") {
+      try {
+        await window._orceraDeferredPrompt.prompt();
+        const choice = await window._orceraDeferredPrompt.userChoice;
+        if (choice && choice.outcome === "accepted") {
           if (banner) banner.style.display = "none";
           if (btnTopInstall) btnTopInstall.style.display = "none";
-          showToast("¡App Instalada!", "KLIKO ya forma parte de tu pantalla de inicio.");
+          if (typeof showToast === "function") {
+            showToast("¡App Instalada!", "KLIKO ya forma parte de tu pantalla de inicio.");
+          }
         }
         window._orceraDeferredPrompt = null;
-      });
-      return;
+        return;
+      } catch (err) {
+        console.warn("Error ejecutando prompt:", err);
+      }
     }
 
-    // 2. Si es dispositivo iOS (iPhone / iPad de Apple)
+    // 2. Si la app ya está instalada en el sistema
+    if ('getInstalledRelatedApps' in navigator) {
+      try {
+        const apps = await navigator.getInstalledRelatedApps();
+        if (apps && apps.length > 0) {
+          if (instructionsBox) {
+            instructionsBox.innerHTML = `
+              <div style="margin-bottom: 12px; color: var(--amurjo-cyan); font-weight: 700; font-size: 0.95rem;">
+                ✅ ¡KLIKO ya está instalada en tu dispositivo!
+              </div>
+              <p style="margin: 0; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                No necesitas volver a instalarla. Puedes abrirla directamente desde el menú de inicio de Windows, tu lista de aplicaciones de Android, o buscando <strong>KLIKO</strong>.
+              </p>
+            `;
+          }
+          if (modal) modal.classList.add("active");
+          return;
+        }
+      } catch (e) {}
+    }
+
+    // 3. Si es dispositivo iOS (iPhone / iPad de Apple)
     const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIos) {
       if (instructionsBox) {
         instructionsBox.innerHTML = `
           <div style="margin-bottom: 12px; display:flex; align-items:flex-start; gap:8px;">
-            <span style="font-size:1.1rem; line-height:1;">1️⃣</span>
-            <div>Toca el botón <strong>Compartir</strong> en la barra inferior de Safari <span style="font-size:1.1rem; vertical-align:middle;">⎋</span> (icono del cuadrado con la flecha hacia arriba).</div>
+            <span style="font-size:1.2rem; line-height:1;">1️⃣</span>
+            <div>Toca el botón <strong>Compartir</strong> en la barra de Safari <span style="font-size:1.1rem; vertical-align:middle;">⎋</span> (icono del recuadro con flecha hacia arriba).</div>
           </div>
           <div style="display:flex; align-items:flex-start; gap:8px;">
-            <span style="font-size:1.1rem; line-height:1;">2️⃣</span>
+            <span style="font-size:1.2rem; line-height:1;">2️⃣</span>
             <div>Desplaza hacia abajo y toca en <strong>«Añadir a pantalla de inicio»</strong> ➕.</div>
           </div>
         `;
@@ -4547,15 +4582,18 @@ function initPWAInstallSystem() {
       return;
     }
 
-    // 3. Si está abierto como file://
-    if (window.location.protocol === 'file:') {
+    // 4. Si es dispositivo Android
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid) {
       if (instructionsBox) {
         instructionsBox.innerHTML = `
-          <div style="color: #fbbf24; margin-bottom: 10px;">
-            ⚠️ Estás abriendo el archivo localmente como <code>file:///</code>.
+          <div style="margin-bottom: 12px; display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:1.2rem; line-height:1;">1️⃣</span>
+            <div>Toca el menú de <strong>tres puntos ⋮</strong> (arriba a la derecha en Chrome).</div>
           </div>
-          <div style="font-size: 0.78rem; line-height: 1.4;">
-            Los navegadores exigen abrir la web desde un servidor local (<code>http://localhost:8000</code>) o con <code>https://</code> para poder instalarse con 1 clic.
+          <div style="display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:1.2rem; line-height:1;">2️⃣</span>
+            <div>Toca en <strong>«Instalar aplicación»</strong> o <strong>«Añadir a pantalla de inicio»</strong>.</div>
           </div>
         `;
       }
@@ -4563,13 +4601,35 @@ function initPWAInstallSystem() {
       return;
     }
 
-    // 4. Si es Ordenador (Chrome / Edge en PC o Mac) sin prompt disparado aún
+    // 5. Si está abierto como file://
+    if (window.location.protocol === 'file:') {
+      if (instructionsBox) {
+        instructionsBox.innerHTML = `
+          <div style="color: #fbbf24; margin-bottom: 10px;">
+            ⚠️ Estás abriendo el archivo localmente como <code>file:///</code>.
+          </div>
+          <div style="font-size: 0.78rem; line-height: 1.4;">
+            Abre la versión oficial segura en <a href="https://kliko-wheat.vercel.app" style="color:var(--amurjo-cyan); text-decoration:underline;">kliko-wheat.vercel.app</a> para instalarla con 1 clic.
+          </div>
+        `;
+      }
+      if (modal) modal.classList.add("active");
+      return;
+    }
+
+    // 6. Si es Ordenador (Chrome / Edge en PC o Mac)
     if (instructionsBox) {
       instructionsBox.innerHTML = `
-        <div style="margin-bottom: 10px;">
-          <strong>En tu ordenador (Chrome / Edge):</strong><br>
-          Haz clic en el icono <strong>📥 «Instalar KLIKO»</strong> situado a la derecha de la barra de direcciones (arriba), o abre el menú (tres puntos ⋮) y selecciona <em>«Instalar KLIKO»</em>.
+        <div style="margin-bottom: 12px; display:flex; align-items:flex-start; gap:8px;">
+          <span style="font-size:1.2rem; line-height:1;">💻</span>
+          <div>
+            <strong>Instalación en Ordenador:</strong><br>
+            Haz clic en el icono <strong>📥 «Instalar KLIKO»</strong> situado a la derecha de la barra de direcciones (arriba), o abre el menú de tres puntos (⋮) y selecciona <em>«Instalar KLIKO»</em>.
+          </div>
         </div>
+        <p style="margin: 6px 0 0; font-size: 0.76rem; color: var(--text-muted); line-height: 1.4;">
+          Si ya la tenías instalada, puedes buscar <strong>KLIKO</strong> en el menú de inicio de Windows o pulsar el icono «Abrir en la aplicación».
+        </p>
       `;
     }
     if (modal) modal.classList.add("active");
