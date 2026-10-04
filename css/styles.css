@@ -241,6 +241,17 @@ body {
   font-size: 0.85rem;
 }
 
+.btn-install-highlight {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.45) !important;
+  color: #34d399 !important;
+}
+
+.btn-install-highlight:hover {
+  background: rgba(16, 185, 129, 0.3) !important;
+  border-color: #34d399 !important;
+}
+
 .btn-action-icon {
   font-size: 0.85rem;
   display: inline-flex;
