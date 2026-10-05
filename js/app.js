@@ -3928,8 +3928,11 @@ function calculateLevel(pts) {
   if (pts > 800) {
     return {
       tier: 4,
+      metal: "Oro",
+      metalIcon: "🥇",
+      metalClass: "tier-gold",
       nivel: "Nivel 4: Leyenda Joven de Orcera",
-      badge: "Nivel 4 · Leyenda Joven",
+      badge: "Nivel 4 · Leyenda Joven (Oro)",
       min: 801,
       max: Infinity,
       nextLevel: null,
@@ -3943,11 +3946,14 @@ function calculateLevel(pts) {
     const pct = Math.min(100, Math.max(0, Math.round((current / range) * 100)));
     return {
       tier: 3,
+      metal: "Plata",
+      metalIcon: "🥈",
+      metalClass: "tier-silver",
       nivel: "Nivel 3: Motor de Orcera",
-      badge: "Nivel 3 · Motor de Orcera",
+      badge: "Nivel 3 · Motor de Orcera (Plata)",
       min: 401,
       max: 800,
-      nextLevel: "Nivel 4: Leyenda Joven de Orcera",
+      nextLevel: "Nivel 4: Leyenda Joven de Orcera (Oro)",
       ptsToNext: 801 - pts,
       progressPercent: pct
     };
@@ -3958,11 +3964,14 @@ function calculateLevel(pts) {
     const pct = Math.min(100, Math.max(0, Math.round((current / range) * 100)));
     return {
       tier: 2,
+      metal: "Bronce",
+      metalIcon: "🥉",
+      metalClass: "tier-bronze",
       nivel: "Nivel 2: Activista de Orcera",
-      badge: "Nivel 2 · Activista",
+      badge: "Nivel 2 · Activista (Bronce)",
       min: 151,
       max: 400,
-      nextLevel: "Nivel 3: Motor de Orcera",
+      nextLevel: "Nivel 3: Motor de Orcera (Plata)",
       ptsToNext: 401 - pts,
       progressPercent: pct
     };
@@ -3973,11 +3982,14 @@ function calculateLevel(pts) {
   const pct = Math.min(100, Math.max(0, Math.round((current / range) * 100)));
   return {
     tier: 1,
+    metal: "Sierra",
+    metalIcon: "🌲",
+    metalClass: "tier-1",
     nivel: "Nivel 1: Explorador del Municipio de Orcera",
     badge: "Nivel 1 · Explorador",
     min: 0,
     max: 150,
-    nextLevel: "Nivel 2: Activista de Orcera",
+    nextLevel: "Nivel 2: Activista de Orcera (Bronce)",
     ptsToNext: 151 - pts,
     progressPercent: pct
   };
@@ -4022,14 +4034,57 @@ function updateUserUI() {
   const cardDniEl = document.getElementById("civic-card-dni");
   const cardHashEl = document.getElementById("civic-card-hash");
   const cardXpEl = document.getElementById("civic-card-xp");
+  const cardEl = document.getElementById("user-civic-card-element") || document.querySelector(".user-civic-card");
+  const cardMetalTag = document.getElementById("civic-card-metal-tag");
+
+  const totalXp = isLogged ? (user.puntosHistoricos !== undefined ? user.puntosHistoricos : user.puntos) : 0;
+  const currentLvl = calculateLevel(totalXp);
+
+  // Aplicar temas metálicos según nivel (Nivel 2: Bronce, Nivel 3: Plata, Nivel 4: Oro)
+  if (cardEl) {
+    cardEl.classList.remove("tier-1", "tier-2", "tier-3", "tier-4", "tier-bronze", "tier-silver", "tier-gold");
+    if (isLogged) {
+      if (currentLvl.tier === 2) {
+        cardEl.classList.add("tier-bronze", "tier-2");
+      } else if (currentLvl.tier === 3) {
+        cardEl.classList.add("tier-silver", "tier-3");
+      } else if (currentLvl.tier === 4) {
+        cardEl.classList.add("tier-gold", "tier-4");
+      } else {
+        cardEl.classList.add("tier-1");
+      }
+    } else {
+      cardEl.classList.add("tier-1");
+    }
+  }
+
+  if (cardMetalTag) {
+    if (isLogged) {
+      if (currentLvl.tier === 2) {
+        cardMetalTag.textContent = "🥉 Bronce";
+        cardMetalTag.style.color = "#ffeedd";
+      } else if (currentLvl.tier === 3) {
+        cardMetalTag.textContent = "🥈 Plata";
+        cardMetalTag.style.color = "#ffffff";
+      } else if (currentLvl.tier === 4) {
+        cardMetalTag.textContent = "🥇 Oro";
+        cardMetalTag.style.color = "#fef08a";
+      } else {
+        cardMetalTag.textContent = "🌲 Sierra";
+        cardMetalTag.style.color = "#a7f3d0";
+      }
+    } else {
+      cardMetalTag.textContent = "🌲 Modo Público";
+      cardMetalTag.style.color = "#a7f3d0";
+    }
+  }
 
   if (cardNameEl) cardNameEl.textContent = isLogged ? user.nombre : "Identifícate para activar tu Carnet";
-  if (cardRoleEl) cardRoleEl.textContent = isLogged ? (user.nivelBadge || "Nivel 1 · Joven Activo") : "Sin Sesión Activa";
+  if (cardRoleEl) cardRoleEl.textContent = isLogged ? (user.nivelBadge || currentLvl.badge) : "Sin Sesión Activa";
   if (cardDniEl) cardDniEl.textContent = isLogged ? `DNI: ${user.dni} · Orcera (Jaén)` : "Orcera (Jaén) · Modo Público";
   if (cardHashEl) cardHashEl.textContent = isLogged ? user.hash : "#ORC-2027-VISITANTE";
   if (cardXpEl) {
-    const xp = isLogged ? (user.puntosHistoricos !== undefined ? user.puntosHistoricos : user.puntos) : 0;
-    cardXpEl.textContent = isLogged ? `${xp} PTS Acumulados` : "0 PTS Acumulados";
+    cardXpEl.textContent = isLogged ? `${totalXp} PTS Acumulados` : "0 PTS Acumulados";
   }
 
   // 4. Actualizar vista del Modal según estado
