@@ -4055,20 +4055,25 @@ function renderSavedAccountsInLogin() {
   }
 
   container.innerHTML = `
-    <div style="margin-bottom: 12px;">
+    <div style="margin-bottom: 14px;">
       <span style="font-size: 0.72rem; color: var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">Cuentas guardadas en este equipo:</span>
       <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 6px;">
         ${saved.map(acc => `
-          <button type="button" class="saved-account-btn" data-saved-id="${acc.id}">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span style="font-size:1.1rem;">👤</span>
-              <div style="text-align:left;">
-                <strong style="font-size:0.82rem; display:block;">${acc.nombre}</strong>
-                <small style="font-size:0.7rem; color:var(--amurjo-cyan);">${acc.puntos} PTS acumulados</small>
+          <div class="saved-account-row">
+            <button type="button" class="saved-account-btn" data-saved-id="${acc.id}" title="Usar cuenta de ${acc.nombre}">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.1rem;">👤</span>
+                <div style="text-align:left;">
+                  <strong style="font-size:0.82rem; display:block;">${acc.nombre}</strong>
+                  <small style="font-size:0.7rem; color:var(--amurjo-cyan);">${acc.puntos || 0} PTS · ${acc.alias || 'Orcera'}</small>
+                </div>
               </div>
-            </div>
-            <span style="font-size:0.75rem; color:var(--text-muted);">Entrar ➔</span>
-          </button>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
+            </button>
+            <button type="button" class="btn-remove-saved-acc" data-remove-id="${acc.id}" title="Olvidar esta cuenta en este equipo" aria-label="Olvidar cuenta">
+              🗑️
+            </button>
+          </div>
         `).join("")}
       </div>
     </div>
@@ -4079,10 +4084,41 @@ function renderSavedAccountsInLogin() {
       const accId = btn.getAttribute("data-saved-id");
       const found = saved.find(a => a.id === accId);
       if (found) {
-        logInWithUser(found);
+        const nameInput = document.getElementById("login-name");
+        const passInput = document.getElementById("login-password");
+        if (nameInput) nameInput.value = found.alias || found.nombre;
+        if (passInput) {
+          passInput.value = "";
+          passInput.focus();
+        }
+        showToast("Cuenta seleccionada", `Introduce tu contraseña para acceder a la cuenta de ${found.alias || found.nombre}.`);
       }
     });
   });
+
+  container.querySelectorAll(".btn-remove-saved-acc").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const accId = btn.getAttribute("data-remove-id");
+      const found = saved.find(a => a.id === accId);
+      const nombre = found ? found.nombre : "esta cuenta";
+      if (confirm(`¿Deseas olvidar la cuenta de ${nombre} en este navegador? Podrás volver a entrar con tu usuario y contraseña.`)) {
+        removeSavedAccount(accId);
+      }
+    });
+  });
+}
+
+function removeSavedAccount(accountId) {
+  try {
+    let saved = getSavedAccountsList();
+    saved = saved.filter(a => a.id !== accountId);
+    localStorage.setItem("orcera_saved_accounts_v3", JSON.stringify(saved));
+    renderSavedAccountsInLogin();
+    showToast("Cuenta retirada", "Se ha eliminado el acceso rápido en este dispositivo.");
+  } catch (e) {
+    console.warn("Error al retirar cuenta:", e);
+  }
 }
 
 function logInWithUser(user) {
@@ -4129,6 +4165,52 @@ function showToast(titleText, descText) {
   }
 }
 
+async function hashPassword(str) {
+  if (!str) return "";
+  try {
+    if (window.crypto && window.crypto.subtle) {
+      const enc = new TextEncoder().encode(str);
+      const hashBuf = await window.crypto.subtle.digest("SHA-256", enc);
+      return Array.from(new Uint8Array(hashBuf))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+  } catch (e) {
+    console.warn("Fallo crypto.subtle:", e);
+  }
+  let h1 = 0xdeadbeef, h2 = 0x41c64e6d;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+}
+
+function setupPasswordToggles() {
+  document.querySelectorAll(".btn-toggle-password").forEach(btn => {
+    if (btn._hasToggleAttached) return;
+    btn._hasToggleAttached = true;
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = btn.getAttribute("data-target");
+      const input = document.getElementById(targetId);
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "🙈";
+        btn.setAttribute("title", "Ocultar contraseña");
+      } else {
+        input.type = "password";
+        btn.textContent = "👁️";
+        btn.setAttribute("title", "Mostrar contraseña");
+      }
+    });
+  });
+}
+
 function setupUserModalEvents() {
   const userModal = document.getElementById("user-modal");
   const openTriggerHeader = document.getElementById("user-pill-trigger");
@@ -4144,6 +4226,9 @@ function setupUserModalEvents() {
       if (e.target === userModal) closeUserModal();
     });
   }
+
+  // Activar botones de ver/ocultar contraseña
+  setupPasswordToggles();
 
   // Botón Cerrar Sesión
   const logoutBtn = document.getElementById("btn-logout-action");
@@ -4206,6 +4291,7 @@ function openUserModal() {
   if (!AppState.currentUser) {
     switchAuthSubTab("register");
   }
+  setupPasswordToggles();
   modal.classList.add("active");
 }
 
@@ -4230,15 +4316,33 @@ function switchAuthSubTab(tabName) {
   }
 }
 
-function handleRegisterNewUser() {
+async function handleRegisterNewUser() {
   const fullName = document.getElementById("reg-fullname").value.trim();
   const aliasInput = document.getElementById("reg-alias").value.trim();
   const age = parseInt(document.getElementById("reg-age").value) || 20;
   const dniInput = document.getElementById("reg-dni").value.trim();
+  const emailInput = document.getElementById("reg-email") ? document.getElementById("reg-email").value.trim() : "";
+  const passwordInput = document.getElementById("reg-password");
+  const passwordConfirmInput = document.getElementById("reg-password-confirm");
+  const password = passwordInput ? passwordInput.value : "";
+  const passwordConfirm = passwordConfirmInput ? passwordConfirmInput.value : "";
   const isEmpadronado = document.getElementById("reg-empadronado").checked;
 
   if (!fullName) {
-    alert("Por favor, introduce tu nombre y apellidos.");
+    showToast("Nombre requerido", "Por favor, introduce tu nombre y apellidos.");
+    document.getElementById("reg-fullname").focus();
+    return;
+  }
+
+  if (!password || password.length < 6) {
+    showToast("Contraseña requerida", "La contraseña debe tener al menos 6 caracteres para proteger tu cuenta.");
+    if (passwordInput) passwordInput.focus();
+    return;
+  }
+
+  if (password !== passwordConfirm) {
+    showToast("Contraseñas no coinciden", "Las contraseñas introducidas no son iguales. Por favor, revísalas.");
+    if (passwordConfirmInput) passwordConfirmInput.focus();
     return;
   }
 
@@ -4246,6 +4350,22 @@ function handleRegisterNewUser() {
   if (consent && !consent.checked) {
     showToast("Consentimiento Requerido", "Debes otorgar tu consentimiento sobre protección de datos y privacidad.");
     return;
+  }
+
+  const saved = getSavedAccountsList();
+  const duplicate = saved.find(u => 
+    (u.nombre && u.nombre.toLowerCase() === fullName.toLowerCase()) ||
+    (emailInput && u.email && u.email.toLowerCase() === emailInput.toLowerCase())
+  );
+  if (duplicate) {
+    if (confirm(`Ya existe una cuenta registrada para "${duplicate.nombre}". ¿Quieres acceder a ella en lugar de crear una nueva?`)) {
+      switchAuthSubTab("login");
+      const nameInput = document.getElementById("login-name");
+      const passInput = document.getElementById("login-password");
+      if (nameInput) nameInput.value = duplicate.alias || duplicate.nombre;
+      if (passInput) passInput.focus();
+      return;
+    }
   }
 
   const parts = fullName.split(" ").filter(Boolean);
@@ -4267,6 +4387,7 @@ function handleRegisterNewUser() {
   const maskedDni = dniInput || `***${Math.floor(1000 + Math.random() * 9000)}*`;
   const initialPoints = isEmpadronado ? 50 : 20;
   const levelInfo = calculateLevel(initialPoints);
+  const passHash = await hashPassword(password);
 
   const newUser = {
     id: `user-${Date.now()}`,
@@ -4276,6 +4397,8 @@ function handleRegisterNewUser() {
     edad: age,
     rangoEdad: rangoEdad,
     dni: maskedDni,
+    email: emailInput || null,
+    passwordHash: passHash,
     empadronado: isEmpadronado,
     puntos: initialPoints,
     nivel: levelInfo.nivel,
@@ -4289,45 +4412,74 @@ function handleRegisterNewUser() {
   // Reset del formulario
   document.getElementById("form-register-user").reset();
 
-  showToast(`¡Bienvenido/a, ${alias}! (+${initialPoints} PTS)`, "Tu cuenta joven está activa. Ya puedes votar y proponer ideas.");
+  showToast(`¡Bienvenido/a, ${alias}! (+${initialPoints} PTS)`, "Tu cuenta joven está activa y asegurada con contraseña.");
 }
 
-function handleManualLogin() {
+async function handleManualLogin() {
   const query = document.getElementById("login-name").value.trim().toLowerCase();
+  const passInput = document.getElementById("login-password");
+  const pass = passInput ? passInput.value : "";
+
   if (!query) {
-    alert("Por favor, introduce tu nombre o DNI registrado.");
+    showToast("Identificación requerida", "Por favor, introduce tu nombre, alias, DNI o correo.");
+    const nameInput = document.getElementById("login-name");
+    if (nameInput) nameInput.focus();
     return;
   }
 
+  if (!pass) {
+    showToast("Contraseña requerida", "Por favor, introduce tu contraseña de acceso.");
+    if (passInput) passInput.focus();
+    return;
+  }
+
+  const inputHash = await hashPassword(pass);
   const saved = getSavedAccountsList();
+  const cleanQuery = query.replace(/[*-\s]/g, '');
+
   const found = saved.find(u => 
-    u.nombre.toLowerCase().includes(query) || 
-    (u.alias && u.alias.toLowerCase().includes(query)) ||
-    (u.dni && u.dni.toLowerCase().includes(query))
+    (u.nombre && u.nombre.toLowerCase() === query) || 
+    (u.alias && u.alias.toLowerCase() === query) ||
+    (u.email && u.email.toLowerCase() === query) ||
+    (u.dni && u.dni.toLowerCase().replace(/[*-\s]/g, '') === cleanQuery) ||
+    (u.nombre && u.nombre.toLowerCase().includes(query))
   );
 
   if (found) {
+    if (found.passwordHash) {
+      if (found.passwordHash !== inputHash) {
+        showToast("Contraseña incorrecta", "La contraseña introducida no es válida para esta cuenta.");
+        if (passInput) {
+          passInput.value = "";
+          passInput.focus();
+        }
+        return;
+      }
+    } else {
+      // Cuenta guardada de versión anterior sin contraseña: se actualiza con la clave introducida
+      found.passwordHash = inputHash;
+      saveSessionToStorage(found);
+    }
+
     logInWithUser(found);
-  } else {
-    // Si no encuentra una coincidencia exacta, se crea la sesión de forma limpia con ese nombre
-    const alias = query.charAt(0).toUpperCase() + query.slice(1);
-    const quickUser = {
-      id: `user-${Date.now()}`,
-      nombre: alias,
-      alias: alias,
-      iniciales: alias.substring(0, 2).toUpperCase(),
-      edad: 20,
-      rangoEdad: "19-24",
-      dni: `***${Math.floor(1000 + Math.random() * 9000)}*`,
-      empadronado: true,
-      puntos: 50,
-      nivel: "Nivel 1: Joven Activo de Orcera",
-      nivelBadge: "Nivel 1 · Activo",
-      hash: `#ORC-2027-${Math.floor(1000 + Math.random() * 9000)}`,
-      rol: "joven"
-    };
-    logInWithUser(quickUser);
+    if (passInput) passInput.value = "";
+    return;
   }
+
+  // Comprobar si se trata de la cuenta Demo de Sara
+  if (query.includes("sara") || query === "user-sara-demo") {
+    const demoUser = JSON.parse(JSON.stringify(DEMO_SARA_USER));
+    demoUser.passwordHash = inputHash;
+    logInWithUser(demoUser);
+    if (passInput) passInput.value = "";
+    return;
+  }
+
+  // Cuenta no encontrada
+  showToast(
+    "Cuenta no encontrada",
+    "No existe ninguna cuenta registrada con esos datos. Ve a '➕ Crear Cuenta' para registrarte con contraseña."
+  );
 }
 
 

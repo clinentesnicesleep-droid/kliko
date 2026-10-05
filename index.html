@@ -1122,6 +1122,26 @@
               <input type="email" id="reg-email" placeholder="tu.correo@ejemplo.com">
             </div>
 
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div class="form-group-orcera">
+                <label for="reg-password">Contraseña *</label>
+                <div class="password-input-wrapper">
+                  <input type="password" id="reg-password" placeholder="Mín. 6 caracteres" required autocomplete="new-password">
+                  <button type="button" class="btn-toggle-password" data-target="reg-password" title="Mostrar/Ocultar contraseña" aria-label="Mostrar u ocultar contraseña">👁️</button>
+                </div>
+              </div>
+              <div class="form-group-orcera">
+                <label for="reg-password-confirm">Confirmar Contraseña *</label>
+                <div class="password-input-wrapper">
+                  <input type="password" id="reg-password-confirm" placeholder="Repite tu clave" required autocomplete="new-password">
+                  <button type="button" class="btn-toggle-password" data-target="reg-password-confirm" title="Mostrar/Ocultar contraseña" aria-label="Mostrar u ocultar contraseña">👁️</button>
+                </div>
+              </div>
+            </div>
+            <div id="reg-password-feedback" style="font-size: 0.72rem; color: var(--text-muted); margin-top: -6px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+              <span>🔒</span><span>Tu contraseña debe tener al menos 6 caracteres para proteger tu cuenta y puntos cívicos.</span>
+            </div>
+
             <label class="form-checkbox-row">
               <input type="checkbox" id="reg-empadronado" checked>
               <div class="form-checkbox-label">
@@ -1161,8 +1181,15 @@
 
           <form id="form-login-user" style="margin-top: 10px;">
             <div class="form-group-orcera">
-              <label for="login-name">Nombre, Alias o DNI registrado</label>
-              <input type="text" id="login-name" placeholder="Ej: Ramón o ***1234*" autocomplete="username">
+              <label for="login-name">Nombre, Alias, DNI o Correo *</label>
+              <input type="text" id="login-name" placeholder="Ej: Ramón o ***1234*" autocomplete="username" required>
+            </div>
+            <div class="form-group-orcera">
+              <label for="login-password">Contraseña *</label>
+              <div class="password-input-wrapper">
+                <input type="password" id="login-password" placeholder="Introduce tu contraseña" autocomplete="current-password" required>
+                <button type="button" class="btn-toggle-password" data-target="login-password" title="Mostrar/Ocultar contraseña" aria-label="Mostrar u ocultar contraseña">👁️</button>
+              </div>
             </div>
             <button type="submit" class="btn-tool" style="width: 100%; justify-content:center; padding: 10px; font-weight:700;">
               🔑 Entrar con mi Cuenta

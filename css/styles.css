@@ -3815,6 +3815,76 @@ body {
   box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
 }
 
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input-wrapper input {
+  padding-right: 42px !important;
+}
+
+.btn-toggle-password {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.btn-toggle-password:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--amurjo-cyan);
+}
+
+.saved-account-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.saved-account-row .saved-account-btn {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.btn-remove-saved-acc {
+  background: var(--segura-surface-elevated);
+  border: 1px solid var(--segura-border);
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.btn-remove-saved-acc:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+
 .form-checkbox-row {
   display: flex;
   align-items: flex-start;
