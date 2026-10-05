@@ -4876,6 +4876,176 @@ body {
   border: 1px solid rgba(6, 182, 212, 0.4);
 }
 
+/* GRÁFICAS DE RESULTADOS DE MICROENCUESTAS EN PANEL ADMIN */
+.stories-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.story-chart-card {
+  background: var(--segura-surface-elevated);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.story-chart-card:hover {
+  border-color: var(--amurjo-cyan);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.story-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.story-chart-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 4px 0 0;
+  line-height: 1.35;
+}
+
+.story-badge-status {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.story-badge-status.activa {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.story-badge-status.cerrada {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.story-chart-wrapper {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--segura-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.story-bar-dual-track {
+  display: flex;
+  width: 100%;
+  height: 14px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.story-bar-fill-a {
+  background: linear-gradient(90deg, #10b981, #06b6d4);
+  transition: width 0.5s ease;
+}
+
+.story-bar-fill-b {
+  background: linear-gradient(90deg, #f59e0b, #ec4899);
+  transition: width 0.5s ease;
+}
+
+.story-opt-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.story-opt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+}
+
+.story-opt-name {
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.story-opt-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.story-opt-dot.dot-a {
+  background: #10b981;
+}
+
+.story-opt-dot.dot-b {
+  background: #ec4899;
+}
+
+.story-opt-count {
+  font-weight: 700;
+  color: var(--amurjo-cyan);
+}
+
+.story-winner-banner {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  color: #a7f3d0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.story-admin-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px dashed var(--segura-border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.btn-story-ctrl {
+  background: transparent;
+  border: 1px solid var(--segura-border);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-story-ctrl:hover {
+  background: var(--segura-surface);
+  color: var(--text-main);
+  border-color: var(--amurjo-cyan);
+}
+
 /* Estilos para el editor de acciones y variantes */
 .badge-variante {
   background: rgba(6, 182, 212, 0.2);

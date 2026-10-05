@@ -328,71 +328,162 @@ function initNavigation() {
   }
 }
 
-// BASE DE DATOS DE CONSULTAS EXPRÉS (STORIES FORMATO INSTAGRAM)
-const STORIES_DATA = {
+// BASE DE DATOS INICIAL DE CONSULTAS EXPRÉS (STORIES FORMATO INSTAGRAM)
+const DEFAULT_STORIES_DATA = {
   "amurjo-fest": {
+    id: "amurjo-fest",
     icono: "🏊‍♂️",
     categoria: "CONSULTA VINCULANTE · AMURJO",
     titulo: "Fiesta Nocturna en Amurjo 2027",
+    label: "Fiesta Amurjo",
+    bgClass: "amurjo-bg",
     desc: "El Ayuntamiento programa una noche de baño y música en Amurjo. ¿Qué horario y ambiente prefieres?",
     opcionA: "🌅 Atardecer & Chill-out (20:30h)",
     votosA: 84,
     opcionB: "🎧 Sesión DJ & Fiesta Nocturna (23:00h)",
-    votosB: 142
+    votosB: 142,
+    estado: "activa",
+    fecha: "2027-04-10"
   },
   "talleres-dj": {
+    id: "talleres-dj",
     icono: "🎧",
     categoria: "ESPACIO DIGITAL JOVEN",
     titulo: "Horario del Taller de DJ y Producción",
+    label: "Curso DJ",
+    bgClass: "dj-bg",
     desc: "Queremos que nadie se quede fuera por estudios o trabajo. ¿Qué turno se adapta mejor a ti?",
     opcionA: "Viernes Tarde (18:30h)",
     votosA: 78,
     opcionB: "Sábados Mediodía (12:00h)",
-    votosB: 65
+    votosB: 65,
+    estado: "activa",
+    fecha: "2027-04-12"
   },
   "presupuestos-expr": {
+    id: "presupuestos-expr",
     icono: "🗳️",
     categoria: "PRESUPUESTO PARTICIPATIVO",
     titulo: "¿Dónde invertimos 1.000 € este año?",
+    label: "Vota 1.000€",
+    bgClass: "vote-bg",
     desc: "Tú decides directamente el destino de la partida participativa del III Plan en Orcera:",
     opcionA: "🧗 Rocódromo Portátil en Amurjo",
     votosA: 112,
     opcionB: "🎮 Zona Gaming en Espacio Joven",
-    votosB: 94
+    votosB: 94,
+    estado: "activa",
+    fecha: "2027-04-15"
   },
   "voluntariado": {
+    id: "voluntariado",
     icono: "🌲",
     categoria: "MEDIO AMBIENTE & PARQUE NATURAL",
     titulo: "Próxima Batida Verde Juvenil",
+    label: "Sierra Limpia",
+    bgClass: "nature-bg",
     desc: "¿Qué entorno de nuestro pueblo necesita una jornada prioritaria de limpieza y recuperación?",
     opcionA: "🌿 Senderos Históricos y Pinar",
     votosA: 95,
     opcionB: "💧 Ribera del Río y Área Recreativa",
-    votosB: 62
+    votosB: 62,
+    estado: "activa",
+    fecha: "2027-04-18"
   },
   "telecentro": {
+    id: "telecentro",
     icono: "💻",
     categoria: "CONECTIVIDAD & TELETRABAJO",
     titulo: "Equipamiento del Telecentro 24h",
+    label: "Telecentro 24h",
+    bgClass: "tech-bg",
     desc: "Orcera habilitará puestos de trabajo remoto con 1 Gbps para jóvenes. ¿Qué equipamiento priorizamos?",
     opcionA: "🖥️ Pantallas 4K y Puestos Coworking",
     votosA: 88,
     opcionB: "🎙️ Estudio Podcast y Creación Multimedia",
-    votosB: 71
+    votosB: 71,
+    estado: "activa",
+    fecha: "2027-04-20"
   }
 };
 
+let STORIES_DATA = {};
 let votedStories = new Set();
 
-// Historias interactivas (Consultas exprés tipo stories de Instagram)
-function initStories() {
-  const stories = document.querySelectorAll(".story-item");
-  stories.forEach(story => {
-    story.addEventListener("click", () => {
-      const type = story.getAttribute("data-story");
+function loadStoriesData() {
+  try {
+    const raw = localStorage.getItem("orcera_microencuestas_v1");
+    if (raw) {
+      STORIES_DATA = JSON.parse(raw);
+    } else {
+      STORIES_DATA = JSON.parse(JSON.stringify(DEFAULT_STORIES_DATA));
+      saveStoriesData();
+    }
+  } catch (e) {
+    console.warn("Error cargando microencuestas:", e);
+    STORIES_DATA = JSON.parse(JSON.stringify(DEFAULT_STORIES_DATA));
+  }
+
+  try {
+    const rawVoted = localStorage.getItem("orcera_voted_stories_v1");
+    if (rawVoted) {
+      votedStories = new Set(JSON.parse(rawVoted));
+    } else {
+      votedStories = new Set();
+    }
+  } catch (e) {
+    votedStories = new Set();
+  }
+}
+
+function saveStoriesData() {
+  try {
+    localStorage.setItem("orcera_microencuestas_v1", JSON.stringify(STORIES_DATA));
+    localStorage.setItem("orcera_voted_stories_v1", JSON.stringify(Array.from(votedStories)));
+  } catch (e) {
+    console.warn("Error guardando microencuestas:", e);
+  }
+}
+
+function renderStoriesStrip() {
+  const strip = document.querySelector(".stories-strip");
+  if (!strip) return;
+
+  const entries = Object.entries(STORIES_DATA).filter(([k, s]) => s.estado !== "cerrada");
+
+  if (entries.length === 0) {
+    strip.innerHTML = `
+      <div style="font-size:0.75rem; color:var(--text-muted); padding:10px 14px;">
+        No hay consultas activas en este momento.
+      </div>
+    `;
+    return;
+  }
+
+  strip.innerHTML = entries.map(([key, s]) => {
+    const isVoted = votedStories.has(key);
+    return `
+      <button class="story-item ${isVoted ? 'story-voted' : 'story-active'}" data-story="${key}" title="Votar: ${s.titulo}">
+        <div class="story-ring ${isVoted ? 'voted-ring' : ''}">
+          <div class="story-avatar ${s.bgClass || 'amurjo-bg'}">${s.icono || '🗳️'}</div>
+        </div>
+        <span class="story-label">${s.label || s.titulo.substring(0, 11)}</span>
+      </button>
+    `;
+  }).join("");
+
+  strip.querySelectorAll(".story-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const type = btn.getAttribute("data-story");
       openStoryModal(type);
     });
   });
+}
+
+// Historias interactivas (Consultas exprés tipo stories de Instagram)
+function initStories() {
+  loadStoriesData();
+  renderStoriesStrip();
 
   const closeBtn = document.getElementById("close-story-modal");
   if (closeBtn) {
@@ -414,10 +505,11 @@ function openStoryModal(storyKey) {
 
   if (!modal) return;
 
-  iconEl.textContent = data.icono;
-  catEl.textContent = data.categoria;
+  const isClosed = data.estado === "cerrada";
+  iconEl.textContent = data.icono || "🗳️";
+  catEl.textContent = isClosed ? `${data.categoria} · FINALIZADA` : data.categoria;
   titleEl.textContent = data.titulo;
-  descEl.textContent = data.desc;
+  descEl.textContent = isClosed ? `[Consulta Finalizada] ${data.desc}` : data.desc;
 
   // Reiniciar barra de tiempo
   if (progressFill) {
@@ -426,21 +518,21 @@ function openStoryModal(storyKey) {
     progressFill.style.animation = 'storyTimer 10s linear forwards';
   }
 
-  const alreadyVoted = votedStories.has(storyKey);
-  const total = data.votosA + data.votosB;
-  const pctA = Math.round((data.votosA / (total || 1)) * 100);
-  const pctB = 100 - pctA;
+  const alreadyVoted = votedStories.has(storyKey) || isClosed;
+  const total = (data.votosA || 0) + (data.votosB || 0);
+  const pctA = total > 0 ? Math.round((data.votosA / total) * 100) : 50;
+  const pctB = total > 0 ? 100 - pctA : 50;
 
   optionsWrap.innerHTML = `
     <button class="story-opt-btn ${alreadyVoted ? 'voted-btn' : ''}" data-choice="A" ${alreadyVoted ? 'disabled' : ''}>
       <div class="story-opt-bar" style="width: ${alreadyVoted ? pctA + '%' : '0%'};"></div>
       <span class="story-opt-text">${data.opcionA}</span>
-      <span class="story-opt-pct" style="${alreadyVoted ? 'display:inline' : 'display:none'}">${pctA}%</span>
+      <span class="story-opt-pct" style="${alreadyVoted ? 'display:inline' : 'display:none'}">${pctA}% (${data.votosA || 0})</span>
     </button>
     <button class="story-opt-btn ${alreadyVoted ? 'voted-btn' : ''}" data-choice="B" ${alreadyVoted ? 'disabled' : ''}>
       <div class="story-opt-bar" style="width: ${alreadyVoted ? pctB + '%' : '0%'};"></div>
       <span class="story-opt-text">${data.opcionB}</span>
-      <span class="story-opt-pct" style="${alreadyVoted ? 'display:inline' : 'display:none'}">${pctB}%</span>
+      <span class="story-opt-pct" style="${alreadyVoted ? 'display:inline' : 'display:none'}">${pctB}% (${data.votosB || 0})</span>
     </button>
   `;
 
@@ -448,12 +540,14 @@ function openStoryModal(storyKey) {
     optionsWrap.querySelectorAll(".story-opt-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const choice = btn.getAttribute("data-choice");
-        if (choice === "A") data.votosA++;
-        else data.votosB++;
+        if (choice === "A") data.votosA = (data.votosA || 0) + 1;
+        else data.votosB = (data.votosB || 0) + 1;
 
         votedStories.add(storyKey);
+        saveStoriesData(); // Persistencia permanente inmediata
+        renderStoriesStrip(); // Actualizar visualmente la tira
 
-        const newTotal = data.votosA + data.votosB;
+        const newTotal = (data.votosA || 0) + (data.votosB || 0);
         const newPctA = Math.round((data.votosA / newTotal) * 100);
         const newPctB = 100 - newPctA;
 
@@ -462,12 +556,12 @@ function openStoryModal(storyKey) {
         btns[0].classList.add("voted-btn");
         btns[0].querySelector(".story-opt-bar").style.width = newPctA + "%";
         btns[0].querySelector(".story-opt-pct").style.display = "inline";
-        btns[0].querySelector(".story-opt-pct").textContent = newPctA + "%";
+        btns[0].querySelector(".story-opt-pct").textContent = `${newPctA}% (${data.votosA})`;
 
         btns[1].classList.add("voted-btn");
         btns[1].querySelector(".story-opt-bar").style.width = newPctB + "%";
         btns[1].querySelector(".story-opt-pct").style.display = "inline";
-        btns[1].querySelector(".story-opt-pct").textContent = newPctB + "%";
+        btns[1].querySelector(".story-opt-pct").textContent = `${newPctB}% (${data.votosB})`;
 
         btns.forEach(b => b.disabled = true);
 
@@ -5694,61 +5788,200 @@ function renderPaneBuzon(container) {
 // ------------------------------------------------------------------------------
 // PANE 4: CONSULTAS EXPRÉS / STORIES (TÉCNICO + ADMIN)
 // ------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
+// PANE 4: CONSULTAS EXPRÉS / STORIES (TÉCNICO + ADMIN)
+// ------------------------------------------------------------------------------
 function renderPaneStories(container) {
+  const storyEntries = Object.entries(STORIES_DATA);
+  const totalStories = storyEntries.length;
+  const activeStories = storyEntries.filter(([, s]) => s.estado !== "cerrada").length;
+  const totalVotes = storyEntries.reduce((acc, [, s]) => acc + (s.votosA || 0) + (s.votosB || 0), 0);
+  const totalPointsDistributed = totalVotes * 15;
+
   container.innerHTML = `
     <div class="admin-pane-card">
       <div class="admin-pane-header">
         <div>
           <span class="badge-tag-civic">Módulo 4 · Consultas Rápidas</span>
-          <h3 style="margin:2px 0 0; font-size:1.15rem; color:var(--text-main);">⚡ Lanzar Nueva Consulta Exprés (Stories en Cabecera)</h3>
+          <h3 style="margin:2px 0 0; font-size:1.15rem; color:var(--text-main);">⚡ Gestión y Resultados de Consultas Exprés (Stories)</h3>
           <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 0;">
-            Lanza encuestas directas de voto en 1 clic tipo Instagram que aparecerán inmediatamente en la barra superior de la app móvil.
+            Los datos se almacenan y persisten de forma continua mientras cada consulta permanezca operativa. Aquí puedes seguir las votaciones en tiempo real con sus gráficas de resultados.
           </p>
         </div>
       </div>
 
-      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:16px; max-width:600px;">
-        <form id="form-new-story">
-          <div class="form-group-orcera">
-            <label>Título / Pregunta de la Consulta *</label>
-            <input type="text" id="story-title" placeholder="Ej: ¿Qué grupo musical traemos para las Fiestas de Agosto?" required>
-          </div>
+      <!-- Resumen de Métricas Globales -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin: 12px 0 18px;">
+        <div style="background:rgba(0,0,0,0.25); border:1px solid var(--segura-border); border-radius:var(--radius-sm); padding:10px 12px;">
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Consultas Totales</div>
+          <div style="font-size:1.4rem; font-weight:800; color:var(--text-main); margin-top:2px;">${totalStories}</div>
+        </div>
+        <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
+          <div style="font-size:0.7rem; color:#34d399; text-transform:uppercase; font-weight:700;">Operativas / Activas</div>
+          <div style="font-size:1.4rem; font-weight:800; color:#34d399; margin-top:2px;">${activeStories}</div>
+        </div>
+        <div style="background:rgba(6,182,212,0.08); border:1px solid rgba(6,182,212,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
+          <div style="font-size:0.7rem; color:var(--amurjo-cyan); text-transform:uppercase; font-weight:700;">Votos Acumulados</div>
+          <div style="font-size:1.4rem; font-weight:800; color:var(--amurjo-cyan); margin-top:2px;">${totalVotes}</div>
+        </div>
+        <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:var(--radius-sm); padding:10px 12px;">
+          <div style="font-size:0.7rem; color:#fbbf24; text-transform:uppercase; font-weight:700;">Puntos Otorgados</div>
+          <div style="font-size:1.4rem; font-weight:800; color:#fbbf24; margin-top:2px;">+${totalPointsDistributed} pts</div>
+        </div>
+      </div>
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+      <!-- Formulario para Nueva Consulta -->
+      <details style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:14px 16px; margin-bottom:20px;">
+        <summary style="font-weight:700; font-size:0.9rem; color:var(--text-main); cursor:pointer; display:flex; align-items:center; gap:8px;">
+          <span>➕ Lanzar Nueva Consulta Exprés</span>
+          <span style="font-size:0.72rem; color:var(--amurjo-cyan); font-weight:600;">(Desplegar formulario)</span>
+        </summary>
+        <div style="margin-top:14px; pt:10px; border-top:1px dashed var(--segura-border);">
+          <form id="form-new-story">
             <div class="form-group-orcera">
-              <label>Categoría</label>
-              <input type="text" id="story-cat" placeholder="Ej: OCIO JOVEN" value="OCIO JOVEN" required>
+              <label>Título / Pregunta de la Consulta *</label>
+              <input type="text" id="story-title" placeholder="Ej: ¿Qué grupo musical traemos para las Fiestas de Agosto?" required>
             </div>
-            <div class="form-group-orcera">
-              <label>Icono (Emoji)</label>
-              <input type="text" id="story-ico" value="🎪" style="text-align:center;">
-            </div>
-          </div>
 
-          <div class="form-group-orcera">
-            <label>Descripción / Contexto</label>
-            <input type="text" id="story-desc" placeholder="Breve contexto para que la juventud decida">
-          </div>
-
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-            <div class="form-group-orcera">
-              <label>Opción A (Verde) *</label>
-              <input type="text" id="story-opt-a" placeholder="Ej: Festival Pop/Rock Local" required>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+              <div class="form-group-orcera">
+                <label>Categoría</label>
+                <input type="text" id="story-cat" placeholder="Ej: OCIO JOVEN" value="OCIO JOVEN" required>
+              </div>
+              <div class="form-group-orcera">
+                <label>Icono (Emoji)</label>
+                <input type="text" id="story-ico" value="🎪" style="text-align:center;">
+              </div>
+              <div class="form-group-orcera">
+                <label>Etiqueta corta (Story)</label>
+                <input type="text" id="story-label-input" placeholder="Ej: Fiestas 2027" maxlength="14">
+              </div>
             </div>
-            <div class="form-group-orcera">
-              <label>Opción B (Cyan) *</label>
-              <input type="text" id="story-opt-b" placeholder="Ej: Sesión Urban / Reggaeton DJ" required>
-            </div>
-          </div>
 
-          <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:12px; margin-top:8px;">
-            🚀 Publicar Consulta en las Stories de la App
-          </button>
-        </form>
+            <div class="form-group-orcera">
+              <label>Descripción / Contexto</label>
+              <input type="text" id="story-desc" placeholder="Breve contexto explicativo para la juventud">
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div class="form-group-orcera">
+                <label>Opción A (Verde) *</label>
+                <input type="text" id="story-opt-a" placeholder="Ej: Festival Pop/Rock Local" required>
+              </div>
+              <div class="form-group-orcera">
+                <label>Opción B (Rosa/Amarillo) *</label>
+                <input type="text" id="story-opt-b" placeholder="Ej: Sesión Urban / Reggaeton DJ" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:11px; margin-top:8px;">
+              🚀 Publicar Consulta (Visible de Inmediato en Stories)
+            </button>
+          </form>
+        </div>
+      </details>
+
+      <!-- Gráficas y Resultados de Encuestas Existentes -->
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h4 style="margin:0; font-size:1rem; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+            <span>📊 Resultados y Estado de Cada Consulta</span>
+            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">(${storyEntries.length})</span>
+          </h4>
+        </div>
+
+        <div class="stories-admin-grid">
+          ${storyEntries.map(([key, s]) => {
+            const vA = s.votosA || 0;
+            const vB = s.votosB || 0;
+            const cardTotal = vA + vB;
+            const pctA = cardTotal > 0 ? Math.round((vA / cardTotal) * 100) : 50;
+            const pctB = cardTotal > 0 ? (100 - pctA) : 50;
+            const isActiva = s.estado !== "cerrada";
+
+            let winnerText = "⚖️ Empate técnico (50% - 50%)";
+            if (cardTotal === 0) {
+              winnerText = "⏳ Aún no hay votos registrados";
+            } else if (vA > vB) {
+              winnerText = `🏆 Lidera: <strong>${escapeHtml(s.opcionA)}</strong> (${pctA}%)`;
+            } else if (vB > vA) {
+              winnerText = `🏆 Lidera: <strong>${escapeHtml(s.opcionB)}</strong> (${pctB}%)`;
+            }
+
+            return `
+              <div class="story-chart-card" data-story-id="${key}">
+                <div class="story-chart-header">
+                  <div>
+                    <span style="font-size:0.68rem; font-weight:800; color:var(--amurjo-cyan); text-transform:uppercase; letter-spacing:0.04em;">
+                      ${escapeHtml(s.categoria || 'CONSULTA')}
+                    </span>
+                    <h5 class="story-chart-title">${s.icono || '🗳️'} ${escapeHtml(s.titulo)}</h5>
+                  </div>
+                  <span class="story-badge-status ${isActiva ? 'activa' : 'cerrada'}">
+                    ${isActiva ? '🟢 OPERATIVA' : '🔴 CERRADA'}
+                  </span>
+                </div>
+
+                <p style="font-size:0.73rem; color:var(--text-muted); margin:0; line-height:1.35;">
+                  ${escapeHtml(s.desc || '')}
+                </p>
+
+                <!-- Gráfica de Resultados Visual -->
+                <div class="story-chart-wrapper">
+                  <div class="story-bar-dual-track" title="Opción A: ${pctA}% vs Opción B: ${pctB}%">
+                    <div class="story-bar-fill-a" style="width:${pctA}%;"></div>
+                    <div class="story-bar-fill-b" style="width:${pctB}%;"></div>
+                  </div>
+
+                  <div class="story-opt-metric">
+                    <div class="story-opt-row">
+                      <span class="story-opt-name">
+                        <span class="story-opt-dot dot-a"></span>
+                        <span>${escapeHtml(s.opcionA)}</span>
+                      </span>
+                      <span class="story-opt-count">${vA} votos · ${pctA}%</span>
+                    </div>
+
+                    <div class="story-opt-row">
+                      <span class="story-opt-name">
+                        <span class="story-opt-dot dot-b"></span>
+                        <span>${escapeHtml(s.opcionB)}</span>
+                      </span>
+                      <span class="story-opt-count" style="color:#f472b6;">${vB} votos · ${pctB}%</span>
+                    </div>
+                  </div>
+
+                  <div class="story-winner-banner">
+                    ${winnerText}
+                  </div>
+                </div>
+
+                <!-- Acciones Administrativas -->
+                <div class="story-admin-actions">
+                  <span style="font-size:0.68rem; color:var(--text-muted); font-weight:600;">
+                    Total: ${cardTotal} votos
+                  </span>
+                  <div style="display:flex; gap:6px;">
+                    <button class="btn-story-ctrl" data-action="toggle-status" data-id="${key}" title="${isActiva ? 'Pausar consulta' : 'Reactivar consulta'}">
+                      ${isActiva ? '⏸️ Cerrar' : '▶️ Reactivar'}
+                    </button>
+                    <button class="btn-story-ctrl" data-action="reset-votes" data-id="${key}" title="Resetear contador de votos a 0">
+                      🔄 Resetear
+                    </button>
+                    <button class="btn-story-ctrl" data-action="delete" data-id="${key}" style="color:#f87171;" title="Eliminar consulta definitivamente">
+                      🗑️
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
       </div>
     </div>
   `;
 
+  // Event Listeners: Formulario de Nueva Consulta
   const storyForm = container.querySelector("#form-new-story");
   if (storyForm) {
     storyForm.addEventListener("submit", (e) => {
@@ -5756,43 +5989,72 @@ function renderPaneStories(container) {
       const title = document.getElementById("story-title").value.trim();
       const cat = document.getElementById("story-cat").value.trim();
       const ico = document.getElementById("story-ico").value.trim() || "🗳️";
+      const customLabel = document.getElementById("story-label-input").value.trim();
       const desc = document.getElementById("story-desc").value.trim() || title;
       const optA = document.getElementById("story-opt-a").value.trim();
       const optB = document.getElementById("story-opt-b").value.trim();
 
       const newId = `story-${Date.now()}`;
       STORIES_DATA[newId] = {
+        id: newId,
         icono: ico,
         categoria: cat,
         titulo: title,
+        label: customLabel || title.substring(0, 11),
+        bgClass: "amurjo-bg",
         desc: desc,
         opcionA: optA,
         votosA: 0,
         opcionB: optB,
-        votosB: 0
+        votosB: 0,
+        estado: "activa",
+        fecha: new Date().toISOString().split("T")[0]
       };
 
-      // Añadir botón en la tira de stories del móvil
-      const strip = document.querySelector(".stories-strip");
-      if (strip) {
-        const btn = document.createElement("button");
-        btn.className = "story-item";
-        btn.setAttribute("data-story", newId);
-        btn.setAttribute("title", title);
-        btn.innerHTML = `
-          <div class="story-ring">
-            <div class="story-avatar amurjo-bg">${ico}</div>
-          </div>
-          <span class="story-label">${title.substring(0, 10)}...</span>
-        `;
-        strip.prepend(btn);
-        btn.addEventListener("click", () => openStoryModal(newId));
-      }
+      saveStoriesData();
+      renderStoriesStrip();
+      renderPaneStories(container);
 
-      showToast("¡Consulta Publicada!", `"${title}" ya está activa en las Stories de la app.`);
-      storyForm.reset();
+      showToast("¡Consulta Publicada!", `"${title}" ya está activa y operativa con su gráfica lista.`);
     });
   }
+
+  // Event Listeners: Acciones en Cada Tarjeta (Toggle Estado, Resetear, Eliminar)
+  container.querySelectorAll(".btn-story-ctrl").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const action = btn.getAttribute("data-action");
+      const id = btn.getAttribute("data-id");
+      const story = STORIES_DATA[id];
+      if (!story) return;
+
+      if (action === "toggle-status") {
+        story.estado = story.estado === "cerrada" ? "activa" : "cerrada";
+        saveStoriesData();
+        renderStoriesStrip();
+        renderPaneStories(container);
+        showToast(
+          story.estado === "activa" ? "Consulta Reactivada" : "Consulta Cerrada",
+          `La consulta "${story.titulo}" ahora está ${story.estado}.`
+        );
+      } else if (action === "reset-votes") {
+        if (confirm(`¿Seguro que deseas poner a 0 los votos de "${story.titulo}"?`)) {
+          story.votosA = 0;
+          story.votosB = 0;
+          saveStoriesData();
+          renderPaneStories(container);
+          showToast("Votos Reseteados", `Contador de "${story.titulo}" reiniciado.`);
+        }
+      } else if (action === "delete") {
+        if (confirm(`¿Eliminar definitivamente la consulta "${story.titulo}"? Esta acción no se puede deshacer.`)) {
+          delete STORIES_DATA[id];
+          saveStoriesData();
+          renderStoriesStrip();
+          renderPaneStories(container);
+          showToast("Consulta Eliminada", `"${story.titulo}" ha sido borrada.`);
+        }
+      }
+    });
+  });
 }
 
 // ------------------------------------------------------------------------------
