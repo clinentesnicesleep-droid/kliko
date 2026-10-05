@@ -279,19 +279,39 @@ function initNavigation() {
   const bottomNavItems = document.querySelectorAll(".bottom-tab-bar .nav-item");
   const panels = document.querySelectorAll(".tab-panel");
 
-  function switchTab(tabId) {
+  function switchTab(tabId, targetElementId = null) {
     AppState.activeTab = tabId;
     
-    // Actualizar botones
+    // Actualizar botones superiores
     topTabs.forEach(b => b.classList.toggle("active", b.getAttribute("data-tab") === tabId));
+    // Actualizar botones barra inferior
     bottomNavItems.forEach(b => b.classList.toggle("active", b.getAttribute("data-target") === tabId));
 
     // Mostrar panel correspondiente
     panels.forEach(p => p.classList.toggle("active", p.id === tabId));
     
-    // Scroll arriba suave en el viewport móvil
-    document.getElementById("mobile-viewport").scrollTo({ top: 0, behavior: "smooth" });
+    // Si se especifica un destino, hacer scroll hacia él
+    if (targetElementId) {
+      setTimeout(() => {
+        const el = document.getElementById(targetElementId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 80);
+    } else {
+      // Scroll arriba suave en el viewport móvil
+      const viewport = document.getElementById("mobile-viewport");
+      if (viewport) {
+        viewport.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
   }
+
+  // Hacer funciones disponibles globalmente
+  window.switchTab = switchTab;
+  window.goToCanjes = function() {
+    switchTab("tab-gamificacion", "rewards-grid");
+  };
 
   topTabs.forEach(btn => {
     btn.addEventListener("click", () => switchTab(btn.getAttribute("data-tab")));
@@ -3179,7 +3199,7 @@ function renderEvaluacionHeroBox() {
           <strong>Recompensa Cívica:</strong> Cada acción da <strong>+20 Pts</strong> y cada indicador <strong>+10 Pts</strong>. Con 150 Pts desbloqueas el <em>Bono Auditor/a Joven en Amurjo</em>.
         </div>
       </div>
-      <button type="button" class="btn-action-back" onclick="window.switchTab && window.switchTab('tab-gamificacion')" style="font-size:0.68rem; padding:5px 12px; white-space:nowrap; font-weight:800;">
+      <button type="button" class="btn-action-back" onclick="window.goToCanjes ? window.goToCanjes() : window.switchTab('tab-gamificacion', 'rewards-grid')" style="font-size:0.72rem; padding:6px 14px; white-space:nowrap; font-weight:800; cursor:pointer;" title="Ir al catálogo de canjes y premios en Amurjo">
         🎁 Canjes
       </button>
     </div>
