@@ -2741,10 +2741,10 @@ function openActionDetailModal(actionCode, optEjeId) {
             </strong>
           </div>
           <p style="font-size: 0.73rem; color: var(--text-muted); line-height: 1.45; margin: 0 0 10px;">
-            Los comentarios de arriba son un debate público directo entre vecinos. Si lo que deseas es <strong>solicitar un cambio vinculante, proponer una ampliación o crear una nueva actividad para ${action.codigo}</strong>, puedes presentar una <em>Propuesta Joven Oficial</em>. Al reunir <strong>25 apoyos</strong> de otros jóvenes en el Buzón, pasará a debate en el Pleno del Ayuntamiento.
+            Los comentarios de arriba son un debate de opinión vecinal. Si deseas <strong>solicitar un cambio vinculante, proponer una mejora o crear una nueva actividad para ${action.codigo}</strong>, este botón te abrirá el formulario del Buzón ya pre-rellenado con esta acción. Al <strong>publicar tu propuesta ganarás tus +50 Puntos</strong> y, si reúne <strong>25 apoyos</strong> de otros jóvenes, pasará a debate en el Pleno del Ayuntamiento.
           </p>
-          <button type="button" class="btn-primary" onclick="linkActionToBuzonProposal('${action.codigo}', '${encodeURIComponent(action.titulo)}', ${eje.numero})" style="width: 100%; justify-content: center; font-size: 0.76rem; padding: 9px 12px; font-weight: 800;">
-            📝 Redactar Propuesta Oficial sobre ${action.codigo} (+50 Pts)
+          <button type="button" class="btn-primary" onclick="linkActionToBuzonProposal('${action.codigo}', '${encodeURIComponent(action.titulo)}', ${eje.numero})" style="width: 100%; justify-content: center; font-size: 0.76rem; padding: 10px 12px; font-weight: 800;">
+            📝 Abrir Formulario en el Buzón para ${action.codigo} (+50 Pts al publicar)
           </button>
         </div>
 
@@ -3068,7 +3068,7 @@ function linkActionToBuzonProposal(actionCode, encodedTitle, ejeId) {
   closeActionDetailModal();
   
   if (window.switchTab) {
-    window.switchTab("tab-buzon");
+    window.switchTab("tab-buzon", "new-proposal-form");
   }
 
   setTimeout(() => {
@@ -3077,6 +3077,7 @@ function linkActionToBuzonProposal(actionCode, encodedTitle, ejeId) {
     const placeInput = document.getElementById("prop-place");
     const descInput = document.getElementById("prop-desc");
     const formEl = document.getElementById("new-proposal-form");
+    const cardEl = formEl ? formEl.closest(".proposal-card") : null;
 
     if (ejeSelect && ejeId) {
       ejeSelect.value = String(ejeId);
@@ -3093,17 +3094,24 @@ function linkActionToBuzonProposal(actionCode, encodedTitle, ejeId) {
       descInput.setSelectionRange(descInput.value.length, descInput.value.length);
     }
 
-    if (formEl) {
-      formEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (cardEl) {
+      cardEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      cardEl.style.transition = "box-shadow 0.4s ease, border-color 0.4s ease";
+      cardEl.style.borderColor = "var(--amurjo-cyan)";
+      cardEl.style.boxShadow = "0 0 20px rgba(6, 182, 212, 0.4)";
+      setTimeout(() => {
+        cardEl.style.boxShadow = "";
+        cardEl.style.borderColor = "";
+      }, 2500);
     }
 
     if (typeof showToast === "function") {
       showToast(
-        `Vinculado a ${actionCode}`,
-        "El formulario del Buzón se ha preconfigurado con esta acción. Si consigues 25 votos de otros jóvenes, pasará al Pleno del Ayuntamiento."
+        `📝 Formulario Listo (${actionCode})`,
+        "Rellena tu idea en el formulario y pulsa 'Publicar Propuesta' al final para recibir tus +50 Puntos."
       );
     }
-  }, 250);
+  }, 180);
 }
 
 window.openActionDetailModal = openActionDetailModal;
