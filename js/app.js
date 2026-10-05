@@ -51,17 +51,17 @@ if (typeof EJES_DATA === 'undefined') {
 const RECOMPENSAS_DATA = [
   {
     id: 0,
-    titulo: "Alta Oficial Gratuita · Asociación Juvenil de Orcera",
+    titulo: "Alta en Asociación Juvenil de Orcera",
     descripcion: "Recompensa de bienvenida del III Plan: Carnet digital de socio/a, voz y voto en asambleas, y acceso preferente a actividades.",
-    costePuntos: 0,
+    costePuntos: 50,
     icono: "🤝",
     categoria: "rw-amurjo",
-    badge: "🎁 Gratis por Registro",
+    badge: "🎁 Bienvenida",
     esAltaAsociacion: true
   },
   {
     id: 1,
-    titulo: "Pase de 1 Día · Piscina Municipal de Amurjo",
+    titulo: "Bono de 15 días a la Piscina de Orcera",
     descripcion: "Disfruta de la piscina natural más grande de Europa en plena Sierra de Segura.",
     costePuntos: 200,
     icono: "🏊‍♂️",
@@ -3567,7 +3567,7 @@ function renderRewards() {
         <div class="reward-cost">⚡ ${item.costePuntos} Puntos Orcera</div>
       </div>
       <button class="btn-redeem ${item.esAltaAsociacion ? 'btn-asociacion-reward' : ''}" data-reward-id="${item.id}" data-cost="${item.costePuntos}" style="${item.esAltaAsociacion ? 'background: linear-gradient(135deg, #8b5cf6, #06b6d4); font-weight:800;' : ''}">
-        ${item.esAltaAsociacion ? (AppState.currentUser && AppState.currentUser.esSocioAJO ? 'Ver Mi Carnet' : 'Solicitar Alta Gratis') : 'Canjear'}
+        ${item.esAltaAsociacion ? (AppState.currentUser && AppState.currentUser.esSocioAJO ? 'Ver Mi Carnet' : 'Solicitar Alta') : 'Canjear'}
       </button>
     </div>
   `).join("");
@@ -3579,6 +3579,14 @@ function renderRewards() {
       const reward = RECOMPENSAS_DATA.find(r => r.id === rId);
 
       if (reward.esAltaAsociacion) {
+        if (AppState.currentUser && AppState.currentUser.esSocioAJO) {
+          openAsociacionModal();
+          return;
+        }
+        if (AppState.userPoints < cost) {
+          alert(`Necesitas ${cost} puntos para esta recompensa. Tienes ${AppState.userPoints} pts. ¡Participa en votaciones o valora actividades para conseguir más!`);
+          return;
+        }
         openAsociacionModal();
         return;
       }
@@ -4885,11 +4893,16 @@ function handleSolicitudAsociacion() {
   user.numSocio = numSocio;
   user.telefonoAJO = phone;
   user.emailAJO = email;
-
-  // Bonificación de +50 Pts por asociacionismo activo
-  rewardPoints(50, `¡Alta completada en la Asociación Juvenil! Nº Socio: ${numSocio}`);
-
+  // Canje de 50 Puntos Orcera por la expedición del carnet oficial
+  if (AppState.userPoints >= 50) {
+    AppState.userPoints -= 50;
+    user.puntos = AppState.userPoints;
+    if (user.puntosHistoricos === undefined) {
+      user.puntosHistoricos = AppState.userPoints + 50;
+    }
+  }
   saveSessionToStorage(user);
+  showToast("¡Alta en Asociación Oficial!", `Nº Socio: ${numSocio}. Se ha expedido tu carnet digital de la Asociación Juvenil.`);
   updateUserUI();
   updateAsociacionUI();
 
