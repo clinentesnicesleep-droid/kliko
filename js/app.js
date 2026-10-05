@@ -3466,11 +3466,20 @@ function renderRewards() {
         return;
       }
 
-      // Descontar puntos y abrir modal con código QR
+      // Descontar saldo de puntos disponible (¡los puntos históricos y el nivel alcanzado NUNCA bajan!)
       AppState.userPoints -= cost;
       if (AppState.currentUser) {
         AppState.currentUser.puntos = AppState.userPoints;
-        saveUsersToStorage();
+        if (AppState.currentUser.puntosHistoricos === undefined) {
+          AppState.currentUser.puntosHistoricos = AppState.userPoints + cost;
+        }
+        // El nivel siempre se mantiene según la experiencia total acumulada
+        const lvl = calculateLevel(AppState.currentUser.puntosHistoricos);
+        AppState.currentUser.nivel = lvl.nivel;
+        AppState.currentUser.nivelBadge = lvl.badge;
+        AppState.userLevel = lvl.nivel;
+
+        saveSessionToStorage(AppState.currentUser);
       }
       updatePointsDisplays();
       updateUserUI();
@@ -3655,9 +3664,19 @@ function rewardPoints(pts, message) {
     return;
   }
 
+  // 1. Saldo disponible para canjes
   AppState.userPoints += pts;
   AppState.currentUser.puntos = AppState.userPoints;
-  const lvl = calculateLevel(AppState.userPoints);
+
+  // 2. Puntos históricos acumulados (experiencia cívica total que nunca disminuye)
+  if (AppState.currentUser.puntosHistoricos === undefined) {
+    AppState.currentUser.puntosHistoricos = AppState.userPoints;
+  } else {
+    AppState.currentUser.puntosHistoricos += pts;
+  }
+
+  // 3. El nivel siempre se calcula sobre los puntos históricos totales
+  const lvl = calculateLevel(AppState.currentUser.puntosHistoricos);
   AppState.currentUser.nivel = lvl.nivel;
   AppState.currentUser.nivelBadge = lvl.badge;
   AppState.userLevel = lvl.nivel;
@@ -3672,9 +3691,15 @@ function rewardPoints(pts, message) {
 function updatePointsDisplays() {
   const topPill = document.getElementById("user-points-val");
   const cardPts = document.getElementById("card-display-points");
+  const cardXp = document.getElementById("civic-card-xp");
+  const modalXp = document.getElementById("modal-user-xp");
 
   if (topPill) topPill.textContent = AppState.userPoints;
   if (cardPts) cardPts.textContent = `${AppState.userPoints} PTS`;
+
+  const totalXp = AppState.currentUser ? (AppState.currentUser.puntosHistoricos !== undefined ? AppState.currentUser.puntosHistoricos : AppState.currentUser.puntos) : 0;
+  if (cardXp) cardXp.textContent = `${totalXp} PTS Acumulados`;
+  if (modalXp) modalXp.textContent = `${totalXp} PTS (Nivel Permanente)`;
 }
 
 function updateGlobalBentoKPIs() {
@@ -3818,7 +3843,8 @@ const DEMO_SARA_USER = {
   rangoEdad: "19-24",
   dni: "***4829*",
   empadronado: true,
-  puntos: 290,
+  puntos: 290, // Saldo disponible para canjes
+  puntosHistoricos: 290, // Experiencia total acumulada (el nivel nunca baja por canjear)
   nivel: "Nivel 2: Activista de Orcera",
   nivelBadge: "Nivel 2 · Activista",
   hash: "#ORC-2027-LIVE",
@@ -3836,8 +3862,14 @@ function loadSessionFromStorage() {
     const rawSession = localStorage.getItem("orcera_session_user_v3");
     if (rawSession) {
       AppState.currentUser = JSON.parse(rawSession);
+      if (AppState.currentUser.puntosHistoricos === undefined) {
+        AppState.currentUser.puntosHistoricos = AppState.currentUser.puntos || 0;
+      }
+      const lvl = calculateLevel(AppState.currentUser.puntosHistoricos);
+      AppState.currentUser.nivel = lvl.nivel;
+      AppState.currentUser.nivelBadge = lvl.badge;
       AppState.userPoints = AppState.currentUser.puntos || 0;
-      AppState.userLevel = AppState.currentUser.nivel || "Nivel 1: Joven de Orcera";
+      AppState.userLevel = AppState.currentUser.nivel;
     } else {
       // Por defecto iniciamos con la cuenta Demo precargada si es la primera visita para no dejar la app vacía,
       // pero el usuario puede pulsar Cerrar Sesión en cualquier momento para ser Visitante o Registrarse con su nombre.
@@ -3989,11 +4021,16 @@ function updateUserUI() {
   const cardRoleEl = document.getElementById("civic-card-role");
   const cardDniEl = document.getElementById("civic-card-dni");
   const cardHashEl = document.getElementById("civic-card-hash");
+  const cardXpEl = document.getElementById("civic-card-xp");
 
   if (cardNameEl) cardNameEl.textContent = isLogged ? user.nombre : "Identifícate para activar tu Carnet";
   if (cardRoleEl) cardRoleEl.textContent = isLogged ? (user.nivelBadge || "Nivel 1 · Joven Activo") : "Sin Sesión Activa";
   if (cardDniEl) cardDniEl.textContent = isLogged ? `DNI: ${user.dni} · Orcera (Jaén)` : "Orcera (Jaén) · Modo Público";
   if (cardHashEl) cardHashEl.textContent = isLogged ? user.hash : "#ORC-2027-VISITANTE";
+  if (cardXpEl) {
+    const xp = isLogged ? (user.puntosHistoricos !== undefined ? user.puntosHistoricos : user.puntos) : 0;
+    cardXpEl.textContent = isLogged ? `${xp} PTS Acumulados` : "0 PTS Acumulados";
+  }
 
   // 4. Actualizar vista del Modal según estado
   const viewLogged = document.getElementById("user-view-logged");
@@ -4011,6 +4048,7 @@ function updateUserUI() {
     const modalName = document.getElementById("modal-user-name");
     const modalBadge = document.getElementById("modal-user-role-badge");
     const modalPts = document.getElementById("modal-user-points");
+    const modalXp = document.getElementById("modal-user-xp");
     const modalPadron = document.getElementById("modal-user-padron-status");
     const modalAge = document.getElementById("modal-user-age");
     const modalDni = document.getElementById("modal-user-dni");
@@ -4020,6 +4058,10 @@ function updateUserUI() {
     if (modalName) modalName.textContent = user.nombre;
     if (modalBadge) modalBadge.textContent = user.nivelBadge || user.nivel;
     if (modalPts) modalPts.textContent = `${user.puntos} PTS`;
+    if (modalXp) {
+      const xp = user.puntosHistoricos !== undefined ? user.puntosHistoricos : user.puntos;
+      modalXp.textContent = `${xp} PTS (Nivel Permanente)`;
+    }
     if (modalPadron) {
       modalPadron.textContent = user.empadronado ? "✅ Empadronado/a" : "⚠️ No empadronado";
       modalPadron.style.color = user.empadronado ? "#10b981" : "#f59e0b";
@@ -4122,6 +4164,13 @@ function removeSavedAccount(accountId) {
 }
 
 function logInWithUser(user) {
+  if (user.puntosHistoricos === undefined) {
+    user.puntosHistoricos = user.puntos || 0;
+  }
+  const lvl = calculateLevel(user.puntosHistoricos);
+  user.nivel = lvl.nivel;
+  user.nivelBadge = lvl.badge;
+
   AppState.currentUser = user;
   AppState.userPoints = user.puntos;
   AppState.userLevel = user.nivel;
@@ -4401,6 +4450,7 @@ async function handleRegisterNewUser() {
     passwordHash: passHash,
     empadronado: isEmpadronado,
     puntos: initialPoints,
+    puntosHistoricos: initialPoints,
     nivel: levelInfo.nivel,
     nivelBadge: levelInfo.badge,
     hash: `#ORC-2027-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -4484,28 +4534,30 @@ async function handleManualLogin() {
 
 
 function updateLevelsExplainerUI() {
-  const pts = AppState.currentUser ? AppState.currentUser.puntos : 0;
-  const lvl = calculateLevel(pts);
+  const user = AppState.currentUser;
+  const xp = user ? (user.puntosHistoricos !== undefined ? user.puntosHistoricos : user.puntos) : 0;
+  const balance = user ? user.puntos : 0;
+  const lvl = calculateLevel(xp);
 
   const progCur = document.getElementById("level-prog-current");
   const progNext = document.getElementById("level-prog-next");
   const progFill = document.getElementById("level-progress-bar-fill");
 
   if (progCur) {
-    if (AppState.currentUser) {
-      progCur.textContent = `${lvl.nivel} (${pts} PTS)`;
+    if (user) {
+      progCur.textContent = `${lvl.nivel} (${xp} PTS acumulados · Saldo para canjes: ${balance} PTS)`;
     } else {
       progCur.textContent = "Modo Visitante (0 PTS)";
     }
   }
 
   if (progNext) {
-    if (!AppState.currentUser) {
+    if (!user) {
       progNext.textContent = "Crea tu cuenta para comenzar en Nivel 1";
     } else if (lvl.nextLevel) {
       progNext.textContent = `Te faltan ${lvl.ptsToNext} pts para ${lvl.nextLevel}`;
     } else {
-      progNext.textContent = "¡Rango Máximo Alcanzado! 👑";
+      progNext.textContent = "¡Rango Máximo Alcanzado! 👑 (Nivel permanente)";
     }
   }
 
@@ -4517,7 +4569,7 @@ function updateLevelsExplainerUI() {
   for (let t = 1; t <= 4; t++) {
     const card = document.getElementById(`tier-card-${t}`);
     if (card) {
-      card.classList.toggle("active-user-tier", AppState.currentUser && lvl.tier === t);
+      card.classList.toggle("active-user-tier", user && lvl.tier === t);
     }
   }
 }
