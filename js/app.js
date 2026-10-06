@@ -243,7 +243,7 @@ function initClock() {
 function initTheme() {
   const toggleBtn = document.getElementById("theme-toggle");
   const themeIcon = document.getElementById("theme-icon");
-  
+
   toggleBtn.addEventListener("click", () => {
     AppState.currentTheme = AppState.currentTheme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", AppState.currentTheme);
@@ -281,7 +281,7 @@ function initNavigation() {
 
   function switchTab(tabId, targetElementId = null) {
     AppState.activeTab = tabId;
-    
+
     // Actualizar botones superiores
     topTabs.forEach(b => b.classList.toggle("active", b.getAttribute("data-tab") === tabId));
     // Actualizar botones barra inferior
@@ -289,7 +289,7 @@ function initNavigation() {
 
     // Mostrar panel correspondiente
     panels.forEach(p => p.classList.toggle("active", p.id === tabId));
-    
+
     // Si se especifica un destino, hacer scroll hacia él
     if (targetElementId) {
       setTimeout(() => {
@@ -309,7 +309,7 @@ function initNavigation() {
 
   // Hacer funciones disponibles globalmente
   window.switchTab = switchTab;
-  window.goToCanjes = function() {
+  window.goToCanjes = function () {
     switchTab("tab-gamificacion", "rewards-grid");
   };
 
@@ -581,7 +581,7 @@ function closeStoryModal() {
 // Acordeón interactivo del Módulo 1 "Descubre el Plan"
 function initAccordion() {
   const items = document.querySelectorAll(".accordion-item");
-  
+
   // Abrir el primer punto por defecto para facilitar el onboarding
   if (items.length > 0) {
     items[0].classList.add("open");
@@ -592,7 +592,7 @@ function initAccordion() {
     const header = item.querySelector(".accordion-header");
     header.addEventListener("click", () => {
       const isOpen = item.classList.contains("open");
-      
+
       // Cerrar otros para que sea estilo acordeón limpio
       items.forEach(other => {
         other.classList.remove("open");
@@ -631,10 +631,10 @@ function renderEjesSlider() {
     btn.addEventListener("click", () => {
       const id = parseInt(btn.getAttribute("data-eje-id"));
       AppState.activeEjeId = id;
-      
+
       container.querySelectorAll(".eje-selector-chip").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      
+
       renderEjeDetail(id);
     });
   });
@@ -1465,45 +1465,45 @@ function renderEjeDetail(ejeId) {
               </div>
 
               ${eje.acciones.map(a => {
-                const rm = a.roadmap || { anos: [2027, 2028, 2029, 2030, 2031] };
-                const dur = rm.anos ? rm.anos.length : 5;
-                return `
+    const rm = a.roadmap || { anos: [2027, 2028, 2029, 2030, 2031] };
+    const dur = rm.anos ? rm.anos.length : 5;
+    return `
                   <div class="eje-gantt-matrix-row" data-action-code="${a.codigo}" data-eje-id="${eje.id}" role="button" tabindex="0" title="Haz clic para ver la ficha completa de ${a.codigo}">
                     <div class="gantt-cell-action" title="${a.titulo}">
                       <strong>${a.codigo} <span class="gantt-click-hint">🔍</span></strong>
                       <span>${a.titulo.substring(0, 32)}...</span>
                     </div>
                     ${[2027, 2028, 2029, 2030, 2031].map(y => {
-                      const act = rm.anos && rm.anos.includes(y);
-                      return `
+      const act = rm.anos && rm.anos.includes(y);
+      return `
                         <div class="gantt-cell-year">
                           ${act ? '<div class="gantt-bar-cell"></div>' : '<div class="gantt-bar-cell empty"></div>'}
                         </div>
                       `;
-                    }).join("")}
+    }).join("")}
                     <div class="gantt-cell-dur">
                       <span class="dur-pill-mini ${dur === 5 ? 'quinquenal' : 'parcial'}">${dur} ${dur === 1 ? 'año' : 'años'}</span>
                     </div>
                   </div>
                 `;
-              }).join("")}
+  }).join("")}
             </div>
           </div>
 
           <div class="oe-groups-container">
             ${eje.objetivosEspecificos.map(oe => {
-              // Filtrar acciones del objetivo según filtro de duración si aplica
-              const filteredAcciones = oe.acciones.filter(acc => {
-                const roadmap = getActionRoadmap(acc, eje);
-                if (AppState.selectedActionDuration !== "todas" && roadmap.duracionTipo !== AppState.selectedActionDuration) {
-                  return false;
-                }
-                return true;
-              });
+    // Filtrar acciones del objetivo según filtro de duración si aplica
+    const filteredAcciones = oe.acciones.filter(acc => {
+      const roadmap = getActionRoadmap(acc, eje);
+      if (AppState.selectedActionDuration !== "todas" && roadmap.duracionTipo !== AppState.selectedActionDuration) {
+        return false;
+      }
+      return true;
+    });
 
-              if (filteredAcciones.length === 0) return '';
+    if (filteredAcciones.length === 0) return '';
 
-              return `
+    return `
               <div class="oe-group-block">
                 <div class="oe-header-banner">
                   <div>
@@ -1515,31 +1515,31 @@ function renderEjeDetail(ejeId) {
 
                 <div class="actions-cards-stack">
                   ${filteredAcciones.map(acc => {
-                    const roadmap = getActionRoadmap(acc, eje);
-                    const isQuinquenal = AppState.selectedActionYear === "quinquenal";
-                    const selYear = parseInt(AppState.selectedActionYear) || 2027;
+      const roadmap = getActionRoadmap(acc, eje);
+      const isQuinquenal = AppState.selectedActionYear === "quinquenal";
+      const selYear = parseInt(AppState.selectedActionYear) || 2027;
 
-                    const isActiveThisYear = roadmap.anos.includes(selYear);
-                    const isCompleted = selYear > Math.max(...roadmap.anos);
-                    const isUpcoming = selYear < Math.min(...roadmap.anos);
+      const isActiveThisYear = roadmap.anos.includes(selYear);
+      const isCompleted = selYear > Math.max(...roadmap.anos);
+      const isUpcoming = selYear < Math.min(...roadmap.anos);
 
-                    let statusClass = "status-en_curso";
-                    let statusLabel = "En curso";
-                    if (isQuinquenal) {
-                      statusClass = "status-" + acc.estado;
-                      statusLabel = formatStatusName(acc.estado);
-                    } else if (isActiveThisYear) {
-                      statusClass = "status-en_curso";
-                      statusLabel = `● En ejecución en ${selYear}`;
-                    } else if (isCompleted) {
-                      statusClass = "status-finalizada";
-                      statusLabel = `✓ Finalizada (año ${Math.max(...roadmap.anos)})`;
-                    } else if (isUpcoming) {
-                      statusClass = "status-no_iniciada";
-                      statusLabel = `⏳ Prevista (año ${Math.min(...roadmap.anos)})`;
-                    }
+      let statusClass = "status-en_curso";
+      let statusLabel = "En curso";
+      if (isQuinquenal) {
+        statusClass = "status-" + acc.estado;
+        statusLabel = formatStatusName(acc.estado);
+      } else if (isActiveThisYear) {
+        statusClass = "status-en_curso";
+        statusLabel = `● En ejecución en ${selYear}`;
+      } else if (isCompleted) {
+        statusClass = "status-finalizada";
+        statusLabel = `✓ Finalizada (año ${Math.max(...roadmap.anos)})`;
+      } else if (isUpcoming) {
+        statusClass = "status-no_iniciada";
+        statusLabel = `⏳ Prevista (año ${Math.min(...roadmap.anos)})`;
+      }
 
-                    return `
+      return `
                     <div class="action-card ${!isQuinquenal && !isActiveThisYear ? 'action-card-muted' : ''}">
                       <div class="action-header-row">
                         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
@@ -1562,9 +1562,9 @@ function renderEjeDetail(ejeId) {
                         </div>
                         <div class="action-barchart-grid">
                           ${[2027, 2028, 2029, 2030, 2031].map(y => {
-                            const active = roadmap.anos.includes(y);
-                            const isCurrent = y === 2027;
-                            return `
+        const active = roadmap.anos.includes(y);
+        const isCurrent = y === 2027;
+        return `
                               <div class="barchart-col ${active ? 'col-active' : 'col-inactive'} ${isCurrent ? 'col-current' : ''}">
                                 <span class="barchart-year">${y}</span>
                                 <div class="barchart-bar-wrap">
@@ -1573,7 +1573,7 @@ function renderEjeDetail(ejeId) {
                                 <span class="barchart-dot ${active ? 'active' : ''}">${active ? '●' : '○'}</span>
                               </div>
                             `;
-                          }).join("")}
+      }).join("")}
                         </div>
                       </div>
 
@@ -1589,14 +1589,14 @@ function renderEjeDetail(ejeId) {
                           </div>
                           <div class="quinquenal-years-grid">
                             ${[2027, 2028, 2029, 2030, 2031].map(yr => {
-                              const inAnos = roadmap.anos.includes(yr);
-                              return `
+        const inAnos = roadmap.anos.includes(yr);
+        return `
                               <div class="quinquenal-year-row ${inAnos ? 'current-highlight' : ''}" style="${!inAnos ? 'opacity: 0.65;' : ''}">
                                 <span class="quinquenal-year-label">${yr}:</span>
                                 <span class="quinquenal-year-text">${roadmap.hitos ? roadmap.hitos[yr] : 'Ejecución normalizada.'}</span>
                               </div>
                             `;
-                            }).join("")}
+      }).join("")}
                           </div>
                         </div>
                       ` : `
@@ -1644,11 +1644,11 @@ function renderEjeDetail(ejeId) {
                       </div>
                     </div>
                   `;
-                  }).join("")}
+    }).join("")}
                 </div>
               </div>
             `;
-            }).join("")}
+  }).join("")}
           </div>
         </div>
 
@@ -1699,10 +1699,10 @@ function renderEjeDetail(ejeId) {
           <!-- LISTADO DE ACCIONES CON SUS 6 INDICADORES OFICIALES CADA UNA -->
           <div class="actions-evaluations-container" style="margin-bottom: 24px;">
             ${displayedAccionesForInd.map(acc => {
-              const accCumplimiento = Math.round(acc.indicadores.reduce((sum, ind) => sum + ind.cumplimiento, 0) / (acc.indicadores.length || 1));
-              const compClass = accCumplimiento >= 100 ? 'comp-superado' : (accCumplimiento >= 90 ? 'comp-optimo' : 'comp-progreso');
+    const accCumplimiento = Math.round(acc.indicadores.reduce((sum, ind) => sum + ind.cumplimiento, 0) / (acc.indicadores.length || 1));
+    const compClass = accCumplimiento >= 100 ? 'comp-superado' : (accCumplimiento >= 90 ? 'comp-optimo' : 'comp-progreso');
 
-              return `
+    return `
                 <div class="action-eval-card" id="eval-card-${acc.codigo}">
                   <div class="action-eval-header">
                     <div class="action-eval-title-wrap">
@@ -1728,8 +1728,8 @@ function renderEjeDetail(ejeId) {
 
                     <div class="ind-cards-grid">
                       ${acc.indicadores.map(ind => {
-                        const indCompClass = ind.cumplimiento >= 100 ? 'comp-superado' : (ind.cumplimiento >= 90 ? 'comp-optimo' : 'comp-progreso');
-                        return `
+      const indCompClass = ind.cumplimiento >= 100 ? 'comp-superado' : (ind.cumplimiento >= 90 ? 'comp-optimo' : 'comp-progreso');
+      return `
                           <div class="indicator-item-card">
                             <div>
                               <div class="ind-item-header">
@@ -1757,25 +1757,25 @@ function renderEjeDetail(ejeId) {
                             <!-- Desglose por Años (2027 a 2031) -->
                             <div class="ind-mini-years-row">
                               ${[2027, 2028, 2029, 2030, 2031].map(yr => {
-                                const yrData = ind.valoresPorAno[yr] || { conseguido: 0, meta: 0, pct: 100 };
-                                const isCurYr = AppState.selectedEvaluationYear === yr;
-                                return `
+        const yrData = ind.valoresPorAno[yr] || { conseguido: 0, meta: 0, pct: 100 };
+        const isCurYr = AppState.selectedEvaluationYear === yr;
+        return `
                                   <div class="mini-yr-cell ${isCurYr ? 'selected-eval-yr' : ''}">
                                     <span class="mini-yr-lbl">${yr}</span>
                                     <span class="mini-yr-val">${yrData.conseguido}</span>
                                     <span class="mini-yr-pct">${yrData.pct}%</span>
                                   </div>
                                 `;
-                              }).join("")}
+      }).join("")}
                             </div>
                           </div>
                         `;
-                      }).join("")}
+    }).join("")}
                     </div>
                   </div>
                 </div>
               `;
-            }).join("")}
+  }).join("")}
           </div>
 
           <!-- SECCIÓN 5: RESULTADOS DE LAS EVALUACIONES OFICIALES (ANUALES Y FINAL) -->
@@ -1900,22 +1900,22 @@ function renderEjeDetail(ejeId) {
             <!-- KPI 1: Ingresos Previstos -->
             <div class="finanza-kpi-card">
               <span class="finanza-kpi-label">💰 Previsión Ingresos (${selFinYear})</span>
-              <span class="finanza-kpi-val" style="color: #38bdf8;">${finAno.ingresosPrevistosTotal.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+              <span class="finanza-kpi-val" style="color: #38bdf8;">${finAno.ingresosPrevistosTotal.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
               <div class="fuentes-mini-list">
-                <div class="fuentes-mini-item"><span>🏛️ Ayto. Orcera (60%):</span> <strong>${finAno.fuentesIngreso.recursosPropios.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong></div>
-                <div class="fuentes-mini-item"><span>🏛️ Diputación Jaén (20%):</span> <strong>${finAno.fuentesIngreso.diputacionJaen.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong></div>
-                <div class="fuentes-mini-item"><span>🏛️ Junta / IAJ (15%):</span> <strong>${finAno.fuentesIngreso.juntaAndaluciaIAJ.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong></div>
-                <div class="fuentes-mini-item"><span>🇪🇺 Otras / Fondos (5%):</span> <strong>${finAno.fuentesIngreso.otrasAyudas.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong></div>
+                <div class="fuentes-mini-item"><span>🏛️ Ayto. Orcera (60%):</span> <strong>${finAno.fuentesIngreso.recursosPropios.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</strong></div>
+                <div class="fuentes-mini-item"><span>🏛️ Diputación Jaén (20%):</span> <strong>${finAno.fuentesIngreso.diputacionJaen.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</strong></div>
+                <div class="fuentes-mini-item"><span>🏛️ Junta / IAJ (15%):</span> <strong>${finAno.fuentesIngreso.juntaAndaluciaIAJ.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</strong></div>
+                <div class="fuentes-mini-item"><span>🇪🇺 Otras / Fondos (5%):</span> <strong>${finAno.fuentesIngreso.otrasAyudas.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</strong></div>
               </div>
             </div>
 
             <!-- KPI 2: Gastos Ejecutados -->
             <div class="finanza-kpi-card">
               <span class="finanza-kpi-label">📉 Gastos Ejecutados (${selFinYear})</span>
-              <span class="finanza-kpi-val" style="color: #34d399;">${finAno.gastosEjecutadosTotal.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+              <span class="finanza-kpi-val" style="color: #34d399;">${finAno.gastosEjecutadosTotal.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
               <div class="fuentes-mini-list">
                 <div class="fuentes-mini-item"><span>Tasa de Ejecución:</span> <strong style="color: #34d399;">${finAno.porcentajeEjecucion}%</strong></div>
-                <div class="fuentes-mini-item"><span>Saldo Remanente:</span> <strong>${finAno.saldoRemanente.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong></div>
+                <div class="fuentes-mini-item"><span>Saldo Remanente:</span> <strong>${finAno.saldoRemanente.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</strong></div>
                 <div class="fuentes-mini-item"><span>Acciones Desarrolladas:</span> <strong>${finAno.totalAccionesActivas} proyectos</strong></div>
                 <div class="fuentes-mini-item"><span>Intervención Contable:</span> <strong style="color: #22d3ee;">Fiscalizado Favorable</strong></div>
               </div>
@@ -1966,15 +1966,15 @@ function renderEjeDetail(ejeId) {
                   <div class="proyecto-finanza-metrics">
                     <div class="pf-metric-item">
                       <span class="pf-metric-lbl">Previsión Ingresos:</span>
-                      <span class="pf-metric-val" style="color: #38bdf8;">${p.previsionIngresos.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+                      <span class="pf-metric-val" style="color: #38bdf8;">${p.previsionIngresos.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
                     </div>
                     <div class="pf-metric-item">
                       <span class="pf-metric-lbl">Gasto Ejecutado:</span>
-                      <span class="pf-metric-val" style="color: #34d399;">${p.gastoEjecutado.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+                      <span class="pf-metric-val" style="color: #34d399;">${p.gastoEjecutado.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
                     </div>
                     <div class="pf-metric-item">
                       <span class="pf-metric-lbl">Saldo Remanente:</span>
-                      <span class="pf-metric-val" style="color: ${p.saldo >= 0 ? '#38bdf8' : '#f87171'};">${p.saldo.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+                      <span class="pf-metric-val" style="color: ${p.saldo >= 0 ? '#38bdf8' : '#f87171'};">${p.saldo.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
                     </div>
                     <div class="pf-metric-item">
                       <span class="pf-metric-lbl">Justificantes:</span>
@@ -2001,7 +2001,7 @@ function renderEjeDetail(ejeId) {
                           </p>
                           <div class="just-item-bottom">
                             <span style="font-size: 0.68rem; color: var(--text-dim);">${j.fecha}</span>
-                            <span style="font-size: 0.85rem; font-weight: 800; color: #34d399;">${j.importe.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+                            <span style="font-size: 0.85rem; font-weight: 800; color: #34d399;">${j.importe.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
                             <button type="button" class="btn-ver-comprobante open-justificante-btn" data-just-id="${j.id}">
                               Ver Volante 🔍
                             </button>
@@ -2048,9 +2048,9 @@ function renderEjeDetail(ejeId) {
                     <tr class="${selFinYear === r.ano ? 'active-row' : ''}">
                       <td><strong>${r.ano}</strong> ${selFinYear === r.ano ? '📍 (Activo)' : ''}</td>
                       <td>${r.acciones} proyectos</td>
-                      <td style="color: #38bdf8; font-weight: 700;">${r.ingresos.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                      <td style="color: #34d399; font-weight: 700;">${r.gastos.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                      <td style="color: ${r.saldo >= 0 ? '#38bdf8' : '#f87171'};">${r.saldo.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                      <td style="color: #38bdf8; font-weight: 700;">${r.ingresos.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</td>
+                      <td style="color: #34d399; font-weight: 700;">${r.gastos.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</td>
+                      <td style="color: ${r.saldo >= 0 ? '#38bdf8' : '#f87171'};">${r.saldo.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</td>
                       <td>${r.facturas} 📄</td>
                       <td>${r.nominas} 💼</td>
                       <td><span class="action-status-badge status-en_curso">${r.porcentaje}%</span></td>
@@ -2329,7 +2329,7 @@ function getActionFullDetails(actionCode, optEjeId) {
       if (acc) {
         foundAcc = acc;
         foundEje = eje;
-        foundOe = (eje.objetivosEspecificos || []).find(oe => 
+        foundOe = (eje.objetivosEspecificos || []).find(oe =>
           (oe.acciones || []).some(a => a.codigo === actionCode)
         );
         break;
@@ -2489,14 +2489,14 @@ function openActionDetailModal(actionCode, optEjeId) {
           </div>
           <div style="display: flex; gap: 6px; margin: 10px 0 14px; overflow-x: auto;">
             ${[2027, 2028, 2029, 2030, 2031].map(yr => {
-              const isAct = roadmap.anos.includes(yr);
-              return `
+    const isAct = roadmap.anos.includes(yr);
+    return `
                 <div style="flex: 1; min-width: 54px; text-align: center; padding: 6px 3px; border-radius: var(--radius-sm); background: ${isAct ? 'rgba(16,185,129,0.18)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isAct ? 'var(--emerald)' : 'var(--segura-border)'};">
                   <span style="font-size: 0.75rem; font-weight: 800; color: ${isAct ? '#34d399' : 'var(--text-dim)'};">${yr}</span>
                   <span style="display: block; font-size: 0.62rem; color: ${isAct ? 'var(--text-main)' : 'var(--text-dim)'};">${isAct ? '● Activa' : '○ —'}</span>
                 </div>
               `;
-            }).join("")}
+  }).join("")}
           </div>
           <div style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.5;">
             <strong style="color: var(--text-main);">Hitos y Fases Programadas:</strong>
@@ -2521,11 +2521,11 @@ function openActionDetailModal(actionCode, optEjeId) {
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 12px;">
             <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
               <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Previsión</span>
-              <strong style="font-size: 0.92rem; color: #34d399;">${finanzas.totalPrevision > 0 ? finanzas.totalPrevision.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'Ordinaria'}</strong>
+              <strong style="font-size: 0.92rem; color: #34d399;">${finanzas.totalPrevision > 0 ? finanzas.totalPrevision.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' €' : 'Ordinaria'}</strong>
             </div>
             <div style="background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
               <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Fiscalizado</span>
-              <strong style="font-size: 0.92rem; color: var(--amurjo-cyan);">${finanzas.totalEjecutado > 0 ? finanzas.totalEjecutado.toLocaleString('es-ES', {minimumFractionDigits: 2}) + ' €' : 'En trámite'}</strong>
+              <strong style="font-size: 0.92rem; color: var(--amurjo-cyan);">${finanzas.totalEjecutado > 0 ? finanzas.totalEjecutado.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' €' : 'En trámite'}</strong>
             </div>
             <div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); padding: 8px 10px; border-radius: var(--radius-sm); text-align: center;">
               <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); display: block;">Ejecución</span>
@@ -2549,9 +2549,9 @@ function openActionDetailModal(actionCode, optEjeId) {
                   ${finanzas.anualidades.map(an => `
                     <tr>
                       <td><strong>${an.ano}</strong></td>
-                      <td>${an.prevision.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                      <td>${an.ejecutado.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
-                      <td>${an.saldo.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</td>
+                      <td>${an.prevision.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</td>
+                      <td>${an.ejecutado.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</td>
+                      <td>${an.saldo.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</td>
                       <td><span class="action-status-badge status-en_curso">${an.pct}%</span></td>
                     </tr>
                   `).join("")}
@@ -2572,7 +2572,7 @@ function openActionDetailModal(actionCode, optEjeId) {
                       <strong style="color: var(--amurjo-cyan);">${j.ref || j.id}</strong> · <span>${j.concepto}</span>
                       <div style="font-size: 0.65rem; color: var(--text-muted);">${j.proveedorBeneficiario} · Fecha: ${j.fecha} · Partida: <code>${j.partidaPresupuestaria || '337.226'}</code></div>
                     </div>
-                    <strong style="color: #34d399; font-size: 0.8rem; white-space: nowrap;">${j.importe.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</strong>
+                    <strong style="color: #34d399; font-size: 0.8rem; white-space: nowrap;">${j.importe.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</strong>
                   </div>
                 `).join("")}
               </div>
@@ -2619,10 +2619,10 @@ function openActionDetailModal(actionCode, optEjeId) {
           ` : `
             <div style="display: flex; flex-direction: column; gap: 10px;">
               ${indicadores.map(ind => {
-                const pct = ind.cumplimiento || (ind.metaQuinquenal > 0 ? Math.round((ind.actualQuinquenal / ind.metaQuinquenal) * 100) : 100);
-                const indVote = evalData.userIndicatorVotes[ind.id];
-                const indComm = evalData.communityIndicatorVotes[ind.id] || { avg: 4.5, count: 20 };
-                return `
+    const pct = ind.cumplimiento || (ind.metaQuinquenal > 0 ? Math.round((ind.actualQuinquenal / ind.metaQuinquenal) * 100) : 100);
+    const indVote = evalData.userIndicatorVotes[ind.id];
+    const indComm = evalData.communityIndicatorVotes[ind.id] || { avg: 4.5, count: 20 };
+    return `
                   <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--segura-border); border-radius: var(--radius-sm); padding: 10px 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 4px;">
                       <strong style="font-size: 0.76rem; color: var(--text-main);">${ind.codigo || ind.id}: ${ind.nombre}</strong>
@@ -2640,7 +2640,7 @@ function openActionDetailModal(actionCode, optEjeId) {
                     </div>
                   </div>
                 `;
-              }).join("")}
+  }).join("")}
             </div>
           `}
         </div>
@@ -3066,7 +3066,7 @@ function closeActionDetailModal() {
 function linkActionToBuzonProposal(actionCode, encodedTitle, ejeId) {
   const actionTitle = decodeURIComponent(encodedTitle || "");
   closeActionDetailModal();
-  
+
   if (window.switchTab) {
     window.switchTab("tab-buzon", "new-proposal-form");
   }
@@ -3245,8 +3245,8 @@ function renderEvaluacionHeroBox() {
   const allActions = getAllActionsList();
   const selYear = EvaluacionState.selectedYear;
 
-  const activeActions = selYear === "all" 
-    ? allActions 
+  const activeActions = selYear === "all"
+    ? allActions
     : allActions.filter(a => a.roadmapAnos.includes(parseInt(selYear)));
 
   const totalActions = activeActions.length;
@@ -3410,9 +3410,9 @@ function renderEvaluacionActionsList() {
             </div>
 
             ${indicators.map(ind => {
-              const userIndScore = evalData.userIndicatorVotes[ind.id] || 0;
-              const commIndScore = evalData.communityIndicatorVotes[ind.id] || { avg: 4.5, count: 50 };
-              return `
+      const userIndScore = evalData.userIndicatorVotes[ind.id] || 0;
+      const commIndScore = evalData.communityIndicatorVotes[ind.id] || { avg: 4.5, count: 50 };
+      return `
                 <div class="eval-indicator-card">
                   <div class="eval-indicator-top">
                     <div>
@@ -3443,7 +3443,7 @@ function renderEvaluacionActionsList() {
                   </div>
                 </div>
               `;
-            }).join("")}
+    }).join("")}
           </div>
         ` : ''}
 
@@ -3920,7 +3920,7 @@ function openJustificanteModal(just, eje, ano) {
         <span style="font-size: 0.7rem; color: #64748b; display: block; text-transform: uppercase;">Importe Total Liquidado:</span>
         <small style="font-size: 0.68rem; color: #059669; font-weight: 700;">${just.estado}</small>
       </div>
-      <span class="volante-total-amount">${just.importe.toLocaleString('es-ES', {minimumFractionDigits: 2})} €</span>
+      <span class="volante-total-amount">${just.importe.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €</span>
     </div>
 
     <div class="volante-footer-diligencia">
@@ -4587,7 +4587,7 @@ async function handleRegisterNewUser() {
   }
 
   const saved = getSavedAccountsList();
-  const duplicate = saved.find(u => 
+  const duplicate = saved.find(u =>
     (u.nombre && u.nombre.toLowerCase() === fullName.toLowerCase()) ||
     (emailInput && u.email && u.email.toLowerCase() === emailInput.toLowerCase())
   );
@@ -4672,8 +4672,8 @@ async function handleManualLogin() {
   const saved = getSavedAccountsList();
   const cleanQuery = query.replace(/[*-\s]/g, '');
 
-  const found = saved.find(u => 
-    (u.nombre && u.nombre.toLowerCase() === query) || 
+  const found = saved.find(u =>
+    (u.nombre && u.nombre.toLowerCase() === query) ||
     (u.alias && u.alias.toLowerCase() === query) ||
     (u.email && u.email.toLowerCase() === query) ||
     (u.dni && u.dni.toLowerCase().replace(/[*-\s]/g, '') === cleanQuery) ||
@@ -5189,7 +5189,7 @@ function setupAdminGlobalEvents() {
 
   if (btnCloseDash) btnCloseDash.addEventListener("click", closeAdminDashboard);
   if (btnLogoutDash) btnLogoutDash.addEventListener("click", logoutMunicipal);
-    const btnOpenManual = document.getElementById("btn-admin-open-manual");
+  const btnOpenManual = document.getElementById("btn-admin-open-manual");
   if (btnOpenManual) {
     btnOpenManual.addEventListener("click", () => {
       switchAdminPane("pane-manual-tecnico");
@@ -5476,11 +5476,11 @@ function renderPaneAcciones(container) {
           </thead>
           <tbody>
             ${curEje.acciones.map(acc => {
-              const vigenciaText = acc.roadmap ? acc.roadmap.vigencia : (acc.periodo || acc.trimestre || 'Quinquenal (2027–2031)');
-              const respText = acc.responsable || acc.concejaliasResponsables || 'Concejalía de Juventud';
-              const recText = acc.recursos || acc.recursosAsignados || 'Recursos propios del Ayuntamiento';
+    const vigenciaText = acc.roadmap ? acc.roadmap.vigencia : (acc.periodo || acc.trimestre || 'Quinquenal (2027–2031)');
+    const respText = acc.responsable || acc.concejaliasResponsables || 'Concejalía de Juventud';
+    const recText = acc.recursos || acc.recursosAsignados || 'Recursos propios del Ayuntamiento';
 
-              return `
+    return `
               <tr>
                 <td><strong style="color:var(--amurjo-cyan); font-size:0.76rem;">${acc.codigo}</strong></td>
                 <td>
@@ -5518,7 +5518,7 @@ function renderPaneAcciones(container) {
                 </td>
               </tr>
               `;
-            }).join("")}
+  }).join("")}
           </tbody>
         </table>
       </div>
@@ -6216,23 +6216,23 @@ function renderPaneStories(container) {
 
         <div class="stories-admin-grid">
           ${storyEntries.map(([key, s]) => {
-            const vA = s.votosA || 0;
-            const vB = s.votosB || 0;
-            const cardTotal = vA + vB;
-            const pctA = cardTotal > 0 ? Math.round((vA / cardTotal) * 100) : 50;
-            const pctB = cardTotal > 0 ? (100 - pctA) : 50;
-            const isActiva = s.estado !== "cerrada";
+    const vA = s.votosA || 0;
+    const vB = s.votosB || 0;
+    const cardTotal = vA + vB;
+    const pctA = cardTotal > 0 ? Math.round((vA / cardTotal) * 100) : 50;
+    const pctB = cardTotal > 0 ? (100 - pctA) : 50;
+    const isActiva = s.estado !== "cerrada";
 
-            let winnerText = "⚖️ Empate técnico (50% - 50%)";
-            if (cardTotal === 0) {
-              winnerText = "⏳ Aún no hay votos registrados";
-            } else if (vA > vB) {
-              winnerText = `🏆 Lidera: <strong>${escapeHtml(s.opcionA)}</strong> (${pctA}%)`;
-            } else if (vB > vA) {
-              winnerText = `🏆 Lidera: <strong>${escapeHtml(s.opcionB)}</strong> (${pctB}%)`;
-            }
+    let winnerText = "⚖️ Empate técnico (50% - 50%)";
+    if (cardTotal === 0) {
+      winnerText = "⏳ Aún no hay votos registrados";
+    } else if (vA > vB) {
+      winnerText = `🏆 Lidera: <strong>${escapeHtml(s.opcionA)}</strong> (${pctA}%)`;
+    } else if (vB > vA) {
+      winnerText = `🏆 Lidera: <strong>${escapeHtml(s.opcionB)}</strong> (${pctB}%)`;
+    }
 
-            return `
+    return `
               <div class="story-chart-card" data-story-id="${key}">
                 <div class="story-chart-header">
                   <div>
@@ -6299,7 +6299,7 @@ function renderPaneStories(container) {
                 </div>
               </div>
             `;
-          }).join("")}
+  }).join("")}
         </div>
       </div>
     </div>
@@ -6730,7 +6730,7 @@ function renderPaneEvaluacionPrevia(container) {
           ${bestActions.map((a, i) => `
             <div style="background:rgba(0,0,0,0.25); border:1px solid var(--segura-border); border-radius:var(--radius-sm); padding:8px 12px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
               <div>
-                <strong style="color:var(--emerald); font-size:0.78rem;">#${i+1} · ${a.codigo}</strong>
+                <strong style="color:var(--emerald); font-size:0.78rem;">#${i + 1} · ${a.codigo}</strong>
                 <span style="font-size:0.75rem; color:var(--text-main); margin-left:6px;">${a.titulo}</span>
                 <span style="font-size:0.68rem; color:var(--text-muted); display:block;">Eje ${a.ejeNumero} · ${a.votes} votos registrados</span>
               </div>
@@ -6830,7 +6830,7 @@ function setupPromotionEvents() {
     });
   }
 
-    // Cartel oficial imprimible
+  // Cartel oficial imprimible
   const closePosterBtn = document.getElementById("close-promo-poster-modal");
   const posterModal = document.getElementById("promo-poster-modal");
   const printPosterBtn = document.getElementById("btn-print-poster-now");
@@ -6923,7 +6923,7 @@ function initPWAInstallSystem() {
           if (modal) modal.classList.add("active");
           return;
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     // 3. Si es dispositivo iOS (iPhone / iPad de Apple)
@@ -7220,14 +7220,14 @@ function getTecnicoChecklistState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_TECNICO_CHECKLIST);
     if (raw) return JSON.parse(raw);
-  } catch(e){}
+  } catch (e) { }
   return {};
 }
 
 function saveTecnicoChecklistState(state) {
   try {
     localStorage.setItem(STORAGE_KEY_TECNICO_CHECKLIST, JSON.stringify(state));
-  } catch(e){}
+  } catch (e) { }
 }
 
 function renderPaneManualTecnico(container) {
