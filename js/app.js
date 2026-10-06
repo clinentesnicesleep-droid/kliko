@@ -4687,6 +4687,42 @@ async function handleManualLogin() {
   const inputHash = await hashPassword(pass);
   const cleanQuery = query.replace(/[*-\s]/g, '');
 
+  // 0. Comprobar si se trata de un Responsable Técnico Nombrado (ej: Yolanda Samblás Díaz)
+  const tecnicosList = getAppointedStaffList();
+  const matchedTecnico = tecnicosList.find(t => {
+    const tFirst = t.nombre.toLowerCase().split(" ")[0];
+    const isQueryMatch = query.includes(tFirst) || t.nombre.toLowerCase().includes(query) || (t.pin && query === t.pin.toLowerCase());
+    const isPinMatch = t.pin && t.pin.toLowerCase() === pass.trim().toLowerCase();
+    return (isQueryMatch && isPinMatch) || (query.includes(tFirst) && isPinMatch);
+  });
+
+  if (matchedTecnico) {
+    const tecnicoUser = {
+      id: `user-${matchedTecnico.id}`,
+      nombre: matchedTecnico.nombre,
+      alias: matchedTecnico.nombre.split(" ")[0],
+      iniciales: matchedTecnico.nombre.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase(),
+      edad: 28,
+      rangoEdad: "18-30",
+      dni: "***7506*",
+      empadronado: true,
+      puntos: 1500,
+      puntosHistoricos: 1500,
+      nivel: "Técnica Municipal de Juventud",
+      nivelBadge: "🛠️ Técnica de Juventud",
+      hash: `#ORC-${matchedTecnico.pin.toUpperCase()}`,
+      rol: "tecnico",
+      cargoTecnico: matchedTecnico.cargo,
+      tecnicoPin: matchedTecnico.pin,
+      passwordHash: inputHash
+    };
+    saveSessionToStorage(tecnicoUser);
+    logInWithUser(tecnicoUser);
+    if (passInput) passInput.value = "";
+    showToast(`¡Bienvenida, ${matchedTecnico.nombre.split(" ")[0]}!`, `Sesión iniciada como ${matchedTecnico.cargo}.`);
+    return;
+  }
+
   // 1. Comprobar PRIMERO si se trata del Superadministrador (Ramón Muñoz)
   const isRamonQuery = query.includes("ramon") || query.includes("ramón") || query === "superadmin" || cleanQuery === "7506" || cleanQuery.includes("7506");
   if (isRamonQuery || isSuperAdminPass(pass)) {
@@ -5010,6 +5046,241 @@ function updateAsociacionUI() {
 // ==============================================================================
 // PANEL DE GESTIÓN MUNICIPAL DEL III PLAN (ADMINISTRADORES Y TÉCNICO DE JUVENTUD)
 // ==============================================================================
+
+// ==============================================================================
+// SISTEMA DE RECONOCIMIENTO Y NOTIFICACIÓN DE RESPONSABLES TÉCNICOS (YOLANDA, ETC.)
+// ==============================================================================
+function findLinkedUserForStaff(staff) {
+  if (!staff) return null;
+  const saved = getSavedAccountsList();
+  const staffNameNorm = (staff.nombre || "").toLowerCase().trim();
+  const staffFirst = staffNameNorm.split(" ")[0];
+
+  // 1. Buscar coincidencia exacta por ID enlazado
+  if (staff.linkedUserId) {
+    const byId = saved.find(u => u.id === staff.linkedUserId);
+    if (byId) return byId;
+  }
+
+  // 2. Buscar coincidencia por nombre o email
+  return saved.find(u => {
+    const uNom = (u.nombre || "").toLowerCase().trim();
+    const uAlias = (u.alias || "").toLowerCase().trim();
+    const uEmail = (u.email || "").toLowerCase().trim();
+    if (staff.email && uEmail && staff.email.toLowerCase() === uEmail) return true;
+    if (uNom === staffNameNorm) return true;
+    if (uNom.includes(staffFirst) && staffNameNorm.includes(uNom)) return true;
+    if (uAlias && staffNameNorm.includes(uAlias)) return true;
+    return false;
+  }) || null;
+}
+
+function syncStaffPrivilegesWithUser(staff, user) {
+  if (!staff || !user) return;
+  user.rol = "tecnico";
+  user.cargoTecnico = staff.cargo;
+  user.tecnicoPin = staff.pin;
+  user.nivel = "Técnica Municipal de Juventud";
+  user.nivelBadge = "🛠️ Técnica de Juventud";
+  saveSessionToStorage(user);
+
+  let saved = getSavedAccountsList();
+  const idx = saved.findIndex(u => u.id === user.id);
+  if (idx !== -1) {
+    saved[idx] = { ...saved[idx], ...user };
+    try {
+      localStorage.setItem("orcera_saved_accounts_v3", JSON.stringify(saved));
+    } catch(e){}
+  }
+}
+
+function openStaffNotificationModal(staff) {
+  const modal = document.getElementById("admin-staff-notify-modal");
+  if (!modal) return;
+
+  const linkedUser = findLinkedUserForStaff(staff);
+  const nameEl = document.getElementById("notify-staff-name");
+  const cargoEl = document.getElementById("notify-staff-cargo");
+  const pinEl = document.getElementById("notify-staff-pin");
+  const emailInput = document.getElementById("notify-staff-email");
+
+  if (nameEl) nameEl.textContent = staff.nombre;
+  if (cargoEl) cargoEl.textContent = staff.cargo;
+  if (pinEl) pinEl.textContent = staff.pin;
+  if (emailInput) {
+    emailInput.value = (linkedUser && linkedUser.email) || staff.email || "";
+  }
+
+  modal._currentStaff = staff;
+  modal._linkedUser = linkedUser;
+  modal.classList.add("active");
+}
+
+function closeStaffNotificationModal() {
+  const modal = document.getElementById("admin-staff-notify-modal");
+  if (modal) modal.classList.remove("active");
+}
+
+function generateStaffOfficialEmailBody(staff) {
+  const appUrl = window.location.origin + window.location.pathname;
+  return `Estimada Dña. ${staff.nombre},
+
+Por la presente, la Coordinación del III Plan Municipal de Juventud y el Ayuntamiento de Orcera le notifican formalmente su nombramiento oficial como:
+
+📋 CARGO: ${staff.cargo}
+🏛️ ORGANISMO: Ayuntamiento de Orcera (Jaén) · Concejalía de Juventud
+🔑 CLAVE / PIN MUNICIPAL: ${staff.pin}
+🌐 PLATAFORMA KLIKO: ${appUrl}
+
+RESPONSABILIDADES Y FACULTADES DELEGADAS:
+- Gestión y actualización del estado de las acciones del Plan (Ejes 1 al 7).
+- Registro y justificación de facturas y partidas de gasto por proveedor.
+- Moderación y respuesta a propuestas ciudadanas del Buzón y Pleno Joven.
+- Lanzamiento de Consultas Exprés (Stories) y censo de la Asociación Juvenil de Orcera (AJO).
+
+INSTRUCCIONES DE ACCESO:
+1. Entra en KLIKO (${appUrl}).
+2. Pulsa en el botón superior "🏛️ Gestión Municipal".
+3. Selecciona tu perfil "${staff.nombre}" o introduce tu PIN: ${staff.pin}.
+4. Dispones del "Manual Operativo del Técnico" en el menú lateral para consultar todas las rutinas paso a paso.
+
+Atentamente,
+Ramón Muñoz · Superadministrador del III Plan
+Ayuntamiento de Orcera`;
+}
+
+function setupStaffNotificationEvents() {
+  const modal = document.getElementById("admin-staff-notify-modal");
+  const closeBtn = document.getElementById("close-staff-notify-modal");
+  const form = document.getElementById("form-send-staff-notification");
+  const copyBtn = document.getElementById("btn-copy-staff-msg");
+  const printBtn = document.getElementById("btn-print-staff-acta");
+
+  if (closeBtn) closeBtn.addEventListener("click", closeStaffNotificationModal);
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeStaffNotificationModal();
+    });
+  }
+
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const staff = modal._currentStaff;
+      if (!staff) return;
+
+      const email = document.getElementById("notify-staff-email").value.trim();
+      if (!email) {
+        showToast("Email requerido", "Por favor, introduce el correo electrónico del destinatario.");
+        return;
+      }
+
+      // Guardar el email en el técnico
+      staff.email = email;
+      const list = getAppointedStaffList();
+      const sIdx = list.findIndex(x => x.id === staff.id);
+      if (sIdx !== -1) {
+        list[sIdx].email = email;
+        saveAppointedStaffList(list);
+      }
+
+      // Construir mailto
+      const subject = encodeURIComponent(`🏛️ Ayuntamiento de Orcera: Nombramiento Oficial como ${staff.cargo} en KLIKO`);
+      const body = encodeURIComponent(generateStaffOfficialEmailBody(staff));
+      const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+
+      window.location.href = mailtoUrl;
+      showToast("Gestor de Correo Abierto", `Se ha redactado la comunicación oficial para ${staff.nombre}.`);
+    });
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener("click", () => {
+      const staff = modal._currentStaff;
+      if (!staff) return;
+      const text = generateStaffOfficialEmailBody(staff);
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("Texto Copiado", "Mensaje oficial copiado al portapapeles para WhatsApp o correo.");
+      });
+    });
+  }
+
+  if (printBtn) {
+    printBtn.addEventListener("click", () => {
+      const staff = modal._currentStaff;
+      if (!staff) return;
+      printStaffAppointmentCredential(staff);
+    });
+  }
+}
+
+function printStaffAppointmentCredential(staff) {
+  const win = window.open("", "_blank");
+  if (!win) return;
+  win.document.write(`
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+      <meta charset="UTF-8">
+      <title>Credencial Oficial de Nombramiento · ${staff.nombre}</title>
+      <style>
+        body { font-family: 'Times New Roman', serif; padding: 40px; color: #111; max-width: 750px; margin: 0 auto; line-height: 1.6; }
+        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 16px; margin-bottom: 24px; }
+        .escudo { font-size: 3rem; margin-bottom: 8px; }
+        h1 { font-size: 1.5rem; text-transform: uppercase; margin: 0; letter-spacing: 1px; }
+        h2 { font-size: 1.1rem; color: #444; margin: 4px 0 0; }
+        .content { margin: 24px 0; font-size: 1.05rem; text-align: justify; }
+        .box { border: 2px solid #064e3b; background: #f0fdf4; padding: 16px; border-radius: 8px; margin: 20px 0; }
+        .signatures { margin-top: 50px; display: flex; justify-content: space-between; }
+        .sig-block { text-align: center; width: 45%; border-top: 1px solid #666; padding-top: 8px; }
+        @media print { body { padding: 0; } button { display: none; } }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div class="escudo">🏛️</div>
+        <h1>Ayuntamiento de Orcera</h1>
+        <h2>Concejalía de Juventud · III Plan Municipal de Juventud (2027–2031)</h2>
+      </div>
+
+      <div class="content">
+        <p><strong>DON RAMÓN MUÑOZ</strong>, en calidad de Superadministrador del III Plan Municipal de Juventud de Orcera y responsable de la plataforma cívica <strong>KLIKO</strong>,</p>
+        
+        <p><strong>HACE SABER:</strong></p>
+        <p>Que en virtud de las facultades de delegación técnica municipal, se procede al nombramiento oficial de:</p>
+
+        <div class="box">
+          <p style="margin:0 0 6px;"><strong>NOMBRADA:</strong> Dña. ${staff.nombre}</p>
+          <p style="margin:0 0 6px;"><strong>CARGO OFICIAL:</strong> ${staff.cargo}</p>
+          <p style="margin:0 0 6px;"><strong>FECHA DE EFECTO:</strong> ${staff.fechaAlta || '06/10/2026'}</p>
+          <p style="margin:0;"><strong>PIN DE ACCESO EN PLATAFORMA:</strong> <code>${staff.pin}</code></p>
+        </div>
+
+        <p>Con dicho nombramiento queda habilitada con facultades plenas para la actualización del cronograma de acciones, control y registro de facturas por proveedor, moderación del Buzón Joven vecinal y validación de socios de la Asociación Juvenil de Orcera.</p>
+
+        <p>Y para que conste y surta los efectos oportunos, se expide la presente credencial en Orcera (Jaén).</p>
+      </div>
+
+      <div class="signatures">
+        <div class="sig-block">
+          <p style="margin:0 0 40px;">El Superadministrador del Plan:</p>
+          <p style="margin:0; font-weight: bold;">Ramón Muñoz</p>
+        </div>
+        <div class="sig-block">
+          <p style="margin:0 0 40px;">La Técnica Nombrada:</p>
+          <p style="margin:0; font-weight: bold;">${staff.nombre}</p>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top: 30px;">
+        <button onclick="window.print()" style="padding:10px 20px; font-size:1rem; cursor:pointer;">🖨️ Imprimir Credencial</button>
+      </div>
+    </body>
+    </html>
+  `);
+  win.document.close();
+}
+
 const STORAGE_KEY_TECNICOS = "orcera_tecnicos_personal_v1";
 
 const DEFAULT_MUNICIPAL_STAFF = {
@@ -5134,6 +5405,7 @@ function initAdminPanel() {
   setupAdminGlobalEvents();
   setupActionEditorEvents();
   setupPromotionEvents();
+  setupStaffNotificationEvents();
 }
 
 function setupAdminGlobalEvents() {
@@ -6585,6 +6857,14 @@ function renderPaneConfiguracion(container, isAdmin) {
                     <span class="admin-badge-role tecnico">Técnico/a</span>
                   </div>
                   <small style="color:var(--text-muted); font-size:0.7rem; display:block;">${t.cargo} · Nombrado: ${t.fechaAlta || 'Vigente'}</small>
+                  ${(() => {
+                    const linked = findLinkedUserForStaff(t);
+                    if (linked) {
+                      return `<div style="margin-top:3px;"><span style="font-size:0.67rem; color:#10b981; background:rgba(16,185,129,0.12); padding:2px 6px; border-radius:4px; font-weight:600;">✔ Cuenta KLIKO vinculada: @${linked.alias || linked.nombre} (${linked.email || 'Email no indicado'})</span></div>`;
+                    } else {
+                      return `<div style="margin-top:3px;"><span style="font-size:0.67rem; color:var(--text-muted); background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px;">ℹ️ Sin cuenta vinculada aún en la app (se vinculará al registrarse o iniciar sesión)</span></div>`;
+                    }
+                  })()}
                   <div style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap;">
                     <span style="font-size:0.65rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">✔ Buzón & Respuestas</span>
                     <span style="font-size:0.65rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">✔ Registro Facturas</span>
@@ -6595,10 +6875,13 @@ function renderPaneConfiguracion(container, isAdmin) {
                 </div>
               </div>
 
-              <div style="display:flex; align-items:center; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <div style="background:rgba(0,0,0,0.3); border:1px dashed var(--segura-border); border-radius:6px; padding:4px 8px; font-family:monospace; font-size:0.75rem; color:var(--amurjo-cyan);" title="PIN de acceso asignado">
                   PIN: <strong>${t.pin}</strong>
                 </div>
+                <button type="button" class="btn-tool btn-notify-staff" data-id="${t.id}" style="color:var(--amurjo-cyan); padding:6px 10px; font-size:0.72rem;" title="Enviar notificación oficial por correo o WhatsApp">
+                  ✉️ Notificar Nombramiento
+                </button>
                 <button type="button" class="btn-tool btn-remove-tecnico" data-id="${t.id}" data-nombre="${t.nombre}" style="color:#f87171; padding:6px 10px; font-size:0.72rem;" title="Dar de baja este responsable técnico">
                   🗑️ Revocar
                 </button>
@@ -6634,6 +6917,16 @@ function renderPaneConfiguracion(container, isAdmin) {
       }
     });
   }
+
+  // Attach event to notify buttons:
+  container.querySelectorAll(".btn-notify-staff").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      const list = getAppointedStaffList();
+      const staff = list.find(x => x.id === id);
+      if (staff) openStaffNotificationModal(staff);
+    });
+  });
 
   // Attach event to revoke buttons:
   container.querySelectorAll(".btn-remove-tecnico").forEach(btn => {
