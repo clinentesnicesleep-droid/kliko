@@ -1574,7 +1574,7 @@
           </div>
         </div>
         <div class="admin-topbar-right">
-          <button type="button" class="btn-tool" id="btn-admin-open-manual"
+          <button type="button" class="btn-tool" id="btn-admin-open-manual" onclick="window.openManualTecnico()"
             style="border-color: rgba(6, 182, 212, 0.45); color: var(--amurjo-cyan);"
             title="Abrir Manual Operativo del Técnico de Juventud">
             <span>📖</span>
@@ -1662,7 +1662,7 @@
                 <small>Respaldo ciudadano medidas 2027–2031</small>
               </div>
             </button>
-            <button type="button" class="admin-nav-item" data-admin-pane="pane-manual-tecnico"
+            <button type="button" class="admin-nav-item" data-admin-pane="pane-manual-tecnico" onclick="window.openManualTecnico()"
               style="border-top:1px dashed var(--segura-border); margin-top:6px; padding-top:10px;">
               <span>📖</span>
               <div class="admin-nav-text">
@@ -2267,7 +2267,7 @@
 
     <script src="js/qrcode.min.js"></script>
     <script src="js/data-ejes.js?v=finanzas_anualizadas_v5"></script>
-    <script src="js/app.js?v=tabs_grid_v14"></script>
+    <script src="js/app.js?v=auth_fixed_v18"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

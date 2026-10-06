@@ -4650,6 +4650,22 @@ async function handleRegisterNewUser() {
   showToast(`¡Bienvenido/a, ${alias}! (+${initialPoints} PTS)`, "Tu cuenta joven está activa y asegurada con contraseña.");
 }
 
+
+function isSuperAdminPass(rawPass) {
+  if (!rawPass) return false;
+  const p = String(rawPass).trim();
+  const lower = p.toLowerCase();
+  return (
+    p === "75064320klico@#" ||
+    p === "75064320kliko@#" ||
+    lower === "75064320klico@#" ||
+    lower === "75064320kliko@#" ||
+    lower === "admin2027" ||
+    p === "75064320"
+  );
+}
+window.isSuperAdminPass = isSuperAdminPass;
+
 async function handleManualLogin() {
   const query = document.getElementById("login-name").value.trim().toLowerCase();
   const passInput = document.getElementById("login-password");
@@ -4669,9 +4685,45 @@ async function handleManualLogin() {
   }
 
   const inputHash = await hashPassword(pass);
-  const saved = getSavedAccountsList();
   const cleanQuery = query.replace(/[*-\s]/g, '');
 
+  // 1. Comprobar PRIMERO si se trata del Superadministrador (Ramón Muñoz)
+  const isRamonQuery = query.includes("ramon") || query.includes("ramón") || query === "superadmin" || cleanQuery === "7506" || cleanQuery.includes("7506");
+  if (isRamonQuery || isSuperAdminPass(pass)) {
+    if (isSuperAdminPass(pass)) {
+      const superAdminUser = {
+        id: "user-ramon-superadmin",
+        nombre: "Ramón Muñoz",
+        alias: "Ramón",
+        iniciales: "RM",
+        edad: 35,
+        rangoEdad: "+30",
+        dni: "***7506*",
+        empadronado: true,
+        puntos: 9999,
+        puntosHistoricos: 9999,
+        nivel: "Superadministrador del Plan",
+        nivelBadge: "👑 Superadmin",
+        hash: "#ORC-SUPERADMIN",
+        rol: "admin",
+        passwordHash: inputHash
+      };
+      saveSessionToStorage(superAdminUser);
+      logInWithUser(superAdminUser);
+      if (passInput) passInput.value = "";
+      showToast("¡Bienvenido, Ramón!", "Sesión de Superadministrador iniciada con privilegios totales.");
+      return;
+    } else {
+      showToast("Contraseña incorrecta", "La clave de Superadministrador no coincide.");
+      if (passInput) {
+        passInput.value = "";
+        passInput.focus();
+      }
+      return;
+    }
+  }
+
+  const saved = getSavedAccountsList();
   const found = saved.find(u =>
     (u.nombre && u.nombre.toLowerCase() === query) ||
     (u.alias && u.alias.toLowerCase() === query) ||
@@ -4710,39 +4762,7 @@ async function handleManualLogin() {
     return;
   }
 
-  // Comprobar si se trata del Superadministrador (Ramón Muñoz)
-  if (query.includes("ramon") || query.includes("ramón") || query === "superadmin") {
-    if (pass === "75064320klico@#") {
-      const superAdminUser = {
-        id: "user-ramon-superadmin",
-        nombre: "Ramón Muñoz",
-        alias: "Ramón",
-        iniciales: "RM",
-        edad: 35,
-        rangoEdad: "+30",
-        dni: "***7506*",
-        empadronado: true,
-        puntos: 9999,
-        puntosHistoricos: 9999,
-        nivel: "Superadministrador del Plan",
-        nivelBadge: "👑 Superadmin",
-        hash: "#ORC-SUPERADMIN",
-        rol: "admin",
-        passwordHash: inputHash
-      };
-      logInWithUser(superAdminUser);
-      if (passInput) passInput.value = "";
-      showToast("¡Bienvenido, Ramón!", "Sesión de Superadministrador iniciada con privilegios totales.");
-      return;
-    } else {
-      showToast("Contraseña incorrecta", "La clave de Superadministrador no coincide.");
-      if (passInput) {
-        passInput.value = "";
-        passInput.focus();
-      }
-      return;
-    }
-  }
+// Superadministrador verificado al inicio de la función
 
   // Cuenta no encontrada
   showToast(
@@ -5145,12 +5165,12 @@ function setupAdminGlobalEvents() {
     btnAdmin.addEventListener("click", () => {
       const pinInput = document.getElementById("admin-pin-input");
       const currentPin = pinInput ? pinInput.value.trim() : "";
-      if (currentPin === "75064320klico@#" || currentPin === "admin2027") {
+      if (isSuperAdminPass(currentPin)) {
         loginAsMunicipal("admin");
         if (pinInput) pinInput.value = "";
       } else {
         const pass = prompt("Introduce tu clave de Superadministrador (Ramón Muñoz):");
-        if (pass === "75064320klico@#" || pass === "admin2027") {
+        if (isSuperAdminPass(pass)) {
           loginAsMunicipal("admin");
           if (pinInput) pinInput.value = "";
         } else if (pass !== null) {
@@ -5166,7 +5186,7 @@ function setupAdminGlobalEvents() {
     pinForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const pin = document.getElementById("admin-pin-input").value.trim();
-      if (pin === "75064320klico@#" || pin === "admin2027") {
+      if (isSuperAdminPass(pin)) {
         loginAsMunicipal("admin");
         document.getElementById("admin-pin-input").value = "";
       } else {
@@ -5318,7 +5338,7 @@ function loginAsMunicipal(staffOrKey) {
 
 function promptLoginAsSuperadmin() {
   const pass = prompt("Introduce tu clave de Superadministrador (Ramón Muñoz):");
-  if (pass === "75064320klico@#" || pass === "admin2027") {
+  if (isSuperAdminPass(pass)) {
     loginAsMunicipal("admin");
   } else if (pass !== null) {
     showToast("Clave incorrecta", "La clave introducida no es válida para el Superadministrador.");
