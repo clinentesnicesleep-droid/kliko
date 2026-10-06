@@ -4710,6 +4710,40 @@ async function handleManualLogin() {
     return;
   }
 
+  // Comprobar si se trata del Superadministrador (Ramón Muñoz)
+  if (query.includes("ramon") || query.includes("ramón") || query === "superadmin") {
+    if (pass === "75064320klico@#") {
+      const superAdminUser = {
+        id: "user-ramon-superadmin",
+        nombre: "Ramón Muñoz",
+        alias: "Ramón",
+        iniciales: "RM",
+        edad: 35,
+        rangoEdad: "+30",
+        dni: "***7506*",
+        empadronado: true,
+        puntos: 9999,
+        puntosHistoricos: 9999,
+        nivel: "Superadministrador del Plan",
+        nivelBadge: "👑 Superadmin",
+        hash: "#ORC-SUPERADMIN",
+        rol: "admin",
+        passwordHash: inputHash
+      };
+      logInWithUser(superAdminUser);
+      if (passInput) passInput.value = "";
+      showToast("¡Bienvenido, Ramón!", "Sesión de Superadministrador iniciada con privilegios totales.");
+      return;
+    } else {
+      showToast("Contraseña incorrecta", "La clave de Superadministrador no coincide.");
+      if (passInput) {
+        passInput.value = "";
+        passInput.focus();
+      }
+      return;
+    }
+  }
+
   // Cuenta no encontrada
   showToast(
     "Cuenta no encontrada",
@@ -4956,24 +4990,118 @@ function updateAsociacionUI() {
 // ==============================================================================
 // PANEL DE GESTIÓN MUNICIPAL DEL III PLAN (ADMINISTRADORES Y TÉCNICO DE JUVENTUD)
 // ==============================================================================
-const MUNICIPAL_STAFF = {
-  tecnico: {
+const STORAGE_KEY_TECNICOS = "orcera_tecnicos_personal_v1";
+
+const DEFAULT_MUNICIPAL_STAFF = {
+  admin: {
+    id: "admin-ramon",
+    nombre: "Ramón Muñoz",
+    cargo: "Superadministrador (Control Total del Plan)",
+    rol: "admin",
+    pin: "75064320klico@#",
+    permisos: ["acciones_total", "finanzas_total", "buzon", "stories", "asociacion", "configuracion", "nombramientos", "eliminar_estructura"]
+  }
+};
+
+const INITIAL_DEFAULT_TECNICOS = [
+  {
     id: "tecnico-alberto",
     nombre: "D. Alberto Moreno",
     cargo: "Técnico Municipal de Juventud",
     rol: "tecnico",
     pin: "tecnico2027",
-    permisos: ["acciones", "finanzas_operativa", "buzon", "stories", "asociacion"]
-  },
-  admin: {
-    id: "admin-carmen",
-    nombre: "Dña. Carmen Romero",
-    cargo: "Concejala de Juventud (Administradora del Plan)",
-    rol: "admin",
-    pin: "admin2027",
-    permisos: ["acciones", "finanzas_total", "buzon", "stories", "asociacion", "configuracion"]
+    fechaAlta: "01/01/2027",
+    activo: true
   }
-};
+];
+
+function getAppointedStaffList() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_TECNICOS);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    console.warn("Error leyendo técnicos nombrados:", e);
+  }
+  return JSON.parse(JSON.stringify(INITIAL_DEFAULT_TECNICOS));
+}
+
+function saveAppointedStaffList(list) {
+  try {
+    localStorage.setItem(STORAGE_KEY_TECNICOS, JSON.stringify(list));
+  } catch (e) {
+    console.error("Error guardando técnicos nombrados:", e);
+  }
+}
+
+function addAppointedStaffMember(nombre, cargo, pin) {
+  if (!canManageStaffAppointments()) {
+    showToast("Permiso Denegado", "Solo el Superadministrador (Ramón Muñoz) puede nombrar responsables técnicos.");
+    return false;
+  }
+  const cleanNombre = (nombre || "").trim();
+  const cleanCargo = (cargo || "").trim();
+  const cleanPin = (pin || "").trim();
+
+  if (!cleanNombre || !cleanCargo || !cleanPin) {
+    showToast("Campos incompletos", "Por favor, introduce el nombre, el cargo y el PIN del responsable técnico.");
+    return false;
+  }
+
+  if (cleanPin === "75064320klico@#") {
+    showToast("PIN no permitido", "Ese PIN está reservado exclusivamente para la clave de Superadministrador.");
+    return false;
+  }
+
+  const list = getAppointedStaffList();
+  if (list.some(t => t.pin.toLowerCase() === cleanPin.toLowerCase())) {
+    showToast("PIN ya en uso", "Ya existe otro responsable técnico con ese mismo PIN. Asigna uno distinto.");
+    return false;
+  }
+
+  const now = new Date();
+  const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+
+  const newStaff = {
+    id: `tecnico-${Date.now()}`,
+    nombre: cleanNombre,
+    cargo: cleanCargo,
+    rol: "tecnico",
+    pin: cleanPin,
+    fechaAlta: dateStr,
+    activo: true
+  };
+
+  list.push(newStaff);
+  saveAppointedStaffList(list);
+  showToast("Responsable Técnico Nombrado", `Se ha habilitado a ${cleanNombre} como ${cleanCargo}.`);
+  return true;
+}
+
+function removeAppointedStaffMember(staffId) {
+  if (!canManageStaffAppointments()) {
+    showToast("Permiso Denegado", "Solo el Superadministrador (Ramón Muñoz) puede revocar nombramientos técnicos.");
+    return false;
+  }
+  let list = getAppointedStaffList();
+  const target = list.find(t => t.id === staffId);
+  if (!target) return false;
+
+  list = list.filter(t => t.id !== staffId);
+  saveAppointedStaffList(list);
+  showToast("Nombramiento Revocado", `Se ha dado de baja el acceso de ${target.nombre}.`);
+  return true;
+}
+
+function canManageStaffAppointments() {
+  return AdminState.activeStaff && AdminState.activeStaff.rol === "admin";
+}
+
+function canDeletePlanStructure() {
+  return AdminState.activeStaff && AdminState.activeStaff.rol === "admin";
+}
 
 const AdminState = {
   activeStaff: null,
@@ -5011,21 +5139,46 @@ function setupAdminGlobalEvents() {
     });
   }
 
-  // Botones de login rápido
-  const btnTecnico = document.getElementById("btn-login-tecnico");
+  // Botón de login Superadministrador
   const btnAdmin = document.getElementById("btn-login-admin");
-  if (btnTecnico) btnTecnico.addEventListener("click", () => loginAsMunicipal("tecnico"));
-  if (btnAdmin) btnAdmin.addEventListener("click", () => loginAsMunicipal("admin"));
+  if (btnAdmin) {
+    btnAdmin.addEventListener("click", () => {
+      const pinInput = document.getElementById("admin-pin-input");
+      const currentPin = pinInput ? pinInput.value.trim() : "";
+      if (currentPin === "75064320klico@#" || currentPin === "admin2027") {
+        loginAsMunicipal("admin");
+        if (pinInput) pinInput.value = "";
+      } else {
+        const pass = prompt("Introduce tu clave de Superadministrador (Ramón Muñoz):");
+        if (pass === "75064320klico@#" || pass === "admin2027") {
+          loginAsMunicipal("admin");
+          if (pinInput) pinInput.value = "";
+        } else if (pass !== null) {
+          showToast("Clave incorrecta", "La clave introducida no es válida para el Superadministrador.");
+        }
+      }
+    });
+  }
 
-  // Formulario PIN
+  // Formulario PIN (valida Superadmin o cualquiera de los Técnicos Nombrados)
   const pinForm = document.getElementById("form-admin-pin");
   if (pinForm) {
     pinForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const pin = document.getElementById("admin-pin-input").value.trim();
-      if (pin === "admin2027") loginAsMunicipal("admin");
-      else if (pin === "tecnico2027") loginAsMunicipal("tecnico");
-      else alert("PIN incorrecto. Usa 'tecnico2027' o 'admin2027'.");
+      if (pin === "75064320klico@#" || pin === "admin2027") {
+        loginAsMunicipal("admin");
+        document.getElementById("admin-pin-input").value = "";
+      } else {
+        const tecnicos = getAppointedStaffList();
+        const matchTecnico = tecnicos.find(t => t.pin === pin);
+        if (matchTecnico) {
+          loginAsMunicipal(matchTecnico);
+          document.getElementById("admin-pin-input").value = "";
+        } else {
+          showToast("Clave incorrecta", "La clave o PIN introducido no coincide con el Superadministrador ni con ningún Responsable Técnico nombrado.");
+        }
+      }
     });
   }
 
@@ -5038,8 +5191,12 @@ function setupAdminGlobalEvents() {
   if (btnLogoutDash) btnLogoutDash.addEventListener("click", logoutMunicipal);
   if (btnSwitchRole) {
     btnSwitchRole.addEventListener("click", () => {
-      const nextRole = AdminState.activeStaff && AdminState.activeStaff.rol === "admin" ? "tecnico" : "admin";
-      loginAsMunicipal(nextRole);
+      if (AdminState.activeStaff && AdminState.activeStaff.rol === "admin") {
+        const tecnicos = getAppointedStaffList();
+        loginAsMunicipal(tecnicos[0] || "tecnico");
+      } else {
+        promptLoginAsSuperadmin();
+      }
     });
   }
 
@@ -5055,7 +5212,74 @@ function setupAdminGlobalEvents() {
 
 function openAdminLoginModal() {
   const modal = document.getElementById("admin-login-modal");
-  if (modal) modal.classList.add("active");
+  if (!modal) return;
+  renderAdminLoginTecnicos();
+  modal.classList.add("active");
+}
+
+function renderAdminLoginTecnicos() {
+  const container = document.getElementById("admin-login-tecnicos-container");
+  if (!container) return;
+
+  const tecnicos = getAppointedStaffList();
+  if (tecnicos.length === 1) {
+    const t = tecnicos[0];
+    container.innerHTML = `
+      <button type="button" class="admin-role-choice-btn" data-tecnico-id="${t.id}">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="admin-choice-avatar">🛠️</div>
+          <div style="text-align:left;">
+            <strong style="display:block; font-size:0.86rem; color:var(--text-main);">${t.nombre} · ${t.cargo}</strong>
+            <small style="font-size:0.7rem; color:var(--amurjo-cyan);">Gestión operativa: Estados, facturas, buzón y asociación (sin borrado)</small>
+          </div>
+        </div>
+        <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
+      </button>
+    `;
+  } else {
+    container.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <span style="font-size:0.7rem; font-weight:700; color:var(--amurjo-cyan); text-transform:uppercase; letter-spacing:0.5px;">
+          Responsables Técnicos Nombrados (${tecnicos.length})
+        </span>
+        ${tecnicos.map(t => `
+          <button type="button" class="admin-role-choice-btn" data-tecnico-id="${t.id}" style="padding:8px 12px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div class="admin-choice-avatar" style="width:28px; height:28px; font-size:0.85rem;">🛠️</div>
+              <div style="text-align:left;">
+                <strong style="display:block; font-size:0.82rem; color:var(--text-main);">${t.nombre}</strong>
+                <small style="font-size:0.68rem; color:var(--text-muted);">${t.cargo}</small>
+              </div>
+            </div>
+            <span style="font-size:0.72rem; color:var(--text-muted);">Acceder ➔</span>
+          </button>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  container.querySelectorAll("[data-tecnico-id]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tId = btn.getAttribute("data-tecnico-id");
+      const targetTecnico = tecnicos.find(x => x.id === tId);
+      if (!targetTecnico) return;
+
+      const pinInput = document.getElementById("admin-pin-input");
+      const currentPin = pinInput ? pinInput.value.trim() : "";
+      if (currentPin && currentPin === targetTecnico.pin) {
+        loginAsMunicipal(targetTecnico);
+        if (pinInput) pinInput.value = "";
+      } else {
+        const pass = prompt(`Introduce el PIN / Clave de acceso para ${targetTecnico.nombre} (${targetTecnico.cargo}):`);
+        if (pass === targetTecnico.pin) {
+          loginAsMunicipal(targetTecnico);
+          if (pinInput) pinInput.value = "";
+        } else if (pass !== null) {
+          showToast("PIN incorrecto", `El PIN introducido no es válido para ${targetTecnico.nombre}.`);
+        }
+      }
+    });
+  });
 }
 
 function closeAdminLoginModal() {
@@ -5063,8 +5287,19 @@ function closeAdminLoginModal() {
   if (modal) modal.classList.remove("active");
 }
 
-function loginAsMunicipal(roleKey) {
-  const staff = MUNICIPAL_STAFF[roleKey];
+function loginAsMunicipal(staffOrKey) {
+  let staff = null;
+  if (typeof staffOrKey === "string") {
+    if (staffOrKey === "admin") {
+      staff = DEFAULT_MUNICIPAL_STAFF.admin;
+    } else {
+      const allTecnicos = getAppointedStaffList();
+      staff = allTecnicos.find(t => t.id === staffOrKey || t.pin === staffOrKey) || allTecnicos[0] || INITIAL_DEFAULT_TECNICOS[0];
+    }
+  } else if (staffOrKey && typeof staffOrKey === "object") {
+    staff = staffOrKey;
+  }
+
   if (!staff) return;
 
   AdminState.activeStaff = staff;
@@ -5073,6 +5308,16 @@ function loginAsMunicipal(roleKey) {
 
   showToast(`Acceso Municipal Concedido`, `Sesión iniciada como: ${staff.nombre} (${staff.cargo})`);
 }
+
+function promptLoginAsSuperadmin() {
+  const pass = prompt("Introduce tu clave de Superadministrador (Ramón Muñoz):");
+  if (pass === "75064320klico@#" || pass === "admin2027") {
+    loginAsMunicipal("admin");
+  } else if (pass !== null) {
+    showToast("Clave incorrecta", "La clave introducida no es válida para el Superadministrador.");
+  }
+}
+window.promptLoginAsSuperadmin = promptLoginAsSuperadmin;
 
 function logoutMunicipal() {
   AdminState.activeStaff = null;
@@ -5108,16 +5353,16 @@ function updateAdminHeaderUI() {
   const navSub = document.getElementById("nav-config-sub");
 
   if (label) {
-    label.innerHTML = `<strong>${staff.cargo}:</strong> ${staff.nombre} · <span class="admin-badge-role ${staff.rol}">${staff.rol === 'admin' ? 'Acceso Total' : 'Gestión Diaria'}</span>`;
+    label.innerHTML = `<strong>${staff.cargo}:</strong> ${staff.nombre} · <span class="admin-badge-role ${staff.rol}">${staff.rol === 'admin' ? 'Acceso Total' : 'Gestión Diaria (Sin Borrado)'}</span>`;
   }
 
   if (switchBtnText) {
-    switchBtnText.textContent = staff.rol === "admin" ? "Cambiar a Técnico" : "Cambiar a Administradora";
+    switchBtnText.textContent = staff.rol === "admin" ? "Probar Modo Técnico" : "Cambiar a Superadministrador";
   }
 
   const isTécnico = staff.rol === "tecnico";
   if (navLock) navLock.style.display = isTécnico ? "inline" : "none";
-  if (navSub) navSub.textContent = isTécnico ? "🔒 Restringido" : "Configuración Global";
+  if (navSub) navSub.textContent = isTécnico ? "🔒 Restringido" : "Nombramientos & Backup";
 }
 
 function switchAdminPane(paneId) {
@@ -5313,6 +5558,7 @@ function renderPaneAcciones(container) {
 function setupActionEditorEvents() {
   const closeBtn = document.getElementById("close-admin-action-modal");
   const cancelBtn = document.getElementById("btn-cancel-edit-action");
+  const deleteBtn = document.getElementById("btn-delete-action");
   const modal = document.getElementById("admin-action-modal");
   const form = document.getElementById("form-edit-action");
   const chkVariante = document.getElementById("edit-action-has-variante");
@@ -5322,6 +5568,29 @@ function setupActionEditorEvents() {
   if (modal) {
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeActionEditModal();
+    });
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", () => {
+      if (!canDeletePlanStructure()) {
+        showToast("Acceso Restringido", "Los responsables técnicos no tienen permiso para eliminar acciones, ejes ni indicadores del Plan oficial. Contacta con Ramón Muñoz (Superadministrador).");
+        return;
+      }
+      const codeInput = document.getElementById("edit-action-code");
+      const actionCode = codeInput ? codeInput.value.trim() : "";
+      const curEje = EJES_DATA.find(e => e.id === AdminState.selectedEjeId) || EJES_DATA[0];
+      const targetAcc = curEje.acciones.find(a => a.codigo === actionCode);
+      if (!targetAcc) return;
+
+      if (confirm(`⚠️ ¿Deseas eliminar definitivamente la acción "${targetAcc.codigo}: ${targetAcc.titulo}"?\n\nEsta operación modificará la estructura oficial del Plan y solo puede ser autorizada por el Superadministrador.`)) {
+        curEje.acciones = curEje.acciones.filter(a => a.codigo !== actionCode);
+        closeActionEditModal();
+        renderPaneAcciones(document.getElementById("admin-main-content"));
+        renderEjeDetail(curEje.id);
+        updateGlobalBentoKPIs();
+        showToast("Acción Eliminada", `La acción ${actionCode} ha sido dada de baja del Eje ${curEje.numero}.`);
+      }
     });
   }
 
@@ -5404,6 +5673,30 @@ function openActionEditModal(actionCode, isNew) {
     if (chkVariante) chkVariante.checked = hasVar;
     if (boxVariante) boxVariante.style.display = hasVar ? "block" : "none";
     if (textoVariante) textoVariante.value = acc.varianteDetalle || "";
+  }
+
+  // Configuración del botón de eliminación según privilegios
+  const deleteBtn = document.getElementById("btn-delete-action");
+  if (deleteBtn) {
+    if (isNew) {
+      deleteBtn.style.display = "none";
+    } else {
+      deleteBtn.style.display = "inline-flex";
+      const isSuperadmin = canDeletePlanStructure();
+      if (isSuperadmin) {
+        deleteBtn.disabled = false;
+        deleteBtn.style.opacity = "1";
+        deleteBtn.style.cursor = "pointer";
+        deleteBtn.title = "Eliminar permanentemente esta acción (Permiso de Superadministrador)";
+        deleteBtn.innerHTML = "<span>🗑️</span><span>Eliminar Acción</span>";
+      } else {
+        deleteBtn.disabled = true;
+        deleteBtn.style.opacity = "0.45";
+        deleteBtn.style.cursor = "not-allowed";
+        deleteBtn.title = "🔒 Bloqueado: Los responsables técnicos no pueden eliminar acciones ni componentes estructurales del Plan.";
+        deleteBtn.innerHTML = "<span>🔒</span><span>Eliminación Bloqueada</span>";
+      }
+    }
   }
 
   modal.classList.add("active");
@@ -5514,7 +5807,7 @@ function renderPaneFinanzas(container, isAdmin) {
           <span class="badge-tag-civic">Módulo 2 · Transparencia Presupuestaria</span>
           <h3 style="margin:2px 0 0; font-size:1.15rem; color:var(--text-main);">💶 Ejecución Financiera y Facturación Justificada</h3>
           <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 0;">
-            ${isAdmin ? '👑 Rol Administradora: Puedes modificar el Presupuesto Base y registrar justificantes contables.' : '🛠️ Rol Técnico: Puedes registrar nuevas facturas y gastos auditados.'}
+            ${isAdmin ? '👑 Rol Superadministrador: Puedes modificar el Presupuesto Base y registrar justificantes contables.' : '🛠️ Rol Técnico: Puedes registrar nuevas facturas y gastos auditados.'}
           </p>
         </div>
         <div style="display:flex; gap:8px;">
@@ -6166,12 +6459,12 @@ function renderPaneConfiguracion(container, isAdmin) {
       <div class="admin-pane-card">
         <div class="admin-locked-box">
           <div style="font-size:2.2rem; margin-bottom:10px;">🔒</div>
-          <h3 style="margin:0 0 6px; font-size:1.1rem; color:#fbbf24;">Sección Restringida a Administradores del Plan</h3>
+          <h3 style="margin:0 0 6px; font-size:1.1rem; color:#fbbf24;">Sección Restringida a la Dirección del Plan</h3>
           <p style="font-size:0.8rem; color:var(--text-muted); max-width:480px; margin:0 auto 16px; line-height:1.4;">
-            Como <strong>Técnico de Juventud</strong> tienes pleno control operativo sobre las acciones, facturas, buzón de propuestas y la asociación juvenil. Las altas de técnicos y reestructuración global del Plan están reservadas a la <strong>Concejalía de Juventud / Alcaldía</strong>.
+            Como <strong>Responsable Técnico</strong> tienes pleno control operativo sobre las propuestas ciudadanas, justificación de gastos, buzón participativo, consultas exprés y la asociación juvenil. El nombramiento de personal técnico, reestructuración y backups del Plan están reservados a <strong>Ramón Muñoz (Superadministrador)</strong>.
           </p>
-          <button type="button" class="btn-primary" onclick="loginAsMunicipal('admin')" style="margin:0 auto; padding:8px 16px; font-size:0.78rem;">
-            👑 Entrar con Perfil de Administradora
+          <button type="button" class="btn-primary" onclick="promptLoginAsSuperadmin()" style="margin:0 auto; padding:8px 16px; font-size:0.78rem;">
+            👑 Entrar como Superadministrador
           </button>
         </div>
       </div>
@@ -6179,59 +6472,160 @@ function renderPaneConfiguracion(container, isAdmin) {
     return;
   }
 
+  const appointedTecnicos = getAppointedStaffList();
+
   container.innerHTML = `
     <div class="admin-pane-card">
       <div class="admin-pane-header">
         <div>
-          <span class="badge-tag-civic" style="color:#fbbf24;">Módulo 6 · Configuración Global & Auditoría</span>
-          <h3 style="margin:2px 0 0; font-size:1.15rem; color:var(--text-main);">⚙️ Gestión de Permisos Municipales y Respaldo</h3>
+          <span class="badge-tag-civic" style="color:#fbbf24;">Módulo 6 · Configuración Global & Nombramientos</span>
+          <h3 style="margin:2px 0 0; font-size:1.15rem; color:var(--text-main);">⚙️ Dirección del Plan y Gestión de Responsables Técnicos</h3>
           <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 0;">
-            Exclusivo para la Concejalía y Dirección del Plan. Auditoría de accesos y salvaguarda de datos.
+            Exclusivo para Ramón Muñoz (Superadministrador). Nombra o da de baja a los responsables técnicos autorizados para gestionar la participación ciudadana del Plan.
           </p>
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
-        <!-- TÉCNICOS AUTORIZADOS -->
-        <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:16px;">
-          <h4 style="margin:0 0 10px; font-size:0.88rem; color:var(--text-main);">👥 Personal Técnico Autorizado</h4>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; background:rgba(255,255,255,0.03); border-radius:6px;">
-              <div>
-                <strong style="display:block; font-size:0.8rem;">D. Alberto Moreno</strong>
-                <small style="color:var(--text-muted); font-size:0.7rem;">Técnico de Juventud · Activo</small>
-              </div>
-              <span class="admin-badge-role tecnico">Gestor</span>
+      <!-- TARJETA SUPERADMINISTRADOR -->
+      <div style="background:linear-gradient(135deg, rgba(245,158,11,0.12), rgba(239,68,68,0.06)); border:1px solid rgba(245,158,11,0.4); border-radius:var(--radius-md); padding:16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg, #f59e0b, #ef4444); display:flex; align-items:center; justify-content:center; font-size:1.3rem;">👑</div>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <strong style="font-size:0.95rem; color:var(--text-main);">Ramón Muñoz</strong>
+              <span class="admin-badge-role admin">Superadministrador</span>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; background:rgba(255,255,255,0.03); border-radius:6px;">
-              <div>
-                <strong style="display:block; font-size:0.8rem;">Dña. Carmen Romero</strong>
-                <small style="color:var(--text-muted); font-size:0.7rem;">Concejala de Juventud · Alcaldía</small>
-              </div>
-              <span class="admin-badge-role admin">Superadmin</span>
-            </div>
+            <small style="color:#fbbf24; font-size:0.72rem; display:block;">Control Total · Preservación de la estructura del Plan y copias maestras</small>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span class="badge-tag-civic" style="background:rgba(16,185,129,0.15); color:#10b981; border:none; font-size:0.68rem;">✔ Nombramiento de Técnicos</span>
+          <span class="badge-tag-civic" style="background:rgba(16,185,129,0.15); color:#10b981; border:none; font-size:0.68rem;">✔ Control de Ejes y Acciones</span>
+          <span class="badge-tag-civic" style="background:rgba(16,185,129,0.15); color:#10b981; border:none; font-size:0.68rem;">✔ Presupuestos Base</span>
+        </div>
+      </div>
+
+      <!-- FORMULARIO DE NOMBRAMIENTO DE NUEVO TÉCNICO -->
+      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:16px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div>
+            <h4 style="margin:0; font-size:0.92rem; color:var(--text-main);">➕ Nombrar Nuevo Responsable Técnico</h4>
+            <small style="color:var(--text-muted); font-size:0.72rem;">
+              Podrá gestionar propuestas ciudadanas, facturas, encuestas y censo de socios, <strong>pero sin permiso para eliminar ejes, acciones ni indicadores</strong>.
+            </small>
           </div>
         </div>
 
-        <!-- COPIA DE SEGURIDAD Y RESPALDO -->
-        <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:16px;">
-          <h4 style="margin:0 0 10px; font-size:0.88rem; color:var(--text-main);">💾 Respaldo y Copia de Seguridad</h4>
-          <p style="font-size:0.74rem; color:var(--text-muted); margin:0 0 12px; line-height:1.4;">
-            Descarga una copia completa en JSON con todos los ejes, gastos contables justificados y propuestas comunitarias.
-          </p>
-          <button type="button" class="btn-tool" id="btn-export-full-plan" style="width:100%; justify-content:center; color:var(--amurjo-cyan); font-weight:700;">
-            📥 Descargar Backup Completo (JSON)
+        <form id="form-add-tecnico" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)) 130px; gap:10px; align-items:end;">
+          <div class="form-group-orcera" style="margin:0;">
+            <label for="new-tec-nombre" style="font-size:0.7rem; font-weight:700;">Nombre y Apellidos *</label>
+            <input type="text" id="new-tec-nombre" placeholder="Ej: Marta Gómez Torres" required style="padding:8px 10px; font-size:0.78rem;">
+          </div>
+          <div class="form-group-orcera" style="margin:0;">
+            <label for="new-tec-cargo" style="font-size:0.7rem; font-weight:700;">Cargo / Función *</label>
+            <input type="text" id="new-tec-cargo" placeholder="Ej: Dinamizadora Juvenil" required style="padding:8px 10px; font-size:0.78rem;">
+          </div>
+          <div class="form-group-orcera" style="margin:0;">
+            <label for="new-tec-pin" style="font-size:0.7rem; font-weight:700;">Clave / PIN de Acceso *</label>
+            <input type="text" id="new-tec-pin" placeholder="Ej: marta2027" required style="padding:8px 10px; font-size:0.78rem;">
+          </div>
+          <button type="submit" class="btn-primary" style="padding:9px 14px; font-size:0.78rem; height:38px; justify-content:center; white-space:nowrap;">
+            ➕ Nombrar
           </button>
+        </form>
+      </div>
+
+      <!-- LISTA DE RESPONSABLES TÉCNICOS NOMBRADOS -->
+      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:16px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <h4 style="margin:0; font-size:0.92rem; color:var(--text-main);">👥 Responsables Técnicos Nombrados (${appointedTecnicos.length})</h4>
+            <small style="color:var(--text-muted); font-size:0.72rem;">Personal autorizado para dinamizar y moderar la participación del Plan</small>
+          </div>
         </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${appointedTecnicos.map(t => `
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, var(--pine-green), var(--amurjo-cyan)); display:flex; align-items:center; justify-content:center; font-size:1rem;">🛠️</div>
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <strong style="font-size:0.84rem; color:var(--text-main);">${t.nombre}</strong>
+                    <span class="admin-badge-role tecnico">Técnico/a</span>
+                  </div>
+                  <small style="color:var(--text-muted); font-size:0.7rem; display:block;">${t.cargo} · Nombrado: ${t.fechaAlta || 'Vigente'}</small>
+                  <div style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap;">
+                    <span style="font-size:0.65rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">✔ Buzón & Respuestas</span>
+                    <span style="font-size:0.65rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">✔ Registro Facturas</span>
+                    <span style="font-size:0.65rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">✔ Censo Asociación</span>
+                    <span style="font-size:0.65rem; color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">✔ Estados Acciones</span>
+                    <span style="font-size:0.65rem; color:#f87171; background:rgba(248,113,113,0.1); padding:2px 6px; border-radius:4px;">⛔ Borrado Ejes/Acciones Bloqueado</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div style="background:rgba(0,0,0,0.3); border:1px dashed var(--segura-border); border-radius:6px; padding:4px 8px; font-family:monospace; font-size:0.75rem; color:var(--amurjo-cyan);" title="PIN de acceso asignado">
+                  PIN: <strong>${t.pin}</strong>
+                </div>
+                <button type="button" class="btn-tool btn-remove-tecnico" data-id="${t.id}" data-nombre="${t.nombre}" style="color:#f87171; padding:6px 10px; font-size:0.72rem;" title="Dar de baja este responsable técnico">
+                  🗑️ Revocar
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <!-- COPIA DE SEGURIDAD Y RESPALDO -->
+      <div style="background:var(--segura-surface-elevated); border:1px solid var(--segura-border); border-radius:var(--radius-md); padding:16px;">
+        <h4 style="margin:0 0 6px; font-size:0.88rem; color:var(--text-main);">💾 Respaldo y Copia de Seguridad Maestra</h4>
+        <p style="font-size:0.74rem; color:var(--text-muted); margin:0 0 12px; line-height:1.4;">
+          Descarga un archivo JSON íntegro con la estructura oficial de los 7 Ejes, personal técnico nombrado, propuestas comunitarias y justificantes de gasto.
+        </p>
+        <button type="button" class="btn-tool" id="btn-export-full-plan" style="width:100%; justify-content:center; color:var(--amurjo-cyan); font-weight:700;">
+          📥 Descargar Backup Completo (JSON)
+        </button>
       </div>
     </div>
   `;
 
+  // Attach event to form-add-tecnico:
+  const formAdd = container.querySelector("#form-add-tecnico");
+  if (formAdd) {
+    formAdd.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nom = container.querySelector("#new-tec-nombre").value.trim();
+      const car = container.querySelector("#new-tec-cargo").value.trim();
+      const pin = container.querySelector("#new-tec-pin").value.trim();
+      if (addAppointedStaffMember(nom, car, pin)) {
+        renderPaneConfiguracion(container, isAdmin);
+      }
+    });
+  }
+
+  // Attach event to revoke buttons:
+  container.querySelectorAll(".btn-remove-tecnico").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      const nom = btn.getAttribute("data-nombre");
+      if (confirm(`¿Revocar el nombramiento de ${nom}?\nNo podrá volver a acceder como responsable técnico a menos que sea nombrado de nuevo.`)) {
+        if (removeAppointedStaffMember(id)) {
+          renderPaneConfiguracion(container, isAdmin);
+        }
+      }
+    });
+  });
+
+  // Attach backup export button:
   const backupBtn = container.querySelector("#btn-export-full-plan");
   if (backupBtn) {
     backupBtn.addEventListener("click", () => {
       const data = {
         fechaExport: new Date().toISOString(),
+        superadministrador: "Ramón Muñoz",
+        tecnicosNombrados: getAppointedStaffList(),
         ejes: EJES_DATA,
         propuestas: propuestasComunitarias,
         usuariosGuardados: getSavedAccountsList()
@@ -6242,7 +6636,7 @@ function renderPaneConfiguracion(container, isAdmin) {
       a.href = url;
       a.download = `backup_completo_iii_plan_orcera_${Date.now()}.json`;
       a.click();
-      showToast("Copia de Seguridad Generada", "Archivo JSON descargado correctamente.");
+      showToast("Copia de Seguridad Generada", "Archivo JSON maestro descargado correctamente.");
     });
   }
 }

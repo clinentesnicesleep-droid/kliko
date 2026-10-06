@@ -1382,25 +1382,27 @@
 
       <!-- BOTONES DE ACCESO RÁPIDO SEGÚN PERFIL -->
       <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;">
-        <!-- PERFIL TÉCNICO -->
-        <button type="button" class="admin-role-choice-btn" id="btn-login-tecnico">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div class="admin-choice-avatar">🛠️</div>
-            <div style="text-align:left;">
-              <strong style="display:block; font-size:0.86rem; color:var(--text-main);">D. Alberto Moreno · Técnico de Juventud</strong>
-              <small style="font-size:0.7rem; color:var(--amurjo-cyan);">Gestión operativa: Estados de acciones, facturas, buzón y asociación</small>
+        <!-- PERFILES DE RESPONSABLES TÉCNICOS -->
+        <div id="admin-login-tecnicos-container">
+          <button type="button" class="admin-role-choice-btn" id="btn-login-tecnico">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="admin-choice-avatar">🛠️</div>
+              <div style="text-align:left;">
+                <strong style="display:block; font-size:0.86rem; color:var(--text-main);">Responsables Técnicos Autorizados</strong>
+                <small style="font-size:0.7rem; color:var(--amurjo-cyan);">Gestión operativa: Estados, facturas, buzón y asociación (sin borrado)</small>
+              </div>
             </div>
-          </div>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
-        </button>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
+          </button>
+        </div>
 
-        <!-- PERFIL ADMINISTRADOR -->
+        <!-- PERFIL SUPERADMINISTRADOR -->
         <button type="button" class="admin-role-choice-btn" id="btn-login-admin" style="border-color: rgba(245, 158, 11, 0.4);">
           <div style="display:flex; align-items:center; gap:12px;">
             <div class="admin-choice-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">👑</div>
             <div style="text-align:left;">
-              <strong style="display:block; font-size:0.86rem; color:var(--text-main);">Dña. Carmen Romero · Concejala de Juventud (Admin)</strong>
-              <small style="font-size:0.7rem; color:#fbbf24;">Control total: Presupuesto anual, configuración del plan y auditoría</small>
+              <strong style="display:block; font-size:0.86rem; color:var(--text-main);">Ramón Muñoz · Superadministrador</strong>
+              <small style="font-size:0.7rem; color:#fbbf24;">Control total: Presupuesto, configuración del plan, nombramientos y backup</small>
             </div>
           </div>
           <span style="font-size:0.75rem; color:var(--text-muted);">Acceder ➔</span>
@@ -1410,14 +1412,14 @@
       <!-- FORMULARIO CON CLAVE / PIN MUNICIPAL -->
       <form id="form-admin-pin" style="border-top: 1px dashed var(--segura-border); padding-top: 14px;">
         <div class="form-group-orcera" style="margin-bottom: 8px;">
-          <label for="admin-pin-input">O introduce tu Clave / PIN Municipal:</label>
+          <label for="admin-pin-input">O introduce tu Clave o PIN de Acceso:</label>
           <div style="display:flex; gap:8px;">
-            <input type="password" id="admin-pin-input" placeholder="tecnico2027 o admin2027" style="flex:1;">
+            <input type="password" id="admin-pin-input" placeholder="Clave de Superadmin o PIN de Técnico..." style="flex:1;">
             <button type="submit" class="btn-primary" style="padding: 0 16px;">Entrar</button>
           </div>
         </div>
         <small style="font-size:0.68rem; color:var(--text-muted); display:block;">
-          Claves demo: <code>tecnico2027</code> (Técnico) o <code>admin2027</code> (Administrador).
+          Acceso para <strong>Ramón Muñoz</strong> (Superadministrador) o cualquier <strong>Responsable Técnico</strong> nombrado.
         </small>
       </form>
     </div>
@@ -1633,6 +1635,9 @@
         <div style="display: flex; gap: 8px; margin-top: 14px;">
           <button type="button" class="btn-tool" id="btn-cancel-edit-action" style="flex:1; justify-content:center;">
             Cancelar
+          </button>
+          <button type="button" class="btn-tool" id="btn-delete-action" style="display:none; color:#f87171; border-color:rgba(248,113,113,0.3); justify-content:center;" title="Eliminar acción">
+            🗑️ Eliminar Acción
           </button>
           <button type="submit" class="btn-primary" style="flex:2; justify-content:center;">
             💾 Guardar Cambios en la Acción
